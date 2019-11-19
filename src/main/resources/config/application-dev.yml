@@ -25,7 +25,7 @@ eureka:
     client:
         service-url:
             defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
-
+        enabled: false
 spring:
     profiles:
         active: dev
@@ -45,16 +45,33 @@ spring:
         stream:
             kafka:
                 binder:
-                    brokers: localhost
-                    zk-nodes: localhost
+                    brokers:  dev.servers.divisosofttech.com
+                    zk-nodes: dev.servers.divisosofttech.com
+                streams:
+                  binder:
+                    brokers: dev.servers.divisosofttech.com
+                    configuration:
+                      schema.registry.url: http://dev.servers.divisosofttech.com:8081
+                      commit.interval.ms: 1000
+                      default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                      default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde 
+                  bindings:
+                    sensor:
+                      consumer:
+                           keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                           valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
             bindings:
-                output:
-                    destination: topic-jhipster
+                notification:
+                    consumer:
+                      useNativeDecoding: true
+                    destination: notification
+                    contentType: application/*+avro
+                    group: notification-shop-groups
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/shopkeepergateway?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/graeshoppegateway?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
         username: root
-        password:
+        password: root
         hikari:
             poolName: Hikari
             auto-commit: false
