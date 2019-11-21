@@ -446,6 +446,28 @@
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
 		</dependency>
 		<!-- jhipster-needle-maven-add-dependency -->
+		<!-- elasticsearch dependency -->
+		
+		<dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>6.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>6.8.3</version>
+        </dependency>
+		
+		<!--end  elasticsearch dependency -->
+		
+		<!-- socketio dependency -->
+		<dependency>
+			<groupId>com.corundumstudio.socketio</groupId>
+			<artifactId>netty-socketio</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+		<!--  end socketio dependency -->
 	</dependencies>
 
 	<build>
