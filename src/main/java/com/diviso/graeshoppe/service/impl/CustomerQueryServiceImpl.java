@@ -31,17 +31,20 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 
-	
+	//@Autowired
 	private RestHighLevelClient restHighLevelClient;
 
-	private ObjectMapper objectMapper;
+
+	@Autowired
+	private ServiceUtility serviceUtility;
 	
-	private ServiceUtility serviceUtility =new ServiceUtility();
 	
-	public CustomerQueryServiceImpl(ObjectMapper objectMapper, RestHighLevelClient restHighLevelClient) {
-		this.objectMapper = objectMapper;
-		this.restHighLevelClient = restHighLevelClient;
-	}
+	  public CustomerQueryServiceImpl(
+	  RestHighLevelClient restHighLevelClient) {
+		  
+	  }
+	  //this.restHighLevelClient = restHighLevelClient; }
+	 
 
 
 	@Override

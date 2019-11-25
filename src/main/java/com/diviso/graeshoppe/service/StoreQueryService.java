@@ -46,5 +46,7 @@ public interface StoreQueryService {
 	 */
 	public Page<Banner> findBannersByStoreId(String regNo);
 
+	List<Banner> findAllBannersByStoreId(String regNo);
+
 
 }

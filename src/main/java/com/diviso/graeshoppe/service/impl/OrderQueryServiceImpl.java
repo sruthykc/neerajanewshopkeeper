@@ -46,15 +46,14 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	Long count = 0L;
 
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
-
-	private ServiceUtility serviceUtility = new ServiceUtility();
-
+	@Autowired
+	private ServiceUtility serviceUtility;
+	
 	private RestHighLevelClient restHighLevelClient;
 
-	private ObjectMapper objectMapper;
 
-	public OrderQueryServiceImpl(ObjectMapper objectMapper, RestHighLevelClient restHighLevelClient) {
-		this.objectMapper = objectMapper;
+	public OrderQueryServiceImpl( RestHighLevelClient restHighLevelClient) {
+		
 		this.restHighLevelClient = restHighLevelClient;
 	}
 

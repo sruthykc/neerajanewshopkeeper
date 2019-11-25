@@ -29,15 +29,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class ReportQueryServiceImpl implements ReportQueryService {
 
-	
-	private ServiceUtility serviceUtility = new ServiceUtility();
+	@Autowired
+	private ServiceUtility serviceUtility;
 
 	private RestHighLevelClient restHighLevelClient;
 
-	private ObjectMapper objectMapper;
+	
 
-	public ReportQueryServiceImpl(ObjectMapper objectMapper, RestHighLevelClient restHighLevelClient) {
-		this.objectMapper = objectMapper;
+	public ReportQueryServiceImpl( RestHighLevelClient restHighLevelClient) {
+		
 		this.restHighLevelClient = restHighLevelClient;
 	}
 

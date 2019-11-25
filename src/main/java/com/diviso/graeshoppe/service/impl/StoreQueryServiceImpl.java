@@ -11,6 +11,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
 
+import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.product.model.Location;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.store.domain.Banner;
@@ -36,15 +38,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class StoreQueryServiceImpl implements StoreQueryService {
 
-	
-	private ServiceUtility serviceUtility = new ServiceUtility();
+	@Autowired
+	private ServiceUtility serviceUtility ;
 
+	
+	@Autowired
+	private ObjectMapper objectMapper;
+	
 	private RestHighLevelClient restHighLevelClient;
 
-	private ObjectMapper objectMapper;
 
-	public StoreQueryServiceImpl(ObjectMapper objectMapper, RestHighLevelClient restHighLevelClient) {
-		this.objectMapper = objectMapper;
+	public StoreQueryServiceImpl(RestHighLevelClient restHighLevelClient) {
+		
 		this.restHighLevelClient = restHighLevelClient;
 	}
 	
@@ -296,5 +301,42 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	}
 
+	
+	@Override public List<Banner> findAllBannersByStoreId(String regNo) {
+		
+		 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+			/*
+			 * String[] includeFields = new String[] { "iDPcode", "image" }; String[]
+			 * excludeFields = new String[] { "category.*" };
+			 * searchSourceBuilder.fetchSource(includeFields, excludeFields);
+			 */
+			searchSourceBuilder.query(termQuery("store.regNo",regNo));
+
+			SearchRequest searchRequest = new SearchRequest("banner");
+			searchRequest.source(searchSourceBuilder);
+			SearchResponse searchResponse = null;
+			try {
+				searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+			} catch (IOException e) { // TODO Auto-generated
+				e.printStackTrace();
+			}
+
+			SearchHit[] searchHit = searchResponse.getHits().getHits();
+
+			List<Banner> bannerList = new ArrayList<>();
+
+			for (SearchHit hit : searchHit) {
+				bannerList.add(objectMapper.convertValue(hit.getSourceAsMap(), Banner.class));
+			}
+
+			return bannerList;
+	
+	}
+		  
+	
+	
+	
+	
+	
 
 }

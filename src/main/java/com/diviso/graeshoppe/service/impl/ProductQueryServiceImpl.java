@@ -53,15 +53,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ProductQueryServiceImpl implements ProductQueryService {
-
-	private ServiceUtility serviceUtility = new ServiceUtility();
+	@Autowired
+	private ServiceUtility serviceUtility;
 
 	private RestHighLevelClient restHighLevelClient;
 
-	private ObjectMapper objectMapper;
+	
 
-	public ProductQueryServiceImpl(ObjectMapper objectMapper, RestHighLevelClient restHighLevelClient) {
-		this.objectMapper = objectMapper;
+	public ProductQueryServiceImpl(RestHighLevelClient restHighLevelClient) {
+		
 		this.restHighLevelClient = restHighLevelClient;
 	}
 

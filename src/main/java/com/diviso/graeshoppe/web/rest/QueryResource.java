@@ -108,9 +108,9 @@ import com.diviso.graeshoppe.service.dto.SaleAggregate;
 @RequestMapping("/api/query")
 public class QueryResource {
 
-	@Autowired
-	QueryService queryService;
-
+	/*
+	 * @Autowired QueryService queryService;
+	 */
 	@Autowired
 	OrderQueryService orderQueryService;
 	
@@ -455,7 +455,7 @@ public class QueryResource {
 					storeTypeResourceApi.listToDtoUsingPOST2(storeQueryService.findAllStoreTypesByStoreId(regNo)).getBody());
 
 			bannerDTO.addAll(
-					bannerResourceApi.listToDtoUsingPOST(queryService.findAllBannersByStoreId(regNo)).getBody());
+					bannerResourceApi.listToDtoUsingPOST(storeQueryService.findAllBannersByStoreId(regNo)).getBody());
 		}
 		StoreAddressDTO storeAddressDTO = new StoreAddressDTO();
 		if (storeAdrress != null) {
@@ -665,7 +665,7 @@ public class QueryResource {
 
 	@GetMapping("/orderMasterByOrderId/{orderId}")
 	public ResponseEntity<OrderMaster> findOrderMasterByOrderId(@PathVariable String orderId) {
-		OrderMaster orderMaster = queryService.findOrderMasterByOrderId(orderId);
+		OrderMaster orderMaster =reportQueryService.findOrderMasterByOrderId(orderId);
 		return ResponseEntity.ok().body(orderMaster);
 	}
 
