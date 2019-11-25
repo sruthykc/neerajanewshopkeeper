@@ -210,12 +210,6 @@ public class QueryResource {
 		return orderQueryService.findOrderByStatusNameAndDeliveryType(statusName, storeId, deliveryType, pageable);
 	}
 
-	@GetMapping("/findAllProductByCategoryId/{categoryId}/{storeId}")
-	public Page<Product> findAllProductsByCategoryId(@PathVariable Long categoryId, @PathVariable String storeId,
-			Pageable pageable) {
-		return productQueryService.findProductByCategoryId(categoryId, storeId, pageable);
-	}
-
 	@GetMapping("/findProductBySearchTerm/{searchTerm}/{storeId}")
 	public Page<Product> findAllProductBySearchTerm(@PathVariable String searchTerm, @PathVariable String storeId,
 			Pageable pageable) {
@@ -232,39 +226,6 @@ public class QueryResource {
 		return this.productResourceApi.getProductUsingGET(id);
 	}
 
-	@GetMapping("/findAllStockCurrentByProductName/{name}/{storeId}")
-	public Page<StockCurrent> findAllStockCurrentByProductName(@PathVariable String name, @PathVariable String storeId,
-			Pageable pageable) {
-		return productQueryService.findStockCurrentByProductName(name, storeId, pageable);
-	}
-
-	@GetMapping("/findAllStockCurrentsByCategoryId/{categoryId}/{storeId}")
-	public Page<StockCurrent> findAllStockCurrentByCategory(@PathVariable Long categoryId, @PathVariable String storeId,
-			Pageable pageable) {
-		return productQueryService.findAllStockCurrentByCategoryId(categoryId, storeId, pageable);
-	}
-
-	@GetMapping("/findStockCurrentByProductId/{productId}/{storeId}")
-	public ResponseEntity<StockCurrent> findStockCurrentByProductId(@PathVariable Long productId,
-			@PathVariable String storeId) {
-		return ResponseEntity.ok().body(productQueryService.findStockCurrentByProductId(productId, storeId));
-	}
-
-	@GetMapping("/findStockCurrentDTOByProductId/{productId}")
-	public ResponseEntity<StockCurrentDTO> findStockCurrentDTOByProductId(@PathVariable Long productId) {
-		return this.stockCurrentResourceApi.getStockCurrentByProductIdUsingGET(productId);
-	}
-
-	@GetMapping("/stockcurrentByIDPcode/{iDPcode}")
-	public ResponseEntity<Page<StockCurrent>> getAllStockCurrentsByIDPcode(@PathVariable String iDPcode,
-			Pageable pageable) {
-		return ResponseEntity.ok().body(productQueryService.findAllStockCurrents(iDPcode, pageable));
-	}
-
-	@GetMapping("/stock-currents/{id}")
-	public ResponseEntity<StockCurrentDTO> findOneStockCurrent(@PathVariable Long id) {
-		return this.stockCurrentResourceApi.getStockCurrentUsingGET(id);
-	}
 
 	////////////////////////
 
@@ -330,16 +291,6 @@ public class QueryResource {
 		return categoryResourceApi.updateCategoryUsingPUT(categoryDTO);
 
 	}
-
-	////////////////////////////
-
-	@GetMapping("/findStockEntryByProductId/{productId}/{storeId}")
-	public ResponseEntity<StockEntry> findStockEntryByProductId(@PathVariable Long productId,
-			@PathVariable String storeId) {
-		return ResponseEntity.ok().body(productQueryService.findStockEntryByProductId(productId, storeId));
-	}
-
-	///////////////////////////////
 
 	@GetMapping("/ticket-lines")
 	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) {
@@ -489,16 +440,6 @@ public class QueryResource {
 
 	}
 	
-	/*
-	 * @PostMapping("/createStore/{regNo}") public ResponseEntity<Createstore>
-	 * createStore(Createstore store) {
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
 
 	@GetMapping("/productBundle/{id}")
 	public ResponseEntity<ProductBundle> getProductBundle(@PathVariable Long id) {
@@ -567,11 +508,6 @@ public class QueryResource {
 		return uomResourceApi.getUOMUsingGET(id);
 	}
 
-	@GetMapping("/store/{id}")
-	public ResponseEntity<StoreDTO> findStore(@PathVariable Long id) {
-		return storeResourceApi.getStoreUsingGET(id);
-	}
-
 	@GetMapping("/category/{id}")
 	public ResponseEntity<CategoryDTO> findCategory(@PathVariable Long id) {
 		return categoryResourceApi.getCategoryUsingGET(id);
@@ -606,12 +542,6 @@ public class QueryResource {
 
 	}
 
-	@GetMapping("/delivery-Types/{storeId}")
-	public List<Type> findAllDeliveryTypesByStoreId(@PathVariable String storeId) {
-
-		return storeQueryService.findAllDeliveryTypesByStoreId(storeId);
-
-	}
 
 	@GetMapping("/product/{id}")
 	public ResponseEntity<Product> findProductById(@PathVariable Long id) {
@@ -799,6 +729,5 @@ public class QueryResource {
 		pdf.setContentType("application/pdf");
 		return ResponseEntity.ok().body(pdf);
 	}
-
 
 }
