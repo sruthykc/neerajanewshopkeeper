@@ -48,7 +48,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 
 
 	@Override
-	public Page<Customer> findAllCustomers(String searchTerm, Pageable pageable) {
+	public Page<Customer> findAllCustomersByName(String searchTerm, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -76,7 +76,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 	
 	
 	@Override
-	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable) {
+	public Page<Customer> findAllCustomers(Pageable pageable) {
 		
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		

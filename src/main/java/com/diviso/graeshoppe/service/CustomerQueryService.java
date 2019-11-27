@@ -7,8 +7,9 @@ import com.diviso.graeshoppe.client.customer.domain.Customer;
 
 public interface CustomerQueryService {
 	
-	public Page<Customer> findAllCustomers(String searchTerm, Pageable pageable);
-	
-	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable);
+		
+	public Page<Customer> findAllCustomers(Pageable pageable);
+
+	public Page<Customer> findAllCustomersByName(String searchTerm, Pageable pageable);
 
 }

@@ -1131,7 +1131,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	}
 
 	@Override
-	public Page<Category> findAllCategoryBySearchTerm(String searchTerm, String storeId, Pageable pageable) {
+	public Page<Category> findAllCategoryBySearchTermAndStoreId(String searchTerm, String storeId, Pageable pageable) {
 	
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();

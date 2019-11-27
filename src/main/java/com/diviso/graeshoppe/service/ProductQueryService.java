@@ -122,7 +122,7 @@ public interface ProductQueryService {
 
 	public Address findAddressByStockEntryId(Long id);
 	
-	public Page<Category> findAllCategoryBySearchTerm(String searchTerm, String storeId, Pageable pageable);
+	//public Page<Category> findAllCategoryBySearchTerm(String searchTerm, String storeId, Pageable pageable);
 	
 	/**
 	 * @param storeId
@@ -130,6 +130,8 @@ public interface ProductQueryService {
 	 * @return
 	 */
 	Page<Category> findAllCategories(String storeId, Pageable pageable);
+
+	public Page<Category> findAllCategoryBySearchTermAndStoreId(String searchTerm, String storeId, Pageable pageable);
 
 
 }
