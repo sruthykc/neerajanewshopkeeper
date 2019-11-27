@@ -11,20 +11,23 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * ReviewDTO
+ * UserRatingReviewDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
-public class ReviewDTO   {
+public class UserRatingReviewDTO   {
+  @JsonProperty("date")
+  private OffsetDateTime date = null;
+
   @JsonProperty("id")
   private Long id = null;
 
+  @JsonProperty("rating")
+  private Double rating = null;
+
   @JsonProperty("review")
   private String review = null;
-
-  @JsonProperty("reviewedDate")
-  private OffsetDateTime reviewedDate = null;
 
   @JsonProperty("storeId")
   private Long storeId = null;
@@ -32,7 +35,28 @@ public class ReviewDTO   {
   @JsonProperty("userName")
   private String userName = null;
 
-  public ReviewDTO id(Long id) {
+  public UserRatingReviewDTO date(OffsetDateTime date) {
+    this.date = date;
+    return this;
+  }
+
+  /**
+   * Get date
+   * @return date
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public OffsetDateTime getDate() {
+    return date;
+  }
+
+  public void setDate(OffsetDateTime date) {
+    this.date = date;
+  }
+
+  public UserRatingReviewDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -52,7 +76,27 @@ public class ReviewDTO   {
     this.id = id;
   }
 
-  public ReviewDTO review(String review) {
+  public UserRatingReviewDTO rating(Double rating) {
+    this.rating = rating;
+    return this;
+  }
+
+  /**
+   * Get rating
+   * @return rating
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getRating() {
+    return rating;
+  }
+
+  public void setRating(Double rating) {
+    this.rating = rating;
+  }
+
+  public UserRatingReviewDTO review(String review) {
     this.review = review;
     return this;
   }
@@ -72,28 +116,7 @@ public class ReviewDTO   {
     this.review = review;
   }
 
-  public ReviewDTO reviewedDate(OffsetDateTime reviewedDate) {
-    this.reviewedDate = reviewedDate;
-    return this;
-  }
-
-  /**
-   * Get reviewedDate
-   * @return reviewedDate
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OffsetDateTime getReviewedDate() {
-    return reviewedDate;
-  }
-
-  public void setReviewedDate(OffsetDateTime reviewedDate) {
-    this.reviewedDate = reviewedDate;
-  }
-
-  public ReviewDTO storeId(Long storeId) {
+  public UserRatingReviewDTO storeId(Long storeId) {
     this.storeId = storeId;
     return this;
   }
@@ -113,7 +136,7 @@ public class ReviewDTO   {
     this.storeId = storeId;
   }
 
-  public ReviewDTO userName(String userName) {
+  public UserRatingReviewDTO userName(String userName) {
     this.userName = userName;
     return this;
   }
@@ -142,27 +165,29 @@ public class ReviewDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ReviewDTO reviewDTO = (ReviewDTO) o;
-    return Objects.equals(this.id, reviewDTO.id) &&
-        Objects.equals(this.review, reviewDTO.review) &&
-        Objects.equals(this.reviewedDate, reviewDTO.reviewedDate) &&
-        Objects.equals(this.storeId, reviewDTO.storeId) &&
-        Objects.equals(this.userName, reviewDTO.userName);
+    UserRatingReviewDTO userRatingReviewDTO = (UserRatingReviewDTO) o;
+    return Objects.equals(this.date, userRatingReviewDTO.date) &&
+        Objects.equals(this.id, userRatingReviewDTO.id) &&
+        Objects.equals(this.rating, userRatingReviewDTO.rating) &&
+        Objects.equals(this.review, userRatingReviewDTO.review) &&
+        Objects.equals(this.storeId, userRatingReviewDTO.storeId) &&
+        Objects.equals(this.userName, userRatingReviewDTO.userName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, review, reviewedDate, storeId, userName);
+    return Objects.hash(date, id, rating, review, storeId, userName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ReviewDTO {\n");
+    sb.append("class UserRatingReviewDTO {\n");
     
+    sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    rating: ").append(toIndentedString(rating)).append("\n");
     sb.append("    review: ").append(toIndentedString(review)).append("\n");
-    sb.append("    reviewedDate: ").append(toIndentedString(reviewedDate)).append("\n");
     sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
     sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
     sb.append("}");

@@ -10,19 +10,16 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Propreitor
+ * UniqueStoreIDDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
-public class Propreitor   {
+public class UniqueStoreIDDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("name")
-  private String name = null;
-
-  public Propreitor id(Long id) {
+  public UniqueStoreIDDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -42,26 +39,6 @@ public class Propreitor   {
     this.id = id;
   }
 
-  public Propreitor name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -71,23 +48,21 @@ public class Propreitor   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Propreitor propreitor = (Propreitor) o;
-    return Objects.equals(this.id, propreitor.id) &&
-        Objects.equals(this.name, propreitor.name);
+    UniqueStoreIDDTO uniqueStoreIDDTO = (UniqueStoreIDDTO) o;
+    return Objects.equals(this.id, uniqueStoreIDDTO.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(id);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Propreitor {\n");
+    sb.append("class UniqueStoreIDDTO {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();
   }

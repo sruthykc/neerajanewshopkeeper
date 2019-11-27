@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * StoreDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-02T11:19:44.906+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
 public class StoreDTO   {
   @JsonProperty("closingTime")
@@ -34,6 +34,9 @@ public class StoreDTO   {
 
   @JsonProperty("imageContentType")
   private String imageContentType = null;
+
+  @JsonProperty("imageLink")
+  private String imageLink = null;
 
   @JsonProperty("info")
   private String info = null;
@@ -56,6 +59,9 @@ public class StoreDTO   {
   @JsonProperty("openingTime")
   private OffsetDateTime openingTime = null;
 
+  @JsonProperty("preOrderSettingsId")
+  private Long preOrderSettingsId = null;
+
   @JsonProperty("propreitorId")
   private Long propreitorId = null;
 
@@ -67,6 +73,9 @@ public class StoreDTO   {
 
   @JsonProperty("storeSettingsId")
   private Long storeSettingsId = null;
+
+  @JsonProperty("storeUniqueId")
+  private String storeUniqueId = null;
 
   @JsonProperty("totalRating")
   private Double totalRating = null;
@@ -190,6 +199,27 @@ public class StoreDTO   {
 
   public void setImageContentType(String imageContentType) {
     this.imageContentType = imageContentType;
+  }
+
+  public StoreDTO imageLink(String imageLink) {
+    this.imageLink = imageLink;
+    return this;
+  }
+
+  /**
+   * Get imageLink
+   * @return imageLink
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+
+  public String getImageLink() {
+    return imageLink;
+  }
+
+  public void setImageLink(String imageLink) {
+    this.imageLink = imageLink;
   }
 
   public StoreDTO info(String info) {
@@ -334,6 +364,26 @@ public class StoreDTO   {
     this.openingTime = openingTime;
   }
 
+  public StoreDTO preOrderSettingsId(Long preOrderSettingsId) {
+    this.preOrderSettingsId = preOrderSettingsId;
+    return this;
+  }
+
+  /**
+   * Get preOrderSettingsId
+   * @return preOrderSettingsId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getPreOrderSettingsId() {
+    return preOrderSettingsId;
+  }
+
+  public void setPreOrderSettingsId(Long preOrderSettingsId) {
+    this.preOrderSettingsId = preOrderSettingsId;
+  }
+
   public StoreDTO propreitorId(Long propreitorId) {
     this.propreitorId = propreitorId;
     return this;
@@ -414,6 +464,27 @@ public class StoreDTO   {
     this.storeSettingsId = storeSettingsId;
   }
 
+  public StoreDTO storeUniqueId(String storeUniqueId) {
+    this.storeUniqueId = storeUniqueId;
+    return this;
+  }
+
+  /**
+   * Get storeUniqueId
+   * @return storeUniqueId
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+
+  public String getStoreUniqueId() {
+    return storeUniqueId;
+  }
+
+  public void setStoreUniqueId(String storeUniqueId) {
+    this.storeUniqueId = storeUniqueId;
+  }
+
   public StoreDTO totalRating(Double totalRating) {
     this.totalRating = totalRating;
     return this;
@@ -450,6 +521,7 @@ public class StoreDTO   {
         Objects.equals(this.id, storeDTO.id) &&
         Objects.equals(this.image, storeDTO.image) &&
         Objects.equals(this.imageContentType, storeDTO.imageContentType) &&
+        Objects.equals(this.imageLink, storeDTO.imageLink) &&
         Objects.equals(this.info, storeDTO.info) &&
         Objects.equals(this.location, storeDTO.location) &&
         Objects.equals(this.locationName, storeDTO.locationName) &&
@@ -457,16 +529,18 @@ public class StoreDTO   {
         Objects.equals(this.minAmount, storeDTO.minAmount) &&
         Objects.equals(this.name, storeDTO.name) &&
         Objects.equals(this.openingTime, storeDTO.openingTime) &&
+        Objects.equals(this.preOrderSettingsId, storeDTO.preOrderSettingsId) &&
         Objects.equals(this.propreitorId, storeDTO.propreitorId) &&
         Objects.equals(this.regNo, storeDTO.regNo) &&
         Objects.equals(this.storeAddressId, storeDTO.storeAddressId) &&
         Objects.equals(this.storeSettingsId, storeDTO.storeSettingsId) &&
+        Objects.equals(this.storeUniqueId, storeDTO.storeUniqueId) &&
         Objects.equals(this.totalRating, storeDTO.totalRating);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitorId, regNo, storeAddressId, storeSettingsId, totalRating);
+    return Objects.hash(closingTime, contactNo, email, id, image, imageContentType, imageLink, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, preOrderSettingsId, propreitorId, regNo, storeAddressId, storeSettingsId, storeUniqueId, totalRating);
   }
 
   @Override
@@ -480,6 +554,7 @@ public class StoreDTO   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
+    sb.append("    imageLink: ").append(toIndentedString(imageLink)).append("\n");
     sb.append("    info: ").append(toIndentedString(info)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    locationName: ").append(toIndentedString(locationName)).append("\n");
@@ -487,10 +562,12 @@ public class StoreDTO   {
     sb.append("    minAmount: ").append(toIndentedString(minAmount)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    openingTime: ").append(toIndentedString(openingTime)).append("\n");
+    sb.append("    preOrderSettingsId: ").append(toIndentedString(preOrderSettingsId)).append("\n");
     sb.append("    propreitorId: ").append(toIndentedString(propreitorId)).append("\n");
     sb.append("    regNo: ").append(toIndentedString(regNo)).append("\n");
     sb.append("    storeAddressId: ").append(toIndentedString(storeAddressId)).append("\n");
     sb.append("    storeSettingsId: ").append(toIndentedString(storeSettingsId)).append("\n");
+    sb.append("    storeUniqueId: ").append(toIndentedString(storeUniqueId)).append("\n");
     sb.append("    totalRating: ").append(toIndentedString(totalRating)).append("\n");
     sb.append("}");
     return sb.toString();

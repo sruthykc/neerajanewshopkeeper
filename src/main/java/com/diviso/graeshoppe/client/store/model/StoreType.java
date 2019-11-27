@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.store.model.Store;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -13,7 +14,7 @@ import javax.validation.constraints.*;
  * StoreType
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-30T16:33:54.740+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
 public class StoreType   {
   @JsonProperty("id")

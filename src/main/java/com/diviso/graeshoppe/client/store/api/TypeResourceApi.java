@@ -6,6 +6,8 @@
 package com.diviso.graeshoppe.client.store.api;
 
 import java.util.List;
+import com.diviso.graeshoppe.client.store.model.Type;
+import com.diviso.graeshoppe.client.store.model.TypeDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,15 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
-import com.diviso.graeshoppe.client.store.domain.Type;
-import com.diviso.graeshoppe.client.store.model.TypeDTO;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-03T10:15:16.010+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
 @Api(value = "TypeResource", description = "the TypeResource API")
 public interface TypeResourceApi {
