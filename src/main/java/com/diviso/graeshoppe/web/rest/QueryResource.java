@@ -204,24 +204,24 @@ public class QueryResource {
 
 	}
 
-	@GetMapping("/orderStatus/{statusName}/{storeId}/{deliveryType}")
+	@GetMapping("/orderStatus/{statusName}/{storeId}/{deliveryType}")		//26 11 19 not working
 	public Page<Order> findOrderByStatusName(@PathVariable String statusName, @PathVariable String storeId,
 			@PathVariable String deliveryType, Pageable pageable) {
 		return orderQueryService.findOrderByStatusNameAndDeliveryType(statusName, storeId, deliveryType, pageable);
 	}
 
-	@GetMapping("/findProductBySearchTerm/{searchTerm}/{storeId}")
+	@GetMapping("/findProductBySearchTerm/{searchTerm}/{storeId}")			//26 11 19 it,s working
 	public Page<Product> findAllProductBySearchTerm(@PathVariable String searchTerm, @PathVariable String storeId,
 			Pageable pageable) {
 		return productQueryService.findAllProductBySearchTerm(searchTerm, storeId, pageable);
 	}
 
-	@GetMapping("/findAllProducts/{iDPcode}")
+	@GetMapping("/findAllProducts/{iDPcode}")								// 26 11 19 it,s working
 	public Page<Product> findAllProducts(@PathVariable String iDPcode, Pageable pageable) {
 		return productQueryService.findAllProducts(iDPcode, pageable);
 	}
 
-	@GetMapping("/products/{id}")
+	@GetMapping("/products/{id}")											//26 11 19 not working
 	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
 		return this.productResourceApi.getProductUsingGET(id);
 	}

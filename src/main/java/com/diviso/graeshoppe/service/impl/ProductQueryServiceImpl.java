@@ -28,7 +28,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
+//import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+//import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -50,6 +52,8 @@ import com.diviso.graeshoppe.service.ProductQueryService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.illud.freightgw.client.freight.model.Quotation;
+//import com.illud.freightgw.client.freight.model.QuotationDTO;
 
 @Service
 public class ProductQueryServiceImpl implements ProductQueryService {
@@ -77,13 +81,22 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * 
 		 * builder.fetchSource(include, exclude);
 		 */
+		
+//		public ResponseEntity<List<QuotationDTO>> findAllQuotationsByCompanyIdAndFreightId(Long companyId, Long freightId,
+//				Pageable pageable) {
+//			log.debug("<<<<< findAllQuotationsByCompanyIdAndFreightId>>>>>>", companyId, freightId);
+//			SearchQuery sq = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery()
+//					.must(termQuery("companyId", companyId)).must(termQuery("freightId", freightId))).withPageable(pageable).build();
+//			return quotationResourceApi
+//					.createQuotationsDtoListUsingPOST(esTemplate.queryForPage(sq, Quotation.class).getContent());
+//			
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("category.id", categoryId))
 				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
-
+		
 		SearchResponse searchResponse = null;
 
 		try {
@@ -91,7 +104,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		} catch (IOException e) { // TODO Auto-generated
 			e.printStackTrace();
 		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new Product() );
+		return serviceUtility.getPageResult(searchResponse, pageable, new Product());
 	}
 
 	@Override
