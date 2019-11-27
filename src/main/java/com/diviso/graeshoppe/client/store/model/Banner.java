@@ -1,7 +1,7 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
-
+import com.diviso.graeshoppe.client.store.model.Store;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * Banner
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-30T16:33:54.740+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
 public class Banner   {
   @JsonProperty("file")
@@ -25,6 +25,9 @@ public class Banner   {
 
   @JsonProperty("id")
   private Long id = null;
+
+  @JsonProperty("imageLink")
+  private String imageLink = null;
 
   @JsonProperty("store")
   private Store store = null;
@@ -89,6 +92,26 @@ public class Banner   {
     this.id = id;
   }
 
+  public Banner imageLink(String imageLink) {
+    this.imageLink = imageLink;
+    return this;
+  }
+
+  /**
+   * Get imageLink
+   * @return imageLink
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getImageLink() {
+    return imageLink;
+  }
+
+  public void setImageLink(String imageLink) {
+    this.imageLink = imageLink;
+  }
+
   public Banner store(Store store) {
     this.store = store;
     return this;
@@ -123,12 +146,13 @@ public class Banner   {
     return Objects.equals(this.file, banner.file) &&
         Objects.equals(this.fileContentType, banner.fileContentType) &&
         Objects.equals(this.id, banner.id) &&
+        Objects.equals(this.imageLink, banner.imageLink) &&
         Objects.equals(this.store, banner.store);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(file, fileContentType, id, store);
+    return Objects.hash(file, fileContentType, id, imageLink, store);
   }
 
   @Override
@@ -139,6 +163,7 @@ public class Banner   {
     sb.append("    file: ").append(toIndentedString(file)).append("\n");
     sb.append("    fileContentType: ").append(toIndentedString(fileContentType)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    imageLink: ").append(toIndentedString(imageLink)).append("\n");
     sb.append("    store: ").append(toIndentedString(store)).append("\n");
     sb.append("}");
     return sb.toString();

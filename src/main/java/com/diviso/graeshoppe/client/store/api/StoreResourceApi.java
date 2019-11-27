@@ -7,6 +7,7 @@ package com.diviso.graeshoppe.client.store.api;
 
 import com.diviso.graeshoppe.client.store.model.Store;
 import com.diviso.graeshoppe.client.store.model.StoreDTO;
+import com.diviso.graeshoppe.client.store.model.StoreSettingsDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +27,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-29T10:47:29.652+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
 @Api(value = "StoreResource", description = "the StoreResource API")
 public interface StoreResourceApi {
@@ -80,6 +81,30 @@ public interface StoreResourceApi {
     @RequestMapping(value = "/api/stores/{id}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteStoreUsingDELETE(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "findByRegNo", nickname = "findByRegNoUsingGET", notes = "", response = Store.class, tags={ "store-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = Store.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/findByRegNo/{regNo}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<Store> findByRegNoUsingGET(@ApiParam(value = "regNo",required=true) @PathVariable("regNo") String regNo);
+
+
+    @ApiOperation(value = "findStoreSettingsByStoreId", nickname = "findStoreSettingsByStoreIdUsingGET", notes = "", response = StoreSettingsDTO.class, tags={ "store-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = StoreSettingsDTO.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/storesettings/{storeId}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<StoreSettingsDTO> findStoreSettingsByStoreIdUsingGET(@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId);
 
 
     @ApiOperation(value = "getAllStores", nickname = "getAllStoresUsingGET", notes = "", response = StoreDTO.class, responseContainer = "List", tags={ "store-resource", })

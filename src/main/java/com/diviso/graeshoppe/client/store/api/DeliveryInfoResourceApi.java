@@ -5,7 +5,7 @@
  */
 package com.diviso.graeshoppe.client.store.api;
 
-import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
+import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.model.DeliveryInfoDTO;
 import java.util.List;
 import io.swagger.annotations.*;
@@ -27,7 +27,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-29T10:47:29.652+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
 @Api(value = "DeliveryInfoResource", description = "the DeliveryInfoResource API")
 public interface DeliveryInfoResourceApi {
@@ -81,7 +81,7 @@ public interface DeliveryInfoResourceApi {
     ResponseEntity<DeliveryInfoDTO> getDeliveryInfoUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "listToDto", nickname = "listToDtoUsingPOST", notes = "", response = DeliveryInfoDTO.class, responseContainer = "List", tags={ "delivery-info-resource", })
+    @ApiOperation(value = "listToDto", nickname = "listToDtoUsingPOST1", notes = "", response = DeliveryInfoDTO.class, responseContainer = "List", tags={ "delivery-info-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = DeliveryInfoDTO.class, responseContainer = "List"),
         @ApiResponse(code = 201, message = "Created"),
@@ -92,7 +92,7 @@ public interface DeliveryInfoResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.POST)
-    ResponseEntity<List<DeliveryInfoDTO>> listToDtoUsingPOST(@ApiParam(value = "deliveryInfos" ,required=true )  @Valid @RequestBody List<DeliveryInfo> deliveryInfo);
+    ResponseEntity<List<DeliveryInfoDTO>> listToDtoUsingPOST1(@ApiParam(value = "deliveryInfos" ,required=true )  @Valid @RequestBody List<DeliveryInfo> deliveryInfo);
 
 
     @ApiOperation(value = "searchDeliveryInfos", nickname = "searchDeliveryInfosUsingGET", notes = "", response = DeliveryInfoDTO.class, responseContainer = "List", tags={ "delivery-info-resource", })

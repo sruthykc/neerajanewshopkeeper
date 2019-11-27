@@ -2,7 +2,6 @@ package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
 import com.diviso.graeshoppe.client.store.model.Store;
-import com.diviso.graeshoppe.client.store.model.Type;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -13,49 +12,52 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeliveryInfo
+ * UserRatingReview
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-25T16:21:09.433+05:30[Asia/Kolkata]")
 
-public class DeliveryInfo   {
-  @JsonProperty("endTime")
-  private OffsetDateTime endTime = null;
+public class UserRatingReview   {
+  @JsonProperty("date")
+  private OffsetDateTime date = null;
 
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("startingTime")
-  private OffsetDateTime startingTime = null;
+  @JsonProperty("rating")
+  private Double rating = null;
+
+  @JsonProperty("review")
+  private String review = null;
 
   @JsonProperty("store")
   private Store store = null;
 
-  @JsonProperty("type")
-  private Type type = null;
+  @JsonProperty("userName")
+  private String userName = null;
 
-  public DeliveryInfo endTime(OffsetDateTime endTime) {
-    this.endTime = endTime;
+  public UserRatingReview date(OffsetDateTime date) {
+    this.date = date;
     return this;
   }
 
   /**
-   * Get endTime
-   * @return endTime
+   * Get date
+   * @return date
   **/
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public OffsetDateTime getEndTime() {
-    return endTime;
+  public OffsetDateTime getDate() {
+    return date;
   }
 
-  public void setEndTime(OffsetDateTime endTime) {
-    this.endTime = endTime;
+  public void setDate(OffsetDateTime date) {
+    this.date = date;
   }
 
-  public DeliveryInfo id(Long id) {
+  public UserRatingReview id(Long id) {
     this.id = id;
     return this;
   }
@@ -75,28 +77,47 @@ public class DeliveryInfo   {
     this.id = id;
   }
 
-  public DeliveryInfo startingTime(OffsetDateTime startingTime) {
-    this.startingTime = startingTime;
+  public UserRatingReview rating(Double rating) {
+    this.rating = rating;
     return this;
   }
 
   /**
-   * Get startingTime
-   * @return startingTime
+   * Get rating
+   * @return rating
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
 
-  public OffsetDateTime getStartingTime() {
-    return startingTime;
+  public Double getRating() {
+    return rating;
   }
 
-  public void setStartingTime(OffsetDateTime startingTime) {
-    this.startingTime = startingTime;
+  public void setRating(Double rating) {
+    this.rating = rating;
   }
 
-  public DeliveryInfo store(Store store) {
+  public UserRatingReview review(String review) {
+    this.review = review;
+    return this;
+  }
+
+  /**
+   * Get review
+   * @return review
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getReview() {
+    return review;
+  }
+
+  public void setReview(String review) {
+    this.review = review;
+  }
+
+  public UserRatingReview store(Store store) {
     this.store = store;
     return this;
   }
@@ -117,25 +138,24 @@ public class DeliveryInfo   {
     this.store = store;
   }
 
-  public DeliveryInfo type(Type type) {
-    this.type = type;
+  public UserRatingReview userName(String userName) {
+    this.userName = userName;
     return this;
   }
 
   /**
-   * Get type
-   * @return type
+   * Get userName
+   * @return userName
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
 
-  public Type getType() {
-    return type;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setType(Type type) {
-    this.type = type;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
 
@@ -147,29 +167,31 @@ public class DeliveryInfo   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeliveryInfo deliveryInfo = (DeliveryInfo) o;
-    return Objects.equals(this.endTime, deliveryInfo.endTime) &&
-        Objects.equals(this.id, deliveryInfo.id) &&
-        Objects.equals(this.startingTime, deliveryInfo.startingTime) &&
-        Objects.equals(this.store, deliveryInfo.store) &&
-        Objects.equals(this.type, deliveryInfo.type);
+    UserRatingReview userRatingReview = (UserRatingReview) o;
+    return Objects.equals(this.date, userRatingReview.date) &&
+        Objects.equals(this.id, userRatingReview.id) &&
+        Objects.equals(this.rating, userRatingReview.rating) &&
+        Objects.equals(this.review, userRatingReview.review) &&
+        Objects.equals(this.store, userRatingReview.store) &&
+        Objects.equals(this.userName, userRatingReview.userName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(endTime, id, startingTime, store, type);
+    return Objects.hash(date, id, rating, review, store, userName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeliveryInfo {\n");
+    sb.append("class UserRatingReview {\n");
     
-    sb.append("    endTime: ").append(toIndentedString(endTime)).append("\n");
+    sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    startingTime: ").append(toIndentedString(startingTime)).append("\n");
+    sb.append("    rating: ").append(toIndentedString(rating)).append("\n");
+    sb.append("    review: ").append(toIndentedString(review)).append("\n");
     sb.append("    store: ").append(toIndentedString(store)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
