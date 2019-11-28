@@ -197,14 +197,14 @@ public class QueryResource {
 
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
-	@GetMapping("/taskDetails/{taskName}/{orderId}/{storeId}")
+	@GetMapping("/taskDetails/{taskName}/{orderId}/{storeId}")									
 	public ResponseEntity<OpenTask> getTaskDetails(@PathVariable String taskName, @PathVariable String orderId,
 			@PathVariable String storeId) {
 		return orderQueryResourceApi.getTaskDetailsUsingGET(taskName, orderId, storeId);
 
 	}
 
-	@GetMapping("/orderStatus/{statusName}/{storeId}/{deliveryType}")		//26 11 19 not working
+	@GetMapping("/orderStatus/{statusName}/{storeId}/{deliveryType}")		//27 11 19 it's working
 	public Page<Order> findOrderByStatusName(@PathVariable String statusName, @PathVariable String storeId,
 			@PathVariable String deliveryType, Pageable pageable) {
 		return orderQueryService.findOrderByStatusNameAndDeliveryType(statusName, storeId, deliveryType, pageable);
