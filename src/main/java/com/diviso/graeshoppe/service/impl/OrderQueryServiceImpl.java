@@ -85,7 +85,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			 */
 
 			builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("status.name.keyword", statusName))
-					.must(QueryBuilders.matchQuery("storeId", storeId))).sort("id", SortOrder.DESC);
+					.must(QueryBuilders.matchQuery("storeId", storeId)).must(QueryBuilders.matchQuery("deliveryInfo.deliveryType.keyword", deliveryType))).sort("id", SortOrder.DESC);
 
 			searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
 					pageable.getPageNumber(), builder);
