@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.diviso.graeshoppe.client.store.domain.Banner;
-import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
+import com.diviso.graeshoppe.client.store.model.Banner;
+import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
-import com.diviso.graeshoppe.client.store.domain.StoreType;
-import com.diviso.graeshoppe.client.store.domain.Type;
+import com.diviso.graeshoppe.client.store.model.StoreType;
+import com.diviso.graeshoppe.client.store.model.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 
 public interface StoreQueryService {

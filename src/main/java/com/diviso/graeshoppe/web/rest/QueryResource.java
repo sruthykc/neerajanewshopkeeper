@@ -81,7 +81,7 @@ import com.diviso.graeshoppe.client.store.api.StoreResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreSettingsResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreTypeResourceApi;
 import com.diviso.graeshoppe.client.store.api.TypeResourceApi;
-import com.diviso.graeshoppe.client.store.domain.Banner;
+import com.diviso.graeshoppe.client.store.model.Banner;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.StoreAddress;
 import com.diviso.graeshoppe.client.store.domain.StoreSettings;
@@ -397,8 +397,8 @@ public class QueryResource {
 			storeDTO = storeResourceApi.getStoreUsingGET(store.getId()).getBody();
 
 			deliveryDTOs.addAll(deliveryInfoResourceApi
-					.listToDtoUsingPOST(storeQueryService.findDeliveryInfoByStoreId(storeDTO.getId()).getContent())
-					.getBody());
+					.listToDtoUsingPOST1(storeQueryService.findDeliveryInfoByStoreId(storeDTO.getId()).getContent()).getBody());
+					
 
 			typeDTOs.addAll(
 					typeResourceApi.listToDtoUsingPOST3(storeQueryService.findAllDeliveryTypesByStoreId(regNo)).getBody());
