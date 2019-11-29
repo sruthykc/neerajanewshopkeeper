@@ -10,12 +10,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * ContactDTO
+ * Contact
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-29T11:38:54.622+05:30[Asia/Calcutta]")
 
-public class ContactDTO   {
+public class Contact   {
   @JsonProperty("email")
   private String email = null;
 
@@ -31,7 +31,7 @@ public class ContactDTO   {
   @JsonProperty("telephone")
   private Long telephone = null;
 
-  public ContactDTO email(String email) {
+  public Contact email(String email) {
     this.email = email;
     return this;
   }
@@ -51,7 +51,7 @@ public class ContactDTO   {
     this.email = email;
   }
 
-  public ContactDTO id(Long id) {
+  public Contact id(Long id) {
     this.id = id;
     return this;
   }
@@ -71,7 +71,7 @@ public class ContactDTO   {
     this.id = id;
   }
 
-  public ContactDTO mobileNumber(Long mobileNumber) {
+  public Contact mobileNumber(Long mobileNumber) {
     this.mobileNumber = mobileNumber;
     return this;
   }
@@ -92,7 +92,7 @@ public class ContactDTO   {
     this.mobileNumber = mobileNumber;
   }
 
-  public ContactDTO phoneCode(Long phoneCode) {
+  public Contact phoneCode(Long phoneCode) {
     this.phoneCode = phoneCode;
     return this;
   }
@@ -113,7 +113,7 @@ public class ContactDTO   {
     this.phoneCode = phoneCode;
   }
 
-  public ContactDTO telephone(Long telephone) {
+  public Contact telephone(Long telephone) {
     this.telephone = telephone;
     return this;
   }
@@ -142,12 +142,12 @@ public class ContactDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ContactDTO contactDTO = (ContactDTO) o;
-    return Objects.equals(this.email, contactDTO.email) &&
-        Objects.equals(this.id, contactDTO.id) &&
-        Objects.equals(this.mobileNumber, contactDTO.mobileNumber) &&
-        Objects.equals(this.phoneCode, contactDTO.phoneCode) &&
-        Objects.equals(this.telephone, contactDTO.telephone);
+    Contact contact = (Contact) o;
+    return Objects.equals(this.email, contact.email) &&
+        Objects.equals(this.id, contact.id) &&
+        Objects.equals(this.mobileNumber, contact.mobileNumber) &&
+        Objects.equals(this.phoneCode, contact.phoneCode) &&
+        Objects.equals(this.telephone, contact.telephone);
   }
 
   @Override
@@ -158,7 +158,7 @@ public class ContactDTO   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ContactDTO {\n");
+    sb.append("class Contact {\n");
     
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");

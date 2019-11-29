@@ -1,26 +1,39 @@
 package com.diviso.graeshoppe.client.customer.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.customer.model.Contact;
+import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
+import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * CustomerDTO
+ * Customer
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-29T11:38:54.622+05:30[Asia/Calcutta]")
 
-public class CustomerDTO   {
-  @JsonProperty("contactId")
-  private Long contactId = null;
+public class Customer   {
+  @JsonProperty("contact")
+  private Contact contact = null;
 
   @JsonProperty("customerUniqueId")
   private String customerUniqueId = null;
+
+  @JsonProperty("favouriteproducts")
+  @Valid
+  private List<FavouriteProduct> favouriteproducts = null;
+
+  @JsonProperty("favouritestores")
+  @Valid
+  private List<FavouriteStore> favouritestores = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -43,27 +56,28 @@ public class CustomerDTO   {
   @JsonProperty("name")
   private String name = null;
 
-  public CustomerDTO contactId(Long contactId) {
-    this.contactId = contactId;
+  public Customer contact(Contact contact) {
+    this.contact = contact;
     return this;
   }
 
   /**
-   * Get contactId
-   * @return contactId
+   * Get contact
+   * @return contact
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getContactId() {
-    return contactId;
+  public Contact getContact() {
+    return contact;
   }
 
-  public void setContactId(Long contactId) {
-    this.contactId = contactId;
+  public void setContact(Contact contact) {
+    this.contact = contact;
   }
 
-  public CustomerDTO customerUniqueId(String customerUniqueId) {
+  public Customer customerUniqueId(String customerUniqueId) {
     this.customerUniqueId = customerUniqueId;
     return this;
   }
@@ -84,7 +98,65 @@ public class CustomerDTO   {
     this.customerUniqueId = customerUniqueId;
   }
 
-  public CustomerDTO id(Long id) {
+  public Customer favouriteproducts(List<FavouriteProduct> favouriteproducts) {
+    this.favouriteproducts = favouriteproducts;
+    return this;
+  }
+
+  public Customer addFavouriteproductsItem(FavouriteProduct favouriteproductsItem) {
+    if (this.favouriteproducts == null) {
+      this.favouriteproducts = new ArrayList<FavouriteProduct>();
+    }
+    this.favouriteproducts.add(favouriteproductsItem);
+    return this;
+  }
+
+  /**
+   * Get favouriteproducts
+   * @return favouriteproducts
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<FavouriteProduct> getFavouriteproducts() {
+    return favouriteproducts;
+  }
+
+  public void setFavouriteproducts(List<FavouriteProduct> favouriteproducts) {
+    this.favouriteproducts = favouriteproducts;
+  }
+
+  public Customer favouritestores(List<FavouriteStore> favouritestores) {
+    this.favouritestores = favouritestores;
+    return this;
+  }
+
+  public Customer addFavouritestoresItem(FavouriteStore favouritestoresItem) {
+    if (this.favouritestores == null) {
+      this.favouritestores = new ArrayList<FavouriteStore>();
+    }
+    this.favouritestores.add(favouritestoresItem);
+    return this;
+  }
+
+  /**
+   * Get favouritestores
+   * @return favouritestores
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<FavouriteStore> getFavouritestores() {
+    return favouritestores;
+  }
+
+  public void setFavouritestores(List<FavouriteStore> favouritestores) {
+    this.favouritestores = favouritestores;
+  }
+
+  public Customer id(Long id) {
     this.id = id;
     return this;
   }
@@ -104,7 +176,7 @@ public class CustomerDTO   {
     this.id = id;
   }
 
-  public CustomerDTO idpCode(String idpCode) {
+  public Customer idpCode(String idpCode) {
     this.idpCode = idpCode;
     return this;
   }
@@ -125,7 +197,7 @@ public class CustomerDTO   {
     this.idpCode = idpCode;
   }
 
-  public CustomerDTO idpSub(String idpSub) {
+  public Customer idpSub(String idpSub) {
     this.idpSub = idpSub;
     return this;
   }
@@ -145,7 +217,7 @@ public class CustomerDTO   {
     this.idpSub = idpSub;
   }
 
-  public CustomerDTO image(byte[] image) {
+  public Customer image(byte[] image) {
     this.image = image;
     return this;
   }
@@ -165,7 +237,7 @@ public class CustomerDTO   {
     this.image = image;
   }
 
-  public CustomerDTO imageContentType(String imageContentType) {
+  public Customer imageContentType(String imageContentType) {
     this.imageContentType = imageContentType;
     return this;
   }
@@ -185,7 +257,7 @@ public class CustomerDTO   {
     this.imageContentType = imageContentType;
   }
 
-  public CustomerDTO imageLink(String imageLink) {
+  public Customer imageLink(String imageLink) {
     this.imageLink = imageLink;
     return this;
   }
@@ -206,7 +278,7 @@ public class CustomerDTO   {
     this.imageLink = imageLink;
   }
 
-  public CustomerDTO name(String name) {
+  public Customer name(String name) {
     this.name = name;
     return this;
   }
@@ -235,30 +307,34 @@ public class CustomerDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CustomerDTO customerDTO = (CustomerDTO) o;
-    return Objects.equals(this.contactId, customerDTO.contactId) &&
-        Objects.equals(this.customerUniqueId, customerDTO.customerUniqueId) &&
-        Objects.equals(this.id, customerDTO.id) &&
-        Objects.equals(this.idpCode, customerDTO.idpCode) &&
-        Objects.equals(this.idpSub, customerDTO.idpSub) &&
-        Objects.equals(this.image, customerDTO.image) &&
-        Objects.equals(this.imageContentType, customerDTO.imageContentType) &&
-        Objects.equals(this.imageLink, customerDTO.imageLink) &&
-        Objects.equals(this.name, customerDTO.name);
+    Customer customer = (Customer) o;
+    return Objects.equals(this.contact, customer.contact) &&
+        Objects.equals(this.customerUniqueId, customer.customerUniqueId) &&
+        Objects.equals(this.favouriteproducts, customer.favouriteproducts) &&
+        Objects.equals(this.favouritestores, customer.favouritestores) &&
+        Objects.equals(this.id, customer.id) &&
+        Objects.equals(this.idpCode, customer.idpCode) &&
+        Objects.equals(this.idpSub, customer.idpSub) &&
+        Objects.equals(this.image, customer.image) &&
+        Objects.equals(this.imageContentType, customer.imageContentType) &&
+        Objects.equals(this.imageLink, customer.imageLink) &&
+        Objects.equals(this.name, customer.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(contactId, customerUniqueId, id, idpCode, idpSub, image, imageContentType, imageLink, name);
+    return Objects.hash(contact, customerUniqueId, favouriteproducts, favouritestores, id, idpCode, idpSub, image, imageContentType, imageLink, name);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CustomerDTO {\n");
+    sb.append("class Customer {\n");
     
-    sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
+    sb.append("    contact: ").append(toIndentedString(contact)).append("\n");
     sb.append("    customerUniqueId: ").append(toIndentedString(customerUniqueId)).append("\n");
+    sb.append("    favouriteproducts: ").append(toIndentedString(favouriteproducts)).append("\n");
+    sb.append("    favouritestores: ").append(toIndentedString(favouritestores)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    idpCode: ").append(toIndentedString(idpCode)).append("\n");
     sb.append("    idpSub: ").append(toIndentedString(idpSub)).append("\n");
