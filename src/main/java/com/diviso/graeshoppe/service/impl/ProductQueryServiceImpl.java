@@ -1144,7 +1144,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name.keyword", searchTerm).prefixLength(3))
+		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name", searchTerm).prefixLength(3))
 				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),

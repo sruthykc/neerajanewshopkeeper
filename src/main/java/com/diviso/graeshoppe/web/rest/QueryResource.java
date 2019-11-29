@@ -233,17 +233,19 @@ public class QueryResource {
 	@GetMapping("/findAllCustomer/{searchTerm}")							//26 11 19 not working
 	public Page<Customer> findAllCustomersByName(@PathVariable String searchTerm,
 			Pageable pageable) {
-		log.debug("<<<<<<<< findAllCustomer >>>>>>>>>>",searchTerm);
+		log.debug("<<<<<<<< findAllCustomer by search term >>>>>>>>>>",searchTerm);
 		return customerQueryService.findAllCustomersByName(searchTerm, pageable);
 	}
 
 	@GetMapping("/findAllCustomers")										// 26 11 19 not working
 	public Page<Customer> findAllCustomers(Pageable pageable) {
+		log.debug("<<<<<<<<<< findAllCustomers >>>>>>>>>>");
 		return customerQueryService.findAllCustomers(pageable);
 	}
 
 	@GetMapping("/customers/{id}")											
 	public ResponseEntity<CustomerDTO> findCustomerById(@PathVariable Long id) {
+		log.debug("<<<<<<<<< findCustomerById >>>>>>>>",id);
 		return this.customerResourceApi.getCustomerUsingGET(id);
 	}
 
@@ -272,6 +274,7 @@ public class QueryResource {
 	@GetMapping("/findCategoryBySearchTerm/{searchTerm}/{storeId}")
 	public Page<Category> findAllCategoryBySearchTermAndStoreId(@PathVariable String searchTerm, @PathVariable String storeId,
 			Pageable pageable) {
+		log.debug("<<<<<<<<<<<< findAllCategoryBySearchTermAndStoreId >>>>>>>>>>>>",searchTerm,storeId);
 		return productQueryService.findAllCategoryBySearchTermAndStoreId(searchTerm, storeId, pageable);
 	}
 
@@ -299,7 +302,7 @@ public class QueryResource {
 		return ticketLineResourceApi.getAllTicketLinesUsingGET(page, size, sort);
 	}
 
-	@GetMapping("/ticket-lines/{saleId}")
+	@GetMapping("/ticket-lines/{saleId}")									//29 11 19 no data in database
 	public ResponseEntity<List<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId) {
 		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId));
 	}
@@ -318,6 +321,7 @@ public class QueryResource {
 
 	@GetMapping("/findallsales/{storeId}")
 	public Page<Sale> findSales(@PathVariable String storeId, Pageable pageable) {
+		log.debug("<<<<<<<<<<< findSales >>>>>>>>",storeId);
 		return saleQueryService.findSales(storeId, pageable);
 	}
 
@@ -341,11 +345,13 @@ public class QueryResource {
 
 	@GetMapping("/entryLineItem/{storeId}")
 	public ResponseEntity<List<EntryLineItem>> findAllEntryLineItems(@PathVariable String storeId, Pageable pageable) {
+		log.debug("<<<<<<<<<< findAllEntryLineItems >>>>>>>>>>",storeId);
 		return ResponseEntity.ok().body(this.productQueryService.findAllEntryLineItems(storeId, pageable).getContent());
 	}
 
 	@GetMapping("/stock-entries/{storeId}")
 	public ResponseEntity<Page<StockEntry>> findAllStockEntries(@PathVariable String storeId, Pageable pageable) {
+		log.debug("<<<<<< findAllStockEntries >>>>>>>>>",storeId);
 		return ResponseEntity.ok().body(productQueryService.findAllStockEntries(storeId, pageable));
 	}
 
@@ -487,7 +493,7 @@ public class QueryResource {
 
 	@GetMapping("/ordersbystoreId/{storeId}")							// 26 11 19 not working
 	public Page<Order> findOrderLineByStoreId(@PathVariable String storeId, Pageable pageable) {
-
+		log.debug("<<<<<<<< findOrderLineByStoreId >>>>>>>>>>",storeId);
 		return orderQueryService.findOrderByStoreId(storeId, pageable);
 
 	}
@@ -495,7 +501,7 @@ public class QueryResource {
 	@GetMapping("/auxilarylineitems/{iDPcode}")
 	public ResponseEntity<Page<AuxilaryLineItem>> getAuxilaryLineItemsByStoreId(@PathVariable String iDPcode,
 			Pageable pageable) {
-
+		log.debug("<<<<<<<<<<<< getAuxilaryLineItemsByStoreId >>>>>>>>>",iDPcode);
 		return ResponseEntity.ok().body(productQueryService.findAuxilaryLineItemsByIDPcode(iDPcode, pageable));
 
 	}
