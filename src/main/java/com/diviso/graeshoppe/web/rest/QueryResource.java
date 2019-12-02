@@ -1,10 +1,23 @@
 package com.diviso.graeshoppe.web.rest;
 
+import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.lucene.search.TermQuery;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
 import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
+import com.diviso.graeshoppe.client.customer.domain.Contact;
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
@@ -108,9 +122,12 @@ import com.diviso.graeshoppe.service.dto.SaleAggregate;
 @RequestMapping("/api/query")
 public class QueryResource {
 
-	/*
-	 * @Autowired QueryService queryService;
-	 */
+	@Autowired
+	RestHighLevelClient rhlc;
+	
+	@Autowired
+	ServiceUtility su;
+	
 	@Autowired
 	OrderQueryService orderQueryService;
 	
@@ -252,6 +269,27 @@ public class QueryResource {
 	@GetMapping("/contacts/{id}")											
 	public ResponseEntity<ContactDTO> findContactById(@PathVariable Long id) {
 		return this.contactResourceApi.getContactUsingGET(id);
+	}
+	@GetMapping("contact/{mobilenumber}")
+	public Page<Contact> findContacts(@PathVariable Long mobileNumber,Pageable page){
+		log.debug("<<<<<<<<<< findContacts >>>>>>>",mobileNumber);
+		
+		SearchSourceBuilder ssb = new SearchSourceBuilder();
+		ssb.query(termQuery("mobileNumber",mobileNumber));
+		SearchRequest sr = su.generateSearchRequest("contact",  
+				page.getPageSize(),page.getPageNumber(), ssb);
+		
+		SearchResponse searchResponse = null;
+		
+		try {
+			rhlc.search(sr, RequestOptions.DEFAULT);
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		return su.getPageResult(searchResponse, page, new Contact());
+		
 	}
 
 	@GetMapping("/customers/export")

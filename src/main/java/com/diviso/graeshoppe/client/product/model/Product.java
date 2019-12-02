@@ -62,8 +62,16 @@ public class Product   {
 
   @JsonProperty("imageContentType")
   private String imageContentType = null;
+  private String imageLink = null;
+  public String getImageLink() {
+	return imageLink;
+}
 
-  @JsonProperty("isActive")
+public void setImageLink(String imageLink) {
+	this.imageLink = imageLink;
+}
+
+@JsonProperty("isActive")
   private Boolean isActive = null;
 
   @JsonProperty("isAuxilaryItem")
