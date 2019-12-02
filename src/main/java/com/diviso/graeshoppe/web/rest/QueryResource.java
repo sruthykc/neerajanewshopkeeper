@@ -34,8 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
 import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
-import com.diviso.graeshoppe.client.customer.domain.Contact;
-import com.diviso.graeshoppe.client.customer.domain.Customer;
+//import com.diviso.graeshoppe.client.customer.domain.Contact;
+//import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;

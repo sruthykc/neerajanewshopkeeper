@@ -36,8 +36,8 @@
     },
     "generator-jhipster-swagger-cli": {
         "promptValues": {
-            "inputSpec": "http://dev.ci1.divisosofttech.com:8071/v2/api-docs",
-            "cliName": "store"
+            "inputSpec": "http://dev.ci1.divisosofttech.com:8088/v2/api-docs",
+            "cliName": "customer"
         },
         "apis": {
             "store": {
