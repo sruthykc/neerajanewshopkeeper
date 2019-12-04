@@ -26,6 +26,11 @@ import com.diviso.graeshoppe.service.ReportQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 
+ * @author Prince
+ *
+ */
 @Service
 public class ReportQueryServiceImpl implements ReportQueryService {
 
@@ -41,7 +46,9 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 		this.restHighLevelClient = restHighLevelClient;
 	}
 
-	
+	/**
+	 * @param orderId
+	 */
 	@Override
 	public OrderMaster findOrderMasterByOrderId(String orderId) {
 		
@@ -74,7 +81,10 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 
 	}
 	
-	
+	/**
+	 * @param orderLineId
+	 * @param pageable
+	 */
 	@Override
 	public Page<AuxItem> findAuxItemByOrderLineId(Long orderLineId, Pageable pageable) {
 		
@@ -107,7 +117,9 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 	}
 
 	
-	
+	/**
+	 * @param orderLineId
+	 */
 	@Override
 	public Page<ComboItem> findComboItemByOrderLineId(Long orderLineId, Pageable pageable) {
 
@@ -140,7 +152,9 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 
 	}
 	
-	
+	/**
+	 * @param orderMasterId
+	 */
 	@Override
 	public Page<com.diviso.graeshoppe.client.report.model.OrderLine> findOrderLineByOrderMasterId(Long orderMasterId,
 			Pageable pageable) {

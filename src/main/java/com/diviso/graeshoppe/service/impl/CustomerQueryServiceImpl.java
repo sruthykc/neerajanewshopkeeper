@@ -23,6 +23,18 @@ import com.diviso.graeshoppe.service.CustomerQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * @author Prince
+ *
+ */
+/**
+ * @author Prince
+ *
+ */
+/**
+ * @author Prince
+ *
+ */
 @Service
 public class CustomerQueryServiceImpl implements CustomerQueryService{
 	
@@ -45,7 +57,10 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 	  //this.restHighLevelClient = restHighLevelClient; }
 	 
 
-
+	/**
+	 * @param name
+	 * 
+	 */
 	@Override
 	public Page<Customer> findAllCustomersByName(String searchTerm, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -73,7 +88,9 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		return serviceUtility.getPageResult(searchResponse, pageable, new Customer());
 	}
 	
-	
+	/**
+	 * @param
+	 */
 	@Override
 	public Page<Customer> findAllCustomers(Pageable pageable) {
 		

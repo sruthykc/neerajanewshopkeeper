@@ -239,7 +239,12 @@ public class QueryResource {
 
 	////////////////////////
 
-	
+	/**
+	 * 
+	 * @param searchTerm
+	 * @param pageable
+	 * @return
+	 */
 	@GetMapping("/findAllCustomersByName/{searchTerm}") // 26 11 19 not working
 	public Page<Customer> findAllCustomersByName(@PathVariable String searchTerm, Pageable pageable) {
 		log.debug("<<<<<<<< findAllCustomer by search term >>>>>>>>>>", searchTerm);

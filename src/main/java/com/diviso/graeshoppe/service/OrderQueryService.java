@@ -10,10 +10,18 @@ import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 
+/**
+ * 
+ * @author Prince
+ *
+ */
 public interface OrderQueryService {
 	
 	/**
 	 * @param statusName
+	 * @param storeid
+	 * @param deliveryType
+	 * @param pageable
 	 */
 	public Page<Order> findOrderByStatusNameAndDeliveryType(String statusName, String storeId, String deliveryType,Pageable pageable);
 
@@ -27,15 +35,38 @@ public interface OrderQueryService {
 	 * @return
 	 */
 	List<OrderLine> findOrderLinesByOrderId(Long orderId);
-	
+	/**
+	 * 
+	 * @param receiverId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Notification> findNotificationByReceiverId(String receiverId,Pageable pageable);
 	
 	//public Long findOrderCountByDateAndStatusName(String statusName, Instant date);
 	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param storeId
+	 * @return
+	 */
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId);
 	
+	/**
+	 * 
+	 * @param status
+	 * @param receiverId
+	 * @return
+	 */
 	public Long getNotificationCountByReceiveridAndStatus(String status, String receiverId);
-	
+	/**
+	 * 
+	 * @param receiverId
+	 * @param status
+	 * @return
+	 */
 	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
 	
 	/**

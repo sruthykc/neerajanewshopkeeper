@@ -46,7 +46,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		this.restHighLevelClient = restHighLevelClient;
 	}
 	
-	
+	/**
+	 * @param storeId
+	 * @param pageable
+	 */
 	@Override
 	public Page<Review> findAllReviews(String storeId, Pageable pageable) {
 		
@@ -75,6 +78,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Review());
 	}
 	
+	/**
+	 * @param storeId
+	 * @param pageable
+	 */
 	@Override
 	public Page<UserRating> findAllUserRatings(String storeId, Pageable pageable) {
 		
@@ -104,7 +111,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	
 	}
 	
-	
+	/**
+	 * @param regNo
+	 */
 	@Override
 	public Store findStoreByRegNo(String regNo) {
 		
@@ -142,6 +151,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * @see
 	 * com.diviso.graeshoppe.service.QueryService#findDeliveryInfoByStoreId(java
 	 * .lang.Long)
+	 */
+	/**
+	 * @param id
 	 */
 	@Override
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(Long id) {
@@ -183,6 +195,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * @see
 	 * com.diviso.graeshoppe.service.QueryService#findAllDeliveryTypesByStoreId(java
 	 * .lang.Long, org.springframework.data.domain.Pageable)
+	 */
+	/**
+	 * @param storeId
 	 */
 	@Override
 	public List<Type> findAllDeliveryTypesByStoreId(String storeId) {
@@ -231,6 +246,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findAllStoreTypesByStoreId(
 	 * java.lang.String)
 	 */
+	/**
+	 * @param regNo
+	 */
 	@Override
 	public List<StoreType> findAllStoreTypesByStoreId(String regNo) {
 
@@ -263,7 +281,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	}
 
-	
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public Page<Banner> findBannersByStoreId(String storeId) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -294,7 +314,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	}
 
-	
+	/**
+	 * @param regNo
+	 */
 	@Override public List<Banner> findAllBannersByStoreId(String regNo) {
 		
 		 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();

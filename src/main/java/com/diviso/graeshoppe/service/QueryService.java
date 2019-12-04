@@ -51,6 +51,12 @@ public interface QueryService {
 	 */
 	public Page<Product> findAllProduct(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<EntryLineItem> findAllEntryLineItems(String storeId, Pageable pageable);
 
 	/**
@@ -58,28 +64,100 @@ public interface QueryService {
 	 */
 	public Page<Sale> findSales(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param saleId
+	 * @return
+	 */
 	public List<TicketLine> findTicketLinesBySaleId(Long saleId);
 
+	/**
+	 * 
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<StockCurrent> findAllStockCurrents(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<StockEntry> findAllStockEntries(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param searchTerm
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param categoryId
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<StockCurrent> findAllStockCurrentByCategoryId(Long categoryId, String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param productId
+	 * @param storeId
+	 * @return
+	 */
 	public StockCurrent findStockCurrentByProductId(Long productId, String storeId);
 
+	/**
+	 * 
+	 * @param productId
+	 * @param storeId
+	 * @return
+	 */
 	public StockEntry findStockEntryByProductId(Long productId, String storeId);
 
+	/**
+	 * 
+	 * @param name
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<StockCurrent> findStockCurrentByProductName(String name, String storeId, Pageable pageable);
-
+/**
+ * 
+ * @param storeId
+ * @param pageable
+ * @return
+ */
 	public Page<Product> findAllProducts(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Review> findAllReviews(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<UserRating> findAllUserRatings(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param regNo
+	 * @return
+	 */
 	public Store findStoreByRegNo(String regNo);
 
 	/**
@@ -187,45 +265,159 @@ public interface QueryService {
 	 */
 	public Order findOrderByOrderId(String orderId);
 
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Product> findProducts(Pageable pageable);
 
+	/**
+	 * 
+	 * @param receiverId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Notification> findNotificationByReceiverId(String receiverId,Pageable pageable);
 
+	/**
+	 * 
+	 * @param statusName
+	 * @param date
+	 * @return
+	 */
 	public Long findOrderCountByDateAndStatusName(String statusName, Instant date);
 
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param storeId
+	 * @return
+	 */
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId);
 
+	/**
+	 * 
+	 * @param status
+	 * @param receiverId
+	 * @return
+	 */
 	public Long getNotificationCountByReceiveridAndStatus(String status, String receiverId);
 
+	/**
+	 * 
+	 * @param searchTerm
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Category> findAllCategoryBySearchTerm(String searchTerm, String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param productId
+	 * @return
+	 */
 	public Discount findDiscountByProductId(Long productId);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public StockEntry findStockEntryById(Long id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public List<EntryLineItem> findAllEntryLineItemsByStockEntryId(Long id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Reason findReasonByStockEntryId(Long id);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Location findLocationByStockEntryId(Long id);
 
+	/**
+	 * 
+	 * @param idpcode
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Location> findLocationByIdpcode(String idpcode, Pageable pageable);
 
+	/**
+	 * 
+	 * @param idpcode
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Reason> findReasonByIdpcode(String idpcode, Pageable pageable);
 
+	/**
+	 * 
+	 * @param id
+	 * @param pageable
+	 * @return
+	 */
 	public Page<EntryLineItem> findAllEntryLineItemsByStockEntryId(String id, Pageable pageable);
 
+	/**
+	 * 
+	 * @param receiverId
+	 * @param status
+	 * @return
+	 */
 	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
 
+	/**
+	 * 
+	 * @param orderId
+	 * @return
+	 */
 	public OrderMaster findOrderMasterByOrderId(String orderId);
 
+	/**
+	 * 
+	 * @param orderLineId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<AuxItem> findAuxItemByOrderLineId(Long orderLineId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param orderLineId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<ComboItem> findComboItemByOrderLineId(Long orderLineId,Pageable pageable);
 
+	/**
+	 * 
+	 * @param orderMasterId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<com.diviso.graeshoppe.client.report.model.OrderLine> findOrderLineByOrderMasterId(Long orderMasterId,
 			Pageable pageable);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Address findAddressByStockEntryId(Long id);
 
 }

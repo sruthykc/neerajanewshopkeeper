@@ -104,22 +104,70 @@ public interface ProductQueryService {
 	 */
 	public List<AuxilaryLineItem> findAllAuxilaryProductsByProductId(Long productId);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public StockEntry findStockEntryById(Long id);
 	
+	/**
+	 * 
+	 * @param productId
+	 * @return
+	 */
 	public Discount findDiscountByProductId(Long productId);
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public List<EntryLineItem> findAllEntryLineItemsByStockEntryId(Long id);
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Reason findReasonByStockEntryId(Long id);
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Location findLocationByStockEntryId(Long id);
 	
+	/**
+	 * 
+	 * @param idpcode
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Location> findLocationByIdpcode(String idpcode, Pageable pageable);
 	
+	/**
+	 * 
+	 * @param idpcode
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Reason> findReasonByIdpcode(String idpcode, Pageable pageable);
 	
+	/**
+	 * 
+	 * @param id
+	 * @param pageable
+	 * @return
+	 */
 	public Page<EntryLineItem> findAllEntryLineItemsByStockEntryId(String id, Pageable pageable);
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Address findAddressByStockEntryId(Long id);
 	
 	//public Page<Category> findAllCategoryBySearchTerm(String searchTerm, String storeId, Pageable pageable);
@@ -131,6 +179,13 @@ public interface ProductQueryService {
 	 */
 	Page<Category> findAllCategories(String storeId, Pageable pageable);
 
+	/**
+	 * 
+	 * @param searchTerm
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Category> findAllCategoryBySearchTermAndStoreId(String searchTerm, String storeId, Pageable pageable);
 
 

@@ -38,7 +38,11 @@ import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.service.OrderQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+/**
+ * 
+ * @author Prince
+ *
+ */
 @Service
 public class OrderQueryServiceImpl implements OrderQueryService {
 
@@ -63,6 +67,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @see
 	 * com.diviso.graeshoppe.service.QueryService#findOrderByStatusName(java.lang.
 	 * String)
+	 */
+	/**
+	 * @param statusname
+	 * @param storeid
+	 * @param deliverytype
 	 */
 	@Override
 	public Page<Order> findOrderByStatusNameAndDeliveryType(String statusName, String storeId, String deliveryType,
@@ -122,6 +131,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findOrderLinesByStoreId(java.
 	 * lang.String)
 	 */
+	
+	/**
+	 * @param storeid
+	 */
 	@Override
 	public Page<Order> findOrderByStoreId(String storeId, Pageable pageable) {
 
@@ -164,6 +177,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByStoreId(java.lang.
 	 * String)
 	 */
+	/**
+	 * @param orderId
+	 */
 	@Override
 	public List<OrderLine> findOrderLinesByOrderId(Long orderId) {
 
@@ -194,6 +210,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Order()).getContent();
 	}
 
+	/**
+	 *@param receiverId 
+	 */
 	@Override
 	public Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable) {
 
@@ -271,6 +290,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		//  return 0l;}
 	 
 
+	/**
+	 * @param from
+	 * @param to
+	 * @param storeId
+	 */
 	@Override
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId) {
 		// .........
@@ -304,6 +328,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 	}
 
+	/**
+	 * @param status
+	 * @param receiverId
+	 */
 	@Override
 	public Long getNotificationCountByReceiveridAndStatus(String status, String receiverId) {
 		log.info(".............." + status + ".............." + receiverId);
@@ -337,6 +365,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		return (long) notifications.size();
 	}
 
+	/**
+	 * @param receiverId
+	 * @param status
+	 */
 	@Override
 	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status) {
 		
@@ -376,6 +408,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * 
 	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.
 	 * String)
+	 */
+	/**
+	 * @param orderId
 	 */
 	@Override
 	public Order findOrderByOrderId(String orderId) {

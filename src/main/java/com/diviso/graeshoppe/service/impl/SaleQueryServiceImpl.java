@@ -43,7 +43,9 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	}
 
 	
-	
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public Page<Sale> findSales(String storeId, Pageable pageable) {
 		
@@ -74,7 +76,9 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 
 	}
 	
-	
+	/**
+	 * @param saleId
+	 */
 	@Override
 	public List<TicketLine> findTicketLinesBySaleId(Long saleId) {
 		

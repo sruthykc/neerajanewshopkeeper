@@ -69,6 +69,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		this.restHighLevelClient = restHighLevelClient;
 	}
 
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public Page<Product> findProductByCategoryId(Long categoryId, String storeId, Pageable pageable) {
 
@@ -107,6 +110,11 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Product());
 	}
 
+	/**
+	 * @param name
+	 * @param storeId
+	 * 
+	 */
 	@Override
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, String storeId, Pageable pageable) {
 
@@ -137,6 +145,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public Page<Product> findAllProducts(String storeId, Pageable pageable) {
 
@@ -177,6 +188,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * com.diviso.graeshoppe.service.QueryService#findProducts(org.springframework.
 	 * data.domain.Pageable)
 	 */
+	/**
+	 * @param 
+	 */
 	@Override
 	public Page<Product> findProducts(Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -211,6 +225,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#
 	 * findNotAuxNotComboProductsByIDPcode(java.lang.String,
 	 * org.springframework.data.domain.Pageable)
+	 */
+	/**
+	 * @param iDPcode
 	 */
 	@Override
 	public Page<Product> findNotAuxNotComboProductsByIDPcode(String iDPcode, Pageable pageable) {
@@ -260,6 +277,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * 
 	 * @see com.diviso.graeshoppe.service.QueryService#findAllAuxilaryProducts()
 	 */
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public Page<Product> findAllAuxilaryProducts(String storeId) {
 
@@ -308,6 +328,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @see
 	 * com.diviso.graeshoppe.service.QueryService#findProductById(java.lang.Long)
 	 */
+	/**
+	 * @param id
+	 */
 	@Override
 	public Product findProductById(Long id) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -342,6 +365,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findAllCategories(org.
 	 * springframework.data.domain.Pageable)
 	 */
+	/**
+	 * @param pageable
+	 */
 	@Override
 	public Page<Category> findAllCategories(Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -371,6 +397,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param pageable
+	 */
 	@Override
 	public List<String> findAllUom(Pageable pageable) {
 		List<String> uomList = new ArrayList<String>();
@@ -422,6 +451,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return uomList;
 	}
 
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public Page<EntryLineItem> findAllEntryLineItems(String storeId, Pageable pageable) {
 		
@@ -452,6 +484,11 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param storeId
+	 * @param pageable
+	 * 
+	 */
 	@Override
 	public Page<StockCurrent> findAllStockCurrents(String storeId, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -481,6 +518,10 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param storeId
+	 * 
+	 */
 	@Override
 	public Page<StockEntry> findAllStockEntries(String storeId, Pageable pageable) {
 
@@ -510,6 +551,11 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new StockEntry());
 	}
 
+	/**
+	 * @param categoryId
+	 * @param storeId
+	 * @param pageable
+	 */
 	@Override
 	public Page<StockCurrent> findAllStockCurrentByCategoryId(Long categoryId, String storeId, Pageable pageable) {
 
@@ -540,6 +586,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new StockCurrent());
 	}
 
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public StockCurrent findStockCurrentByProductId(Long productId, String storeId) {
 
@@ -570,6 +619,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getObjectResult(searchResponse, new StockCurrent());
 	}
 
+	/**
+	 * @param storeId
+	 */
 	@Override
 	public StockEntry findStockEntryByProductId(Long productId, String storeId) {
 
@@ -600,6 +652,10 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getObjectResult(searchResponse, new StockEntry());
 	}
 
+	/**
+	 * @param storeId
+	 * @param pageable
+	 */
 	@Override
 	public Page<StockCurrent> findStockCurrentByProductName(String name, String storeId, Pageable pageable) {
 
@@ -645,6 +701,10 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * com.diviso.graeshoppe.service.QueryService#findAuxilaryLineItemsByStoreId
 	 * (java.lang.String, org.springframework.data.domain.Pageable)
 	 */
+	/**
+	 * @param iDPcode
+	 * @param pageable
+	 */
 	@Override
 	public Page<AuxilaryLineItem> findAuxilaryLineItemsByIDPcode(String iDPcode, Pageable pageable) {
 
@@ -680,6 +740,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findUOMByStoreId(java.lang.
 	 * String, org.springframework.data.domain.Pageable)
 	 */
+	/**
+	 * @param iDPcode
+	 */
 	@Override
 	public Page<UOM> findUOMByIDPcode(String iDPcode, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -714,6 +777,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @see
 	 * com.diviso.graeshoppe.service.QueryService#findCategoryById(java.lang.Long)
 	 */
+	/**
+	 * @param id
+	 */
 	@Override
 	public Category findCategoryById(Long id) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -746,6 +812,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * (non-Javadoc)
 	 * 
 	 * @see com.diviso.graeshoppe.service.QueryService#findUOMById(java.lang.Long)
+	 */
+	/**
+	 * @param id
 	 */
 	@Override
 	public UOM findUOMById(Long id) {
@@ -782,6 +851,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @see
 	 * com.diviso.graeshoppe.service.QueryService#finAllComboLineItemsByProductId(
 	 * java.lang.Long)
+	 */
+	/**
+	 * @param id
 	 */
 	@Override
 	public List<ComboLineItem> finAllComboLineItemsByProductId(Long id) {
@@ -821,6 +893,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * com.diviso.graeshoppe.service.QueryService#findAllAuxilaryProductsByProductId
 	 * ()
 	 */
+	/**
+	 * @param productId
+	 */
 	@Override
 	public List<AuxilaryLineItem> findAllAuxilaryProductsByProductId(Long productId) {
 
@@ -853,6 +928,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param id
+	 */
 	@Override
 	public StockEntry findStockEntryById(Long id) {
 
@@ -883,6 +961,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param productId
+	 */
 	@Override
 	public Discount findDiscountByProductId(Long productId) {
 
@@ -913,6 +994,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param id
+	 */
 	@Override
 	public List<EntryLineItem> findAllEntryLineItemsByStockEntryId(Long id) {
 
@@ -945,6 +1029,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param id
+	 */
 	@Override
 	public Reason findReasonByStockEntryId(Long id) {
 
@@ -974,7 +1061,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getObjectResult(searchResponse, new Reason() );
 
 	}
-
+/**
+ * @param id
+ */
 	@Override
 	public Location findLocationByStockEntryId(Long id) {
 
@@ -1006,6 +1095,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return stockentry.getLocation();
 	}
 
+	/**
+	 * @param idpcode
+	 */
 	@Override
 	public Page<Location> findLocationByIdpcode(String idpcode, Pageable pageable) {
 
@@ -1036,6 +1128,10 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param idpcode
+	 * @param pageable
+	 */
 	@Override
 	public Page<Reason> findReasonByIdpcode(String idpcode, Pageable pageable) {
 	
@@ -1067,6 +1163,10 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param id
+	 * @param pageable
+	 */
 	@Override
 	public Page<EntryLineItem> findAllEntryLineItemsByStockEntryId(String id, Pageable pageable) {
 	
@@ -1097,6 +1197,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param id
+	 */
 	@Override
 	public Address findAddressByStockEntryId(Long id) {
 
@@ -1130,6 +1233,12 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param storeId
+	 * @param name
+	 * @param pageable
+	 * 
+	 */
 	@Override
 	public Page<Category> findAllCategoryBySearchTermAndStoreId(String searchTerm, String storeId, Pageable pageable) {
 	
@@ -1162,6 +1271,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
+	/**
+	 * @param iDPcode
+	 */
 	@Override
 	public Page<Category> findAllCategories(String iDPcode, Pageable pageable) {
 
