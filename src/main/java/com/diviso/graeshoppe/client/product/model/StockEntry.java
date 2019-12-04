@@ -1,6 +1,4 @@
 package com.diviso.graeshoppe.client.product.model;
-
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;

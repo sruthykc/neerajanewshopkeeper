@@ -6,6 +6,7 @@
 package com.diviso.graeshoppe.client.order.api;
 
 import com.diviso.graeshoppe.client.order.model.OpenTask;
+import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-01T11:30:02.598930+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T06:55:16.442375+05:30[Asia/Kolkata]")
 
 @Api(value = "OrderQueryResource", description = "the OrderQueryResource API")
 public interface OrderQueryResourceApi {
@@ -42,6 +43,30 @@ public interface OrderQueryResourceApi {
     ResponseEntity<Long> countByCustomerIdAndStatusNameUsingGET(@ApiParam(value = "customerId",required=true) @PathVariable("customerId") String customerId,@ApiParam(value = "statusName",required=true) @PathVariable("statusName") String statusName);
 
 
+    @ApiOperation(value = "countByStoreIdAndCustomerId", nickname = "countByStoreIdAndCustomerIdUsingGET", notes = "", response = Long.class, tags={ "order-query-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = Long.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/count-by-storeid-customerid/{storeId}/{customerId}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<Long> countByStoreIdAndCustomerIdUsingGET(@ApiParam(value = "customerId",required=true) @PathVariable("customerId") String customerId,@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId);
+
+
+    @ApiOperation(value = "findByDeliveryInfoId", nickname = "findByDeliveryInfoIdUsingGET", notes = "", response = OrderDTO.class, tags={ "order-query-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = OrderDTO.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/findByDeliveryInfoId/{id}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<OrderDTO> findByDeliveryInfoIdUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
     @ApiOperation(value = "getTaskDetails", nickname = "getTaskDetailsUsingGET", notes = "", response = OpenTask.class, tags={ "order-query-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = OpenTask.class),
@@ -51,7 +76,7 @@ public interface OrderQueryResourceApi {
     @RequestMapping(value = "/api/taskDetails/{taskName}/{orderId}/{storeId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<OpenTask> getTaskDetailsUsingGET(@ApiParam(value = "taskName",required=true) @PathVariable("taskName") String taskName,@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId);
+    ResponseEntity<OpenTask> getTaskDetailsUsingGET(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId,@ApiParam(value = "taskName",required=true) @PathVariable("taskName") String taskName);
 
 
     @ApiOperation(value = "getTasks", nickname = "getTasksUsingGET", notes = "", response = OpenTask.class, responseContainer = "List", tags={ "order-query-resource", })

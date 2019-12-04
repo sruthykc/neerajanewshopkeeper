@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -29,7 +28,6 @@ import javax.validation.constraints.*;
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-05T10:57:27.574354+05:30[Asia/Kolkata]")
-
 
 public class Order   {
   @JsonProperty("appliedOffers")
@@ -54,7 +52,24 @@ public class Order   {
   @JsonProperty("grandTotal")
   private Double grandTotal = null;
 
-  @JsonProperty("id")
+  @JsonProperty("subTotal")
+  private Double subTotal = null;
+  
+  /**
+ * @return the subTotal
+ */
+public Double getSubTotal() {
+	return subTotal;
+}
+
+/**
+ * @param subTotal the subTotal to set
+ */
+public void setSubTotal(Double subTotal) {
+	this.subTotal = subTotal;
+}
+
+@JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("orderId")
@@ -356,58 +371,119 @@ public class Order   {
   }
 
 
+  
   @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Order order = (Order) o;
-    return Objects.equals(this.appliedOffers, order.appliedOffers) &&
-        Objects.equals(this.approvalDetails, order.approvalDetails) &&
-        Objects.equals(this.customerId, order.customerId) &&
-        Objects.equals(this.date, order.date) &&
-        Objects.equals(this.deliveryInfo, order.deliveryInfo) &&
-        Objects.equals(this.email, order.email) &&
-        Objects.equals(this.grandTotal, order.grandTotal) &&
-        Objects.equals(this.id, order.id) &&
-        Objects.equals(this.orderId, order.orderId) &&
-        Objects.equals(this.orderLines, order.orderLines) &&
-        Objects.equals(this.paymentRef, order.paymentRef) &&
-        Objects.equals(this.status, order.status) &&
-        Objects.equals(this.storeId, order.storeId);
-  }
+public String toString() {
+	return String.format(
+			"Order [appliedOffers=%s,\n approvalDetails=%s,\n customerId=%s,\n date=%s,\n deliveryInfo=%s,\n email=%s,\n grandTotal=%s,\n subTotal=%s,\n id=%s,\n orderId=%s,\n orderLines=%s,\n paymentRef=%s,\n status=%s,\n storeId=%s]",
+			appliedOffers, approvalDetails, customerId, date, deliveryInfo, email, grandTotal, subTotal, id, orderId,
+			orderLines, paymentRef, status, storeId);
+}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(appliedOffers, approvalDetails, customerId, date, deliveryInfo, email, grandTotal, id, orderId, orderLines, paymentRef, status, storeId);
-  }
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((appliedOffers == null) ? 0 : appliedOffers.hashCode());
+	result = prime * result + ((approvalDetails == null) ? 0 : approvalDetails.hashCode());
+	result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
+	result = prime * result + ((date == null) ? 0 : date.hashCode());
+	result = prime * result + ((deliveryInfo == null) ? 0 : deliveryInfo.hashCode());
+	result = prime * result + ((email == null) ? 0 : email.hashCode());
+	result = prime * result + ((grandTotal == null) ? 0 : grandTotal.hashCode());
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
+	result = prime * result + ((orderLines == null) ? 0 : orderLines.hashCode());
+	result = prime * result + ((paymentRef == null) ? 0 : paymentRef.hashCode());
+	result = prime * result + ((status == null) ? 0 : status.hashCode());
+	result = prime * result + ((storeId == null) ? 0 : storeId.hashCode());
+	result = prime * result + ((subTotal == null) ? 0 : subTotal.hashCode());
+	return result;
+}
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Order {\n");
-    
-    sb.append("    appliedOffers: ").append(toIndentedString(appliedOffers)).append("\n");
-    sb.append("    approvalDetails: ").append(toIndentedString(approvalDetails)).append("\n");
-    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
-    sb.append("    date: ").append(toIndentedString(date)).append("\n");
-    sb.append("    deliveryInfo: ").append(toIndentedString(deliveryInfo)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
-    sb.append("    grandTotal: ").append(toIndentedString(grandTotal)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
-    sb.append("    orderLines: ").append(toIndentedString(orderLines)).append("\n");
-    sb.append("    paymentRef: ").append(toIndentedString(paymentRef)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (!(obj instanceof Order))
+		return false;
+	Order other = (Order) obj;
+	if (appliedOffers == null) {
+		if (other.appliedOffers != null)
+			return false;
+	} else if (!appliedOffers.equals(other.appliedOffers))
+		return false;
+	if (approvalDetails == null) {
+		if (other.approvalDetails != null)
+			return false;
+	} else if (!approvalDetails.equals(other.approvalDetails))
+		return false;
+	if (customerId == null) {
+		if (other.customerId != null)
+			return false;
+	} else if (!customerId.equals(other.customerId))
+		return false;
+	if (date == null) {
+		if (other.date != null)
+			return false;
+	} else if (!date.equals(other.date))
+		return false;
+	if (deliveryInfo == null) {
+		if (other.deliveryInfo != null)
+			return false;
+	} else if (!deliveryInfo.equals(other.deliveryInfo))
+		return false;
+	if (email == null) {
+		if (other.email != null)
+			return false;
+	} else if (!email.equals(other.email))
+		return false;
+	if (grandTotal == null) {
+		if (other.grandTotal != null)
+			return false;
+	} else if (!grandTotal.equals(other.grandTotal))
+		return false;
+	if (id == null) {
+		if (other.id != null)
+			return false;
+	} else if (!id.equals(other.id))
+		return false;
+	if (orderId == null) {
+		if (other.orderId != null)
+			return false;
+	} else if (!orderId.equals(other.orderId))
+		return false;
+	if (orderLines == null) {
+		if (other.orderLines != null)
+			return false;
+	} else if (!orderLines.equals(other.orderLines))
+		return false;
+	if (paymentRef == null) {
+		if (other.paymentRef != null)
+			return false;
+	} else if (!paymentRef.equals(other.paymentRef))
+		return false;
+	if (status == null) {
+		if (other.status != null)
+			return false;
+	} else if (!status.equals(other.status))
+		return false;
+	if (storeId == null) {
+		if (other.storeId != null)
+			return false;
+	} else if (!storeId.equals(other.storeId))
+		return false;
+	if (subTotal == null) {
+		if (other.subTotal != null)
+			return false;
+	} else if (!subTotal.equals(other.subTotal))
+		return false;
+	return true;
+}
 
-  /**
+/**
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */

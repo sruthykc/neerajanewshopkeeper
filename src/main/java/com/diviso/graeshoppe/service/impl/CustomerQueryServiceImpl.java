@@ -18,8 +18,7 @@ import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
 
-
-import com.diviso.graeshoppe.client.customer.domain.Customer;
+import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.service.CustomerQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;

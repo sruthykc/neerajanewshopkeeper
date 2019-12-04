@@ -18,8 +18,6 @@ package com.diviso.graeshoppe.client.sale.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-
-
 /**
  * TODO Provide a detailed description here 
  * @author MayaSanjeev

@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-05T10:57:27.574354+05:30[Asia/Kolkata]")
 
-
 public class AuxilaryOrderLine   {
   @JsonProperty("id")
   private Long id = null;

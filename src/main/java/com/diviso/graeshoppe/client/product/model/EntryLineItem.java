@@ -2,6 +2,8 @@ package com.diviso.graeshoppe.client.product.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+
+
 /**
  * A EntryLineItem.
  */

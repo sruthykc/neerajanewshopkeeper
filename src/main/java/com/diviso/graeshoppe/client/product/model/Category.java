@@ -1,16 +1,30 @@
 package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
+import java.util.Set;
+
 import com.diviso.graeshoppe.client.product.model.Product;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -21,226 +35,172 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-28T15:55:43.394+05:30[Asia/Kolkata]")
 
 public class Category   {
-  @JsonProperty("description")
-  private String description = null;
+	  private static final long serialVersionUID = 1L;
+	    
 
-  @JsonProperty("iDPcode")
-  private String iDPcode = null;
+	    private Long id;
 
-  @JsonProperty("id")
-  private Long id = null;
+	    private String iDPcode;
 
-  @JsonProperty("image")
-  private byte[] image = null;
+	    private String name;
 
-  @JsonProperty("imageContentType")
-  private String imageContentType = null;
+	    private byte[] image;
 
-  @JsonProperty("name")
-  private String name = null;
+	    private String imageContentType;
 
-  @JsonProperty("products")
-  @Valid
-  private List<Product> products = null;
+	    private String imageLink;
 
-  public Category description(String description) {
-    this.description = description;
-    return this;
-  }
+	    private String description;
 
-  /**
-   * Get description
-   * @return description
-  **/
-  @ApiModelProperty(value = "")
+	    @OneToMany(mappedBy = "category")
+	    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	    private Set<Product> products = new HashSet<>();
+	    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	    public Long getId() {
+	        return id;
+	    }
 
+	    public void setId(Long id) {
+	        this.id = id;
+	    }
 
-  public String getDescription() {
-    return description;
-  }
+	    public String getiDPcode() {
+	        return iDPcode;
+	    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	    public Category iDPcode(String iDPcode) {
+	        this.iDPcode = iDPcode;
+	        return this;
+	    }
 
-  public Category iDPcode(String iDPcode) {
-    this.iDPcode = iDPcode;
-    return this;
-  }
+	    public void setiDPcode(String iDPcode) {
+	        this.iDPcode = iDPcode;
+	    }
 
-  /**
-   * Get iDPcode
-   * @return iDPcode
-  **/
-  @ApiModelProperty(value = "")
+	    public String getName() {
+	        return name;
+	    }
 
+	    public Category name(String name) {
+	        this.name = name;
+	        return this;
+	    }
 
-  public String getIDPcode() {
-    return iDPcode;
-  }
+	    public void setName(String name) {
+	        this.name = name;
+	    }
 
-  public void setIDPcode(String iDPcode) {
-    this.iDPcode = iDPcode;
-  }
+	    @ApiModelProperty(value = "")
 
-  public Category id(Long id) {
-    this.id = id;
-    return this;
-  }
+	    @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
+	      public byte[] getImage() {
+	        return image;
+	      }
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
+	    public Category image(byte[] image) {
+	        this.image = image;
+	        return this;
+	    }
 
+	    public void setImage(byte[] image) {
+	        this.image = image;
+	    }
 
-  public Long getId() {
-    return id;
-  }
+	    public String getImageContentType() {
+	        return imageContentType;
+	    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	    public Category imageContentType(String imageContentType) {
+	        this.imageContentType = imageContentType;
+	        return this;
+	    }
 
-  public Category image(byte[] image) {
-    this.image = image;
-    return this;
-  }
+	    public void setImageContentType(String imageContentType) {
+	        this.imageContentType = imageContentType;
+	    }
 
-  /**
-   * Get image
-   * @return image
-  **/
-  @ApiModelProperty(value = "")
+	    public String getImageLink() {
+	        return imageLink;
+	    }
 
-@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
-  public byte[] getImage() {
-    return image;
-  }
+	    public Category imageLink(String imageLink) {
+	        this.imageLink = imageLink;
+	        return this;
+	    }
 
-  public void setImage(byte[] image) {
-    this.image = image;
-  }
+	    public void setImageLink(String imageLink) {
+	        this.imageLink = imageLink;
+	    }
 
-  public Category imageContentType(String imageContentType) {
-    this.imageContentType = imageContentType;
-    return this;
-  }
+	    public String getDescription() {
+	        return description;
+	    }
 
-  /**
-   * Get imageContentType
-   * @return imageContentType
-  **/
-  @ApiModelProperty(value = "")
+	    public Category description(String description) {
+	        this.description = description;
+	        return this;
+	    }
 
+	    public void setDescription(String description) {
+	        this.description = description;
+	    }
 
-  public String getImageContentType() {
-    return imageContentType;
-  }
+	    public Set<Product> getProducts() {
+	        return products;
+	    }
 
-  public void setImageContentType(String imageContentType) {
-    this.imageContentType = imageContentType;
-  }
+	    public Category products(Set<Product> products) {
+	        this.products = products;
+	        return this;
+	    }
 
-  public Category name(String name) {
-    this.name = name;
-    return this;
-  }
+	    public Category addProducts(Product product) {
+	        this.products.add(product);
+	        product.setCategory(this);
+	        return this;
+	    }
 
-  /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
+	    public Category removeProducts(Product product) {
+	        this.products.remove(product);
+	        product.setCategory(null);
+	        return this;
+	    }
 
+	    public void setProducts(Set<Product> products) {
+	        this.products = products;
+	    }
+	    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-  public String getName() {
-    return name;
-  }
+	    @Override
+	    public boolean equals(Object o) {
+	        if (this == o) {
+	            return true;
+	        }
+	        if (o == null || getClass() != o.getClass()) {
+	            return false;
+	        }
+	        Category category = (Category) o;
+	        if (category.getId() == null || getId() == null) {
+	            return false;
+	        }
+	        return Objects.equals(getId(), category.getId());
+	    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	    @Override
+	    public int hashCode() {
+	        return Objects.hashCode(getId());
+	    }
 
-  public Category products(List<Product> products) {
-    this.products = products;
-    return this;
-  }
-
-  public Category addProductsItem(Product productsItem) {
-    if (this.products == null) {
-      this.products = new ArrayList<Product>();
-    }
-    this.products.add(productsItem);
-    return this;
-  }
-
-  /**
-   * Get products
-   * @return products
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<Product> getProducts() {
-    return products;
-  }
-
-  public void setProducts(List<Product> products) {
-    this.products = products;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Category category = (Category) o;
-    return Objects.equals(this.description, category.description) &&
-        Objects.equals(this.iDPcode, category.iDPcode) &&
-        Objects.equals(this.id, category.id) &&
-        Objects.equals(this.image, category.image) &&
-        Objects.equals(this.imageContentType, category.imageContentType) &&
-        Objects.equals(this.name, category.name) &&
-        Objects.equals(this.products, category.products);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(description, iDPcode, id, image, imageContentType, name, products);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
-    
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    image: ").append(toIndentedString(image)).append("\n");
-    sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    products: ").append(toIndentedString(products)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
-}
-
+	    @Override
+	    public String toString() {
+	        return "Category{" +
+	            "id=" + getId() +
+	            ", iDPcode='" + getiDPcode() + "'" +
+	            ", name='" + getName() + "'" +
+	            ", image='" + getImage() + "'" +
+	            ", imageContentType='" + getImageContentType() + "'" +
+	            ", imageLink='" + getImageLink() + "'" +
+	            ", description='" + getDescription() + "'" +
+	            "}";
+	    }
+	}

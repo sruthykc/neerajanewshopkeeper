@@ -1,6 +1,8 @@
 package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
+import java.util.Set;
+
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Brand;
 import com.diviso.graeshoppe.client.product.model.Category;
@@ -17,8 +19,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-
 
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -31,762 +34,523 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-28T15:55:43.394+05:30[Asia/Kolkata]")
 
 public class Product   {
-  @JsonProperty("auxilaryLineItems")
-  @Valid
-  private List<AuxilaryLineItem> auxilaryLineItems = null;
+   private Long id;
 
-  @JsonProperty("brand")
-  private Brand brand = null;
+	    
+	    private String reference;
 
-  @JsonProperty("buyPrice")
-  private Double buyPrice = null;
+	 
+	    private String name;
 
-  @JsonProperty("category")
-  private Category category = null;
+	
+	    private Boolean showInCatalogue;
 
-  @JsonProperty("comboLineItems")
-  @Valid
-  private List<ComboLineItem> comboLineItems = null;
+	    private byte[] image;
 
-  @JsonProperty("discount")
-  private Discount discount = null;
+	 
+	    private String imageContentType;
 
-  @JsonProperty("iDPcode")
-  private String iDPcode = null;
+	
+	    private String imageLink;
 
-  @JsonProperty("id")
-  private Long id = null;
+	  
+	    private Boolean isActive;
 
-  @JsonProperty("image")
-  private byte[] image = null;
+	   
+	    private String sku;
 
-  @JsonProperty("imageContentType")
-  private String imageContentType = null;
-  private String imageLink = null;
-  public String getImageLink() {
-	return imageLink;
-}
+	  
+	    private String iDPcode;
 
-public void setImageLink(String imageLink) {
-	this.imageLink = imageLink;
-}
+	   
+	    private Boolean isServiceItem;
 
-@JsonProperty("isActive")
-  private Boolean isActive = null;
+	   
+	    private Boolean isAuxilaryItem;
 
-  @JsonProperty("isAuxilaryItem")
-  private Boolean isAuxilaryItem = null;
+	 
+	    private Double minQuantityLevel;
 
-  @JsonProperty("isServiceItem")
-  private Boolean isServiceItem = null;
+	   
+	    private Double maxQuantityLevel;
 
-  @JsonProperty("labels")
-  @Valid
-  private List<Label> labels = null;
+	 
+	    private Double storageCost;
 
-  @JsonProperty("location")
-  private Location location = null;
+	  
+	    private Double sellingPrice;
 
-  @JsonProperty("manufacturer")
-  private Manufacturer manufacturer = null;
+	  
+	    private Double buyPrice;
 
-  @JsonProperty("maxQuantityLevel")
-  private Double maxQuantityLevel = null;
+	   
+	    private Set<AuxilaryLineItem> auxilaryLineItems = new HashSet<>();
+	  
+	    private Set<ComboLineItem> comboLineItems = new HashSet<>();
+	  
+	    private Set<Label> labels = new HashSet<>();
+	    
+	    private TaxCategory taxCategory;
 
-  @JsonProperty("minQuantityLevel")
-  private Double minQuantityLevel = null;
+	   
+	    private UOM unit;
 
-  @JsonProperty("name")
-  private String name = null;
+	  
+	    private Location location;
 
-  @JsonProperty("reference")
-  private String reference = null;
+	   
+	    private Supplier supplier;
 
-  @JsonProperty("sellingPrice")
-  private Double sellingPrice = null;
+	  
+	    private Manufacturer manufacturer;
 
-  @JsonProperty("showInCatalogue")
-  private Boolean showInCatalogue = null;
+	   
+	    private Brand brand;
 
-  @JsonProperty("sku")
-  private String sku = null;
+	 
+	    private Discount discount;
 
-  @JsonProperty("storageCost")
-  private Double storageCost = null;
+	   
+	    private Category category;
 
-  @JsonProperty("supplier")
-  private Supplier supplier = null;
+	    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	    public Long getId() {
+	        return id;
+	    }
 
-  @JsonProperty("taxCategory")
-  private TaxCategory taxCategory = null;
+	    public void setId(Long id) {
+	        this.id = id;
+	    }
 
-  @JsonProperty("unit")
-  private UOM unit = null;
+	    public String getReference() {
+	        return reference;
+	    }
 
-  public Product auxilaryLineItems(List<AuxilaryLineItem> auxilaryLineItems) {
-    this.auxilaryLineItems = auxilaryLineItems;
-    return this;
-  }
+	    public Product reference(String reference) {
+	        this.reference = reference;
+	        return this;
+	    }
 
-  public Product addAuxilaryLineItemsItem(AuxilaryLineItem auxilaryLineItemsItem) {
-    if (this.auxilaryLineItems == null) {
-      this.auxilaryLineItems = new ArrayList<AuxilaryLineItem>();
-    }
-    this.auxilaryLineItems.add(auxilaryLineItemsItem);
-    return this;
-  }
-
-  /**
-   * Get auxilaryLineItems
-   * @return auxilaryLineItems
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<AuxilaryLineItem> getAuxilaryLineItems() {
-    return auxilaryLineItems;
-  }
-
-  public void setAuxilaryLineItems(List<AuxilaryLineItem> auxilaryLineItems) {
-    this.auxilaryLineItems = auxilaryLineItems;
-  }
-
-  public Product brand(Brand brand) {
-    this.brand = brand;
-    return this;
-  }
-
-  /**
-   * Get brand
-   * @return brand
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Brand getBrand() {
-    return brand;
-  }
-
-  public void setBrand(Brand brand) {
-    this.brand = brand;
-  }
-
-  public Product buyPrice(Double buyPrice) {
-    this.buyPrice = buyPrice;
-    return this;
-  }
-
-  /**
-   * Get buyPrice
-   * @return buyPrice
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getBuyPrice() {
-    return buyPrice;
-  }
-
-  public void setBuyPrice(Double buyPrice) {
-    this.buyPrice = buyPrice;
-  }
-
-  public Product category(Category category) {
-    this.category = category;
-    return this;
-  }
-
-  /**
-   * Get category
-   * @return category
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Category getCategory() {
-    return category;
-  }
-
-  public void setCategory(Category category) {
-    this.category = category;
-  }
-
-  public Product comboLineItems(List<ComboLineItem> comboLineItems) {
-    this.comboLineItems = comboLineItems;
-    return this;
-  }
-
-  public Product addComboLineItemsItem(ComboLineItem comboLineItemsItem) {
-    if (this.comboLineItems == null) {
-      this.comboLineItems = new ArrayList<ComboLineItem>();
-    }
-    this.comboLineItems.add(comboLineItemsItem);
-    return this;
-  }
-
-  /**
-   * Get comboLineItems
-   * @return comboLineItems
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<ComboLineItem> getComboLineItems() {
-    return comboLineItems;
-  }
-
-  public void setComboLineItems(List<ComboLineItem> comboLineItems) {
-    this.comboLineItems = comboLineItems;
-  }
-
-  public Product discount(Discount discount) {
-    this.discount = discount;
-    return this;
-  }
-
-  /**
-   * Get discount
-   * @return discount
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Discount getDiscount() {
-    return discount;
-  }
-
-  public void setDiscount(Discount discount) {
-    this.discount = discount;
-  }
-
-  public Product iDPcode(String iDPcode) {
-    this.iDPcode = iDPcode;
-    return this;
-  }
-
-  /**
-   * Get iDPcode
-   * @return iDPcode
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getIDPcode() {
-    return iDPcode;
-  }
-
-  public void setIDPcode(String iDPcode) {
-    this.iDPcode = iDPcode;
-  }
-
-  public Product id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Product image(byte[] image) {
-    this.image = image;
-    return this;
-  }
-
-  /**
-   * Get image
-   * @return image
-  **/
-  @ApiModelProperty(value = "")
-
-@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
-  public byte[] getImage() {
-    return image;
-  }
-
-  public void setImage(byte[] image) {
-    this.image = image;
-  }
-
-  public Product imageContentType(String imageContentType) {
-    this.imageContentType = imageContentType;
-    return this;
-  }
-
-  /**
-   * Get imageContentType
-   * @return imageContentType
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getImageContentType() {
-    return imageContentType;
-  }
-
-  public void setImageContentType(String imageContentType) {
-    this.imageContentType = imageContentType;
-  }
-
-  public Product isActive(Boolean isActive) {
-    this.isActive = isActive;
-    return this;
-  }
-
-  /**
-   * Get isActive
-   * @return isActive
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isIsActive() {
-    return isActive;
-  }
-
-  public void setIsActive(Boolean isActive) {
-    this.isActive = isActive;
-  }
-
-  public Product isAuxilaryItem(Boolean isAuxilaryItem) {
-    this.isAuxilaryItem = isAuxilaryItem;
-    return this;
-  }
-
-  /**
-   * Get isAuxilaryItem
-   * @return isAuxilaryItem
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isIsAuxilaryItem() {
-    return isAuxilaryItem;
-  }
-
-  public void setIsAuxilaryItem(Boolean isAuxilaryItem) {
-    this.isAuxilaryItem = isAuxilaryItem;
-  }
-
-  public Product isServiceItem(Boolean isServiceItem) {
-    this.isServiceItem = isServiceItem;
-    return this;
-  }
-
-  /**
-   * Get isServiceItem
-   * @return isServiceItem
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isIsServiceItem() {
-    return isServiceItem;
-  }
-
-  public void setIsServiceItem(Boolean isServiceItem) {
-    this.isServiceItem = isServiceItem;
-  }
-
-  public Product labels(List<Label> labels) {
-    this.labels = labels;
-    return this;
-  }
-
-  public Product addLabelsItem(Label labelsItem) {
-    if (this.labels == null) {
-      this.labels = new ArrayList<Label>();
-    }
-    this.labels.add(labelsItem);
-    return this;
-  }
-
-  /**
-   * Get labels
-   * @return labels
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<Label> getLabels() {
-    return labels;
-  }
-
-  public void setLabels(List<Label> labels) {
-    this.labels = labels;
-  }
-
-  public Product location(Location location) {
-    this.location = location;
-    return this;
-  }
-
-  /**
-   * Get location
-   * @return location
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Location getLocation() {
-    return location;
-  }
-
-  public void setLocation(Location location) {
-    this.location = location;
-  }
-
-  public Product manufacturer(Manufacturer manufacturer) {
-    this.manufacturer = manufacturer;
-    return this;
-  }
-
-  /**
-   * Get manufacturer
-   * @return manufacturer
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Manufacturer getManufacturer() {
-    return manufacturer;
-  }
-
-  public void setManufacturer(Manufacturer manufacturer) {
-    this.manufacturer = manufacturer;
-  }
-
-  public Product maxQuantityLevel(Double maxQuantityLevel) {
-    this.maxQuantityLevel = maxQuantityLevel;
-    return this;
-  }
-
-  /**
-   * Get maxQuantityLevel
-   * @return maxQuantityLevel
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getMaxQuantityLevel() {
-    return maxQuantityLevel;
-  }
-
-  public void setMaxQuantityLevel(Double maxQuantityLevel) {
-    this.maxQuantityLevel = maxQuantityLevel;
-  }
-
-  public Product minQuantityLevel(Double minQuantityLevel) {
-    this.minQuantityLevel = minQuantityLevel;
-    return this;
-  }
-
-  /**
-   * Get minQuantityLevel
-   * @return minQuantityLevel
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getMinQuantityLevel() {
-    return minQuantityLevel;
-  }
-
-  public void setMinQuantityLevel(Double minQuantityLevel) {
-    this.minQuantityLevel = minQuantityLevel;
-  }
-
-  public Product name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Product reference(String reference) {
-    this.reference = reference;
-    return this;
-  }
-
-  /**
-   * Get reference
-   * @return reference
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getReference() {
-    return reference;
-  }
-
-  public void setReference(String reference) {
-    this.reference = reference;
-  }
-
-  public Product sellingPrice(Double sellingPrice) {
-    this.sellingPrice = sellingPrice;
-    return this;
-  }
-
-  /**
-   * Get sellingPrice
-   * @return sellingPrice
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getSellingPrice() {
-    return sellingPrice;
-  }
-
-  public void setSellingPrice(Double sellingPrice) {
-    this.sellingPrice = sellingPrice;
-  }
-
-  public Product showInCatalogue(Boolean showInCatalogue) {
-    this.showInCatalogue = showInCatalogue;
-    return this;
-  }
-
-  /**
-   * Get showInCatalogue
-   * @return showInCatalogue
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isShowInCatalogue() {
-    return showInCatalogue;
-  }
-
-  public void setShowInCatalogue(Boolean showInCatalogue) {
-    this.showInCatalogue = showInCatalogue;
-  }
-
-  public Product sku(String sku) {
-    this.sku = sku;
-    return this;
-  }
-
-  /**
-   * Get sku
-   * @return sku
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getSku() {
-    return sku;
-  }
-
-  public void setSku(String sku) {
-    this.sku = sku;
-  }
-
-  public Product storageCost(Double storageCost) {
-    this.storageCost = storageCost;
-    return this;
-  }
-
-  /**
-   * Get storageCost
-   * @return storageCost
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getStorageCost() {
-    return storageCost;
-  }
-
-  public void setStorageCost(Double storageCost) {
-    this.storageCost = storageCost;
-  }
-
-  public Product supplier(Supplier supplier) {
-    this.supplier = supplier;
-    return this;
-  }
-
-  /**
-   * Get supplier
-   * @return supplier
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Supplier getSupplier() {
-    return supplier;
-  }
-
-  public void setSupplier(Supplier supplier) {
-    this.supplier = supplier;
-  }
-
-  public Product taxCategory(TaxCategory taxCategory) {
-    this.taxCategory = taxCategory;
-    return this;
-  }
-
-  /**
-   * Get taxCategory
-   * @return taxCategory
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public TaxCategory getTaxCategory() {
-    return taxCategory;
-  }
-
-  public void setTaxCategory(TaxCategory taxCategory) {
-    this.taxCategory = taxCategory;
-  }
-
-  public Product unit(UOM unit) {
-    this.unit = unit;
-    return this;
-  }
-
-  /**
-   * Get unit
-   * @return unit
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public UOM getUnit() {
-    return unit;
-  }
-
-  public void setUnit(UOM unit) {
-    this.unit = unit;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Product product = (Product) o;
-    return Objects.equals(this.auxilaryLineItems, product.auxilaryLineItems) &&
-        Objects.equals(this.brand, product.brand) &&
-        Objects.equals(this.buyPrice, product.buyPrice) &&
-        Objects.equals(this.category, product.category) &&
-        Objects.equals(this.comboLineItems, product.comboLineItems) &&
-        Objects.equals(this.discount, product.discount) &&
-        Objects.equals(this.iDPcode, product.iDPcode) &&
-        Objects.equals(this.id, product.id) &&
-        Objects.equals(this.image, product.image) &&
-        Objects.equals(this.imageContentType, product.imageContentType) &&
-        Objects.equals(this.isActive, product.isActive) &&
-        Objects.equals(this.isAuxilaryItem, product.isAuxilaryItem) &&
-        Objects.equals(this.isServiceItem, product.isServiceItem) &&
-        Objects.equals(this.labels, product.labels) &&
-        Objects.equals(this.location, product.location) &&
-        Objects.equals(this.manufacturer, product.manufacturer) &&
-        Objects.equals(this.maxQuantityLevel, product.maxQuantityLevel) &&
-        Objects.equals(this.minQuantityLevel, product.minQuantityLevel) &&
-        Objects.equals(this.name, product.name) &&
-        Objects.equals(this.reference, product.reference) &&
-        Objects.equals(this.sellingPrice, product.sellingPrice) &&
-        Objects.equals(this.showInCatalogue, product.showInCatalogue) &&
-        Objects.equals(this.sku, product.sku) &&
-        Objects.equals(this.storageCost, product.storageCost) &&
-        Objects.equals(this.supplier, product.supplier) &&
-        Objects.equals(this.taxCategory, product.taxCategory) &&
-        Objects.equals(this.unit, product.unit);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(auxilaryLineItems, brand, buyPrice, category, comboLineItems, discount, iDPcode, id, image, imageContentType, isActive, isAuxilaryItem, isServiceItem, labels, location, manufacturer, maxQuantityLevel, minQuantityLevel, name, reference, sellingPrice, showInCatalogue, sku, storageCost, supplier, taxCategory, unit);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Product {\n");
-    
-    sb.append("    auxilaryLineItems: ").append(toIndentedString(auxilaryLineItems)).append("\n");
-    sb.append("    brand: ").append(toIndentedString(brand)).append("\n");
-    sb.append("    buyPrice: ").append(toIndentedString(buyPrice)).append("\n");
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
-    sb.append("    comboLineItems: ").append(toIndentedString(comboLineItems)).append("\n");
-    sb.append("    discount: ").append(toIndentedString(discount)).append("\n");
-    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    image: ").append(toIndentedString(image)).append("\n");
-    sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
-    sb.append("    isActive: ").append(toIndentedString(isActive)).append("\n");
-    sb.append("    isAuxilaryItem: ").append(toIndentedString(isAuxilaryItem)).append("\n");
-    sb.append("    isServiceItem: ").append(toIndentedString(isServiceItem)).append("\n");
-    sb.append("    labels: ").append(toIndentedString(labels)).append("\n");
-    sb.append("    location: ").append(toIndentedString(location)).append("\n");
-    sb.append("    manufacturer: ").append(toIndentedString(manufacturer)).append("\n");
-    sb.append("    maxQuantityLevel: ").append(toIndentedString(maxQuantityLevel)).append("\n");
-    sb.append("    minQuantityLevel: ").append(toIndentedString(minQuantityLevel)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
-    sb.append("    showInCatalogue: ").append(toIndentedString(showInCatalogue)).append("\n");
-    sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
-    sb.append("    storageCost: ").append(toIndentedString(storageCost)).append("\n");
-    sb.append("    supplier: ").append(toIndentedString(supplier)).append("\n");
-    sb.append("    taxCategory: ").append(toIndentedString(taxCategory)).append("\n");
-    sb.append("    unit: ").append(toIndentedString(unit)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	    public void setReference(String reference) {
+	        this.reference = reference;
+	    }
+
+	    public String getName() {
+	        return name;
+	    }
+
+	    public Product name(String name) {
+	        this.name = name;
+	        return this;
+	    }
+
+	    public void setName(String name) {
+	        this.name = name;
+	    }
+
+	    public Boolean isShowInCatalogue() {
+	        return showInCatalogue;
+	    }
+
+	    public Product showInCatalogue(Boolean showInCatalogue) {
+	        this.showInCatalogue = showInCatalogue;
+	        return this;
+	    }
+
+	    public void setShowInCatalogue(Boolean showInCatalogue) {
+	        this.showInCatalogue = showInCatalogue;
+	    }
+
+	    public byte[] getImage() {
+	        return image;
+	    }
+
+	    public Product image(byte[] image) {
+	        this.image = image;
+	        return this;
+	    }
+
+	    public void setImage(byte[] image) {
+	        this.image = image;
+	    }
+
+	    public String getImageContentType() {
+	        return imageContentType;
+	    }
+
+	    public Product imageContentType(String imageContentType) {
+	        this.imageContentType = imageContentType;
+	        return this;
+	    }
+
+	    public void setImageContentType(String imageContentType) {
+	        this.imageContentType = imageContentType;
+	    }
+
+	    public String getImageLink() {
+	        return imageLink;
+	    }
+
+	    public Product imageLink(String imageLink) {
+	        this.imageLink = imageLink;
+	        return this;
+	    }
+
+	    public void setImageLink(String imageLink) {
+	        this.imageLink = imageLink;
+	    }
+
+	    public Boolean isIsActive() {
+	        return isActive;
+	    }
+
+	    public Product isActive(Boolean isActive) {
+	        this.isActive = isActive;
+	        return this;
+	    }
+
+	    public void setIsActive(Boolean isActive) {
+	        this.isActive = isActive;
+	    }
+
+	    public String getSku() {
+	        return sku;
+	    }
+
+	    public Product sku(String sku) {
+	        this.sku = sku;
+	        return this;
+	    }
+
+	    public void setSku(String sku) {
+	        this.sku = sku;
+	    }
+
+	    public String getiDPcode() {
+	        return iDPcode;
+	    }
+
+	    public Product iDPcode(String iDPcode) {
+	        this.iDPcode = iDPcode;
+	        return this;
+	    }
+
+	    public void setiDPcode(String iDPcode) {
+	        this.iDPcode = iDPcode;
+	    }
+
+	    public Boolean isIsServiceItem() {
+	        return isServiceItem;
+	    }
+
+	    public Product isServiceItem(Boolean isServiceItem) {
+	        this.isServiceItem = isServiceItem;
+	        return this;
+	    }
+
+	    public void setIsServiceItem(Boolean isServiceItem) {
+	        this.isServiceItem = isServiceItem;
+	    }
+
+	    public Boolean isIsAuxilaryItem() {
+	        return isAuxilaryItem;
+	    }
+
+	    public Product isAuxilaryItem(Boolean isAuxilaryItem) {
+	        this.isAuxilaryItem = isAuxilaryItem;
+	        return this;
+	    }
+
+	    public void setIsAuxilaryItem(Boolean isAuxilaryItem) {
+	        this.isAuxilaryItem = isAuxilaryItem;
+	    }
+
+	    public Double getMinQuantityLevel() {
+	        return minQuantityLevel;
+	    }
+
+	    public Product minQuantityLevel(Double minQuantityLevel) {
+	        this.minQuantityLevel = minQuantityLevel;
+	        return this;
+	    }
+
+	    public void setMinQuantityLevel(Double minQuantityLevel) {
+	        this.minQuantityLevel = minQuantityLevel;
+	    }
+
+	    public Double getMaxQuantityLevel() {
+	        return maxQuantityLevel;
+	    }
+
+	    public Product maxQuantityLevel(Double maxQuantityLevel) {
+	        this.maxQuantityLevel = maxQuantityLevel;
+	        return this;
+	    }
+
+	    public void setMaxQuantityLevel(Double maxQuantityLevel) {
+	        this.maxQuantityLevel = maxQuantityLevel;
+	    }
+
+	    public Double getStorageCost() {
+	        return storageCost;
+	    }
+
+	    public Product storageCost(Double storageCost) {
+	        this.storageCost = storageCost;
+	        return this;
+	    }
+
+	    public void setStorageCost(Double storageCost) {
+	        this.storageCost = storageCost;
+	    }
+
+	    public Double getSellingPrice() {
+	        return sellingPrice;
+	    }
+
+	    public Product sellingPrice(Double sellingPrice) {
+	        this.sellingPrice = sellingPrice;
+	        return this;
+	    }
+
+	    public void setSellingPrice(Double sellingPrice) {
+	        this.sellingPrice = sellingPrice;
+	    }
+
+	    public Double getBuyPrice() {
+	        return buyPrice;
+	    }
+
+	    public Product buyPrice(Double buyPrice) {
+	        this.buyPrice = buyPrice;
+	        return this;
+	    }
+
+	    public void setBuyPrice(Double buyPrice) {
+	        this.buyPrice = buyPrice;
+	    }
+
+	    public Set<AuxilaryLineItem> getAuxilaryLineItems() {
+	        return auxilaryLineItems;
+	    }
+
+	    public Product auxilaryLineItems(Set<AuxilaryLineItem> auxilaryLineItems) {
+	        this.auxilaryLineItems = auxilaryLineItems;
+	        return this;
+	    }
+
+	    public Product addAuxilaryLineItems(AuxilaryLineItem auxilaryLineItem) {
+	        this.auxilaryLineItems.add(auxilaryLineItem);
+	        auxilaryLineItem.setProduct(this);
+	        return this;
+	    }
+
+	    public Product removeAuxilaryLineItems(AuxilaryLineItem auxilaryLineItem) {
+	        this.auxilaryLineItems.remove(auxilaryLineItem);
+	        auxilaryLineItem.setProduct(null);
+	        return this;
+	    }
+
+	    public void setAuxilaryLineItems(Set<AuxilaryLineItem> auxilaryLineItems) {
+	        this.auxilaryLineItems = auxilaryLineItems;
+	    }
+
+	    public Set<ComboLineItem> getComboLineItems() {
+	        return comboLineItems;
+	    }
+
+	    public Product comboLineItems(Set<ComboLineItem> comboLineItems) {
+	        this.comboLineItems = comboLineItems;
+	        return this;
+	    }
+
+	    public Product addComboLineItems(ComboLineItem comboLineItem) {
+	        this.comboLineItems.add(comboLineItem);
+	        comboLineItem.setProduct(this);
+	        return this;
+	    }
+
+	    public Product removeComboLineItems(ComboLineItem comboLineItem) {
+	        this.comboLineItems.remove(comboLineItem);
+	        comboLineItem.setProduct(null);
+	        return this;
+	    }
+
+	    public void setComboLineItems(Set<ComboLineItem> comboLineItems) {
+	        this.comboLineItems = comboLineItems;
+	    }
+
+	    public Set<Label> getLabels() {
+	        return labels;
+	    }
+
+	    public Product labels(Set<Label> labels) {
+	        this.labels = labels;
+	        return this;
+	    }
+
+	    public Product addLabels(Label label) {
+	        this.labels.add(label);
+	        label.setProduct(this);
+	        return this;
+	    }
+
+	    public Product removeLabels(Label label) {
+	        this.labels.remove(label);
+	        label.setProduct(null);
+	        return this;
+	    }
+
+	    public void setLabels(Set<Label> labels) {
+	        this.labels = labels;
+	    }
+
+	    public TaxCategory getTaxCategory() {
+	        return taxCategory;
+	    }
+
+	    public Product taxCategory(TaxCategory taxCategory) {
+	        this.taxCategory = taxCategory;
+	        return this;
+	    }
+
+	    public void setTaxCategory(TaxCategory taxCategory) {
+	        this.taxCategory = taxCategory;
+	    }
+
+	    public UOM getUnit() {
+	        return unit;
+	    }
+
+	    public Product unit(UOM uOM) {
+	        this.unit = uOM;
+	        return this;
+	    }
+
+	    public void setUnit(UOM uOM) {
+	        this.unit = uOM;
+	    }
+
+	    public Location getLocation() {
+	        return location;
+	    }
+
+	    public Product location(Location location) {
+	        this.location = location;
+	        return this;
+	    }
+
+	    public void setLocation(Location location) {
+	        this.location = location;
+	    }
+
+	    public Supplier getSupplier() {
+	        return supplier;
+	    }
+
+	    public Product supplier(Supplier supplier) {
+	        this.supplier = supplier;
+	        return this;
+	    }
+
+	    public void setSupplier(Supplier supplier) {
+	        this.supplier = supplier;
+	    }
+
+	    public Manufacturer getManufacturer() {
+	        return manufacturer;
+	    }
+
+	    public Product manufacturer(Manufacturer manufacturer) {
+	        this.manufacturer = manufacturer;
+	        return this;
+	    }
+
+	    public void setManufacturer(Manufacturer manufacturer) {
+	        this.manufacturer = manufacturer;
+	    }
+
+	    public Brand getBrand() {
+	        return brand;
+	    }
+
+	    public Product brand(Brand brand) {
+	        this.brand = brand;
+	        return this;
+	    }
+
+	    public void setBrand(Brand brand) {
+	        this.brand = brand;
+	    }
+
+	    public Discount getDiscount() {
+	        return discount;
+	    }
+
+	    public Product discount(Discount discount) {
+	        this.discount = discount;
+	        return this;
+	    }
+
+	    public void setDiscount(Discount discount) {
+	        this.discount = discount;
+	    }
+
+	    public Category getCategory() {
+	        return category;
+	    }
+
+	    public Product category(Category category) {
+	        this.category = category;
+	        return this;
+	    }
+
+	    public void setCategory(Category category) {
+	        this.category = category;
+	    }
+	    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+	    @Override
+	    public boolean equals(Object o) {
+	        if (this == o) {
+	            return true;
+	        }
+	        if (o == null || getClass() != o.getClass()) {
+	            return false;
+	        }
+	        Product product = (Product) o;
+	        if (product.getId() == null || getId() == null) {
+	            return false;
+	        }
+	        return Objects.equals(getId(), product.getId());
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return Objects.hashCode(getId());
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "Product{" +
+	            "id=" + getId() +
+	            ", reference='" + getReference() + "'" +
+	            ", name='" + getName() + "'" +
+	            ", showInCatalogue='" + isShowInCatalogue() + "'" +
+	            ", image='" + getImage() + "'" +
+	            ", imageContentType='" + getImageContentType() + "'" +
+	            ", imageLink='" + getImageLink() + "'" +
+	            ", isActive='" + isIsActive() + "'" +
+	            ", sku='" + getSku() + "'" +
+	            ", iDPcode='" + getiDPcode() + "'" +
+	            ", isServiceItem='" + isIsServiceItem() + "'" +
+	            ", isAuxilaryItem='" + isIsAuxilaryItem() + "'" +
+	            ", minQuantityLevel=" + getMinQuantityLevel() +
+	            ", maxQuantityLevel=" + getMaxQuantityLevel() +
+	            ", storageCost=" + getStorageCost() +
+	            ", sellingPrice=" + getSellingPrice() +
+	            ", buyPrice=" + getBuyPrice() +
+	            "}";
+	    }
 }
 

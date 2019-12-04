@@ -13,17 +13,43 @@ import javax.validation.constraints.*;
  * OfferDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-01T11:30:02.598930+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T06:55:16.442375+05:30[Asia/Kolkata]")
 
 public class OfferDTO   {
+  @JsonProperty("description")
+  private String description = null;
+
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("offerRef")
   private String offerRef = null;
 
+  @JsonProperty("orderDiscountAmount")
+  private Double orderDiscountAmount = null;
+
   @JsonProperty("orderId")
   private Long orderId = null;
+
+  public OfferDTO description(String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
   public OfferDTO id(Long id) {
     this.id = id;
@@ -65,6 +91,26 @@ public class OfferDTO   {
     this.offerRef = offerRef;
   }
 
+  public OfferDTO orderDiscountAmount(Double orderDiscountAmount) {
+    this.orderDiscountAmount = orderDiscountAmount;
+    return this;
+  }
+
+  /**
+   * Get orderDiscountAmount
+   * @return orderDiscountAmount
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getOrderDiscountAmount() {
+    return orderDiscountAmount;
+  }
+
+  public void setOrderDiscountAmount(Double orderDiscountAmount) {
+    this.orderDiscountAmount = orderDiscountAmount;
+  }
+
   public OfferDTO orderId(Long orderId) {
     this.orderId = orderId;
     return this;
@@ -95,14 +141,16 @@ public class OfferDTO   {
       return false;
     }
     OfferDTO offerDTO = (OfferDTO) o;
-    return Objects.equals(this.id, offerDTO.id) &&
+    return Objects.equals(this.description, offerDTO.description) &&
+        Objects.equals(this.id, offerDTO.id) &&
         Objects.equals(this.offerRef, offerDTO.offerRef) &&
+        Objects.equals(this.orderDiscountAmount, offerDTO.orderDiscountAmount) &&
         Objects.equals(this.orderId, offerDTO.orderId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, offerRef, orderId);
+    return Objects.hash(description, id, offerRef, orderDiscountAmount, orderId);
   }
 
   @Override
@@ -110,8 +158,10 @@ public class OfferDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class OfferDTO {\n");
     
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    offerRef: ").append(toIndentedString(offerRef)).append("\n");
+    sb.append("    orderDiscountAmount: ").append(toIndentedString(orderDiscountAmount)).append("\n");
     sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
     sb.append("}");
     return sb.toString();
