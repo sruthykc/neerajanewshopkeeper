@@ -81,6 +81,7 @@ import com.diviso.graeshoppe.client.store.model.StoreSettingsDTO;
 import com.diviso.graeshoppe.client.store.model.StoreTypeDTO;
 import com.diviso.graeshoppe.client.store.model.TypeDTO;
 import com.diviso.graeshoppe.client.store.model.UserRatingDTO;
+import com.diviso.graeshoppe.service.OrderQueryService;
 import com.diviso.graeshoppe.service.QueryService;
 
 @RestController
@@ -173,15 +174,10 @@ public class CommandResource {
     @Autowired
     AddressResourceApi addressResourceApi;
     
+    @Autowired
+    OrderQueryService orderQueryService;
     
-	@Autowired
-	private QueryService queryService;
-	/*
-	 * @Autowired LoadControllerApi loadControllerApi;
-	 */
-
-	
-	
+   	
 	private final Logger log = LoggerFactory.getLogger(CommandResource.class);
 
 	
@@ -364,7 +360,7 @@ public class CommandResource {
 	
 	@PostMapping("/markAsDelivered/{orderId}")
 	public void markOrderAsDelivered(@PathVariable String orderId) {
-		Order order=queryService.findOrderByOrderId(orderId);
+		Order order=orderQueryService.findOrderByOrderId(orderId);
 		OrderDTO orderDTO = new OrderDTO();
 		orderDTO.setId(order.getId());
 		orderDTO.setDate(OffsetDateTime.ofInstant(order.getDate(), ZoneId.systemDefault()));
