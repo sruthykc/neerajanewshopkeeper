@@ -449,7 +449,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		/////////             create builders and queries                //////////////
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		TermQueryBuilder termQuery = new TermQueryBuilder("customerId.keyword",customerId);
-		TermQueryBuilder termQuery2 = new TermQueryBuilder("order.status.name.keyword",statusname);
+		TermQueryBuilder termQuery2 = new TermQueryBuilder("status.name.keyword",statusname);
 		builder.query(QueryBuilders.boolQuery().must(termQuery).must(termQuery2));
 		CountRequest countRequest =new CountRequest("order");
 		
