@@ -442,12 +442,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 	@Override
 	public Long orderCountByCustomerIdAndStoreId(String customerId, String storeId) {
-		log.debug("<<<<<<<<<<<<< orderCountByCustomerIdAndStatusName >>>>>>>>>", customerId, storeId);
+		log.debug("<<<<<<<<<<<<< orderCountByCustomerIdAndStoreId >>>>>>>>>", customerId, storeId);
 		///////// create builders and queries //////////////
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		TermQueryBuilder termQuery = new TermQueryBuilder("customerId.keyword", customerId);
-		TermQueryBuilder termQuery2 = new TermQueryBuilder("storeId.name.keyword", storeId);
+		TermQueryBuilder termQuery2 = new TermQueryBuilder("storeId.keyword", storeId);
 		builder.query(QueryBuilders.boolQuery().must(termQuery).must(termQuery2));
 		CountRequest countRequest = new CountRequest("order");
 
