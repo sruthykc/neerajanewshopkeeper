@@ -75,7 +75,7 @@ public interface OrderQueryService {
 	 */
 	public Order findOrderByOrderId(String orderId);
 
-	public Long orderCountByCustomerIdAndStatusName(String customerId, String statusname);
+	public Long orderCountByCustomerIdAndStatusName(String customerId, String statusName);
 	
 	
 
