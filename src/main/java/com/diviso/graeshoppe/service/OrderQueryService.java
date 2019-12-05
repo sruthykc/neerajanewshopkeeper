@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
@@ -73,6 +74,8 @@ public interface OrderQueryService {
 	 * @param orderId
 	 */
 	public Order findOrderByOrderId(String orderId);
+
+	public ResponseEntity<Order> orderCountByCustomerIdAndStatusName(String customerId, String name);
 	
 	
 

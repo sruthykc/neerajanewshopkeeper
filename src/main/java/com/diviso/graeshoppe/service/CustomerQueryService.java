@@ -22,4 +22,6 @@ public interface CustomerQueryService {
 	 */
 	public Page<Customer> findAllCustomersByName(String searchTerm, Pageable pageable);
 
+	//public Page<Customer> getAllCustomers(Pageable pageable);
+
 }

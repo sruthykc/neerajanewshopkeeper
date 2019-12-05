@@ -16,6 +16,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
@@ -28,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.diviso.graeshoppe.client.order.model.Notification;
@@ -437,6 +439,33 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		return serviceUtility.getObjectResult(searchResponse, new Order());
 	
+	}
+
+	@Override
+	public ResponseEntity<Order> orderCountByCustomerIdAndStatusName(String customerId, String name) {
+		log.debug("<<<<<<<<<<<<< orderCountByCustomerIdAndStatusName >>>>>>>>>",customerId,name);
+		/////////             create builders and queries                //////////////
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		TermQueryBuilder termQuery = new TermQueryBuilder("customerId.keyword",customerId);
+		TermQueryBuilder termQuery2 = new TermQueryBuilder("status.name.keyword",name);
+		builder.query(QueryBuilders.boolQuery().must(termQuery).must(termQuery2));
+		
+		SearchRequest request =new SearchRequest("order");					//indexname
+		request.source(builder);
+		SearchResponse response = null;
+		
+		try {
+			response=restHighLevelClient.search(request, RequestOptions.DEFAULT);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		//response.getHits().forEach(x->{(new ObjectMapper().convertValue(response, Order.class)).wait();});
+		Order order =new Order();
+		for(SearchHit hit : response.getHits()) {
+			order = new ObjectMapper().convertValue(hit.getSourceAsString(), Order.class);
+		}
+		
+		return ResponseEntity.ok().body(order);
 	}
 
 	

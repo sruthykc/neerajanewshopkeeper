@@ -118,5 +118,6 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		}
 		return serviceUtility.getPageResult(searchResponse, pageable, new Customer());
 	}
-	
+
+
 }
