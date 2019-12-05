@@ -293,8 +293,8 @@ public class QueryResource {
 
 	}
 
-	@GetMapping("ordercountBycustomeridandstatus/{customerId}/{storeId}")
-	public Long orderCountByCustomerIdAndOrderId(@PathVariable String customerId, @PathVariable String storeId) {
+	@GetMapping("orderCountByCustomerIdAndStoreId/{customerId}/{storeId}")
+	public Long orderCountByCustomerIdAndStoreId(@PathVariable String customerId, @PathVariable String storeId) {
 		log.debug("<<<<<<<<<<< OrderCount >>>>>>>>>>", customerId, storeId);
 		return orderQueryService.orderCountByCustomerIdAndStoreId(customerId, storeId);
 
