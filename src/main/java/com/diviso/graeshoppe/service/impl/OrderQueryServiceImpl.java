@@ -444,46 +444,48 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Long orderCountByCustomerIdAndStatusName(String customerId, String statusName) {
 		log.debug("<<<<<<<<<<<<< orderCountByCustomerIdAndStatusName >>>>>>>>>", customerId, statusName);
 		///////// create builders and queries //////////////
-		/*
-		 * SearchSourceBuilder builder = new SearchSourceBuilder(); TermQueryBuilder
-		 * termQuery = new TermQueryBuilder("customerId.keyword",customerId);
-		 * TermQueryBuilder termQuery2 = new
-		 * TermQueryBuilder("status.name.keyword",statusname);
-		 * builder.query(QueryBuilders.boolQuery().must(termQuery).must(termQuery2));
-		 * CountRequest countRequest =new CountRequest("order");
-		 * 
-		 * //SearchRequest request =new SearchRequest("order"); //indexname
-		 * countRequest.source(builder); CountResponse response = null;
-		 * 
-		 * try { response=restHighLevelClient.count(countRequest,
-		 * RequestOptions.DEFAULT); }catch(IOException e) { e.printStackTrace(); }
-		 * //response.getHits().forEach(x->{(new ObjectMapper().convertValue(response,
-		 * Order.class)).wait();});
-		 * 
-		 * Order order =new Order(); for(SearchHit hit : response.getHits()) { order =
-		 * new ObjectMapper().convertValue(hit.getSourceAsString(), Order.class); }
-		 * 
-		 * long count =response.getCount(); return count;
-		 */
 
-		CountRequest countRequest = new CountRequest("order"); // <1>
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); // <2>
-		searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("customerId.keyword", customerId))
-				.must(QueryBuilders.termQuery("status.name.keyword",statusName ))); // <3>
-		countRequest.source(searchSourceBuilder);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		TermQueryBuilder termQuery = new TermQueryBuilder("customerId.keyword", customerId);
+		TermQueryBuilder termQuery2 = new TermQueryBuilder("status.name.keyword", statusName);
+		builder.query(QueryBuilders.boolQuery().must(termQuery).must(termQuery2));
+		CountRequest countRequest = new CountRequest("order");
 
-		CountResponse countResponse = null;
+		// SearchRequest request =new SearchRequest("order"); //indexname
+		countRequest.source(builder);
+		CountResponse response = null;
+
 		try {
-			countResponse = restHighLevelClient.count(countRequest, RequestOptions.DEFAULT);
+			response = restHighLevelClient.count(countRequest, RequestOptions.DEFAULT);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// response.getHits().forEach(x->{(new
+		// ObjectMapper().convertValue(response,Order.class)).wait();});
 
-		long count = countResponse.getCount();
-
+		/*
+		 * Order order = new Order(); for (SearchHit hit : response.getHits()) { order =
+		 * new ObjectMapper().convertValue(hit.getSourceAsString(), Order.class); }
+		 */
+		long count = response.getCount();
 		return count;
 
+		/*
+		 * CountRequest countRequest = new CountRequest("order"); // <1>
+		 * SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); // <2>
+		 * searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.
+		 * termQuery("customerId.keyword", customerId))
+		 * .must(QueryBuilders.termQuery("status.name.keyword",statusName ))); // <3>
+		 * countRequest.source(searchSourceBuilder);
+		 * 
+		 * CountResponse countResponse = null; try { countResponse =
+		 * restHighLevelClient.count(countRequest, RequestOptions.DEFAULT); } catch
+		 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * long count = countResponse.getCount();
+		 * 
+		 * return count;
+		 */
 	}
 
 }
