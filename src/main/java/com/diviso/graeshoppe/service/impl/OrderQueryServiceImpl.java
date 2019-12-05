@@ -15,6 +15,8 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.core.CountRequest;
+import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.SearchHit;
@@ -442,30 +444,31 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	}
 
 	@Override
-	public ResponseEntity<Order> orderCountByCustomerIdAndStatusName(String customerId, String name) {
+	public Long orderCountByCustomerIdAndStatusName(String customerId, String name) {
 		log.debug("<<<<<<<<<<<<< orderCountByCustomerIdAndStatusName >>>>>>>>>",customerId,name);
 		/////////             create builders and queries                //////////////
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		TermQueryBuilder termQuery = new TermQueryBuilder("customerId.keyword",customerId);
 		TermQueryBuilder termQuery2 = new TermQueryBuilder("status.name.keyword",name);
 		builder.query(QueryBuilders.boolQuery().must(termQuery).must(termQuery2));
+		CountRequest countRequest =new CountRequest("order");
 		
-		SearchRequest request =new SearchRequest("order");					//indexname
-		request.source(builder);
-		SearchResponse response = null;
+		//SearchRequest request =new SearchRequest("order");					//indexname
+		countRequest.source(builder);
+		CountResponse response = null;
 		
 		try {
-			response=restHighLevelClient.search(request, RequestOptions.DEFAULT);
+			response=restHighLevelClient.count(countRequest, RequestOptions.DEFAULT);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 		//response.getHits().forEach(x->{(new ObjectMapper().convertValue(response, Order.class)).wait();});
-		Order order =new Order();
-		for(SearchHit hit : response.getHits()) {
-			order = new ObjectMapper().convertValue(hit.getSourceAsString(), Order.class);
-		}
-		
-		return ResponseEntity.ok().body(order);
+		/*
+		 * Order order =new Order(); for(SearchHit hit : response.getHits()) { order =
+		 * new ObjectMapper().convertValue(hit.getSourceAsString(), Order.class); }
+		 */
+		long count =response.getCount();
+		return count;
 	}
 
 	

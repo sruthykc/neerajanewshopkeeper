@@ -75,7 +75,7 @@ public interface OrderQueryService {
 	 */
 	public Order findOrderByOrderId(String orderId);
 
-	public ResponseEntity<Order> orderCountByCustomerIdAndStatusName(String customerId, String name);
+	public Long orderCountByCustomerIdAndStatusName(String customerId, String name);
 	
 	
 

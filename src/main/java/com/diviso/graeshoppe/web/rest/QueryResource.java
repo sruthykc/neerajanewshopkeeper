@@ -273,7 +273,7 @@ public class QueryResource {
 		return this.contactResourceApi.getContactUsingGET(id);
 	}
 
-	@GetMapping("contact/{mobilenumber}")
+	@GetMapping("contact/{mobileNumber}")
 	public Page<Contact> findContacts(@PathVariable Long mobileNumber, Pageable page) {
 		log.debug("<<<<<<<<<< findContacts >>>>>>>", mobileNumber);
 
@@ -294,7 +294,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("ordercountBycustomeridandstatus/{customerId}/{statusName}")
-	public ResponseEntity<Order> CountOrders(@PathVariable String customerId, @PathVariable String name) {
+	public Long CountOrders(@PathVariable String customerId, @PathVariable String name) {
 		log.debug("<<<<<<<<<<< OrderCount >>>>>>>>>>", customerId, name);
 		return orderQueryService.orderCountByCustomerIdAndStatusName(customerId, name);
 
