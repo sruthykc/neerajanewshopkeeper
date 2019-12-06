@@ -215,7 +215,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		builder.query(termQuery("store.regNo", storeId));
 
 		Pageable pageable = PageRequest.of(2, 20);
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("Type", pageable.getPageSize(),
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("type", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
 
 		SearchResponse searchResponse = null;
