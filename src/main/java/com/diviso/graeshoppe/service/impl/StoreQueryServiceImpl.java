@@ -296,10 +296,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("store.regNo", storeId));
+		builder.query(termQuery("store.regNo.keyword", storeId));
 
 		Pageable pageable = PageRequest.of(2, 20);
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("deliveryinfo", pageable.getPageSize(),
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("banner", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
 
 		SearchResponse searchResponse = null;

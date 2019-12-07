@@ -683,7 +683,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/auxilarylineitems/{idpCode}")
+	@GetMapping("/auxilarylineitems/{idpCode}")//its working
 	public ResponseEntity<Page<AuxilaryLineItem>> getAuxilaryLineItemsByIdpCode(@PathVariable String idpCode,
 			Pageable pageable) {
 		log.debug("<<<<<<<<<<<< getAuxilaryLineItemsByStoreId >>>>>>>>>", idpCode);
@@ -697,7 +697,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/UOM/{iDPcode}")
+	@GetMapping("/UOM/{idpCode}")
 	public ResponseEntity<Page<UOM>> findUOMByIdpCode(@PathVariable String idpCode, Pageable pageable) {
 		return ResponseEntity.ok().body(productQueryService.findUOMByIDPcode(idpCode, pageable));
 	}
@@ -707,7 +707,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/uom/{id}")
+	@GetMapping("/uom/{id}")//its working
 	public ResponseEntity<UOMDTO> findUOM(@PathVariable Long id) {
 		return uomResourceApi.getUOMUsingGET(id);
 	}
@@ -717,7 +717,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/category/{id}")
+	@GetMapping("/category/{id}")//its working
 	public ResponseEntity<CategoryDTO> findCategory(@PathVariable Long id) {
 		return categoryResourceApi.getCategoryUsingGET(id);
 	}
@@ -727,7 +727,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/auxilaryitem/{id}")
+	@GetMapping("/auxilaryitem/{id}")//its working
 	public ResponseEntity<AuxilaryLineItemDTO> findAuxilaryLineItem(@PathVariable Long id) {
 		return auxilaryLineItemResourceApi.getAuxilaryLineItemUsingGET(id);
 	}
@@ -737,7 +737,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/combolineitem/{id}")
+	@GetMapping("/combolineitem/{id}")//not working
 	public ResponseEntity<ComboLineItemDTO> findCombolineItem(@PathVariable Long id) {
 		return comboLineItemResourceApi.getComboLineItemUsingGET(id);
 	}
@@ -747,7 +747,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/banner/{id}")
+	@GetMapping("/banner/{id}")//not working
 	public ResponseEntity<BannerDTO> findBanner(@PathVariable Long id) {
 		return bannerResourceApi.getBannerUsingGET(id);
 	}
@@ -802,7 +802,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/uombyid/{id}")
+	@GetMapping("/uombyid/{id}")// 26 11 19 it's working
 	public ResponseEntity<UOM> findUOMById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(productQueryService.findUOMById(id));
 	}
