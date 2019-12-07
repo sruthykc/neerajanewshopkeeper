@@ -56,9 +56,11 @@ import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.client.store.api.*;
 import com.diviso.graeshoppe.client.store.model.*;
+import com.diviso.graeshoppe.service.ContactService;
 import com.diviso.graeshoppe.service.CustomerQueryService;
 import com.diviso.graeshoppe.service.OrderQueryService;
 import com.diviso.graeshoppe.service.ProductQueryService;
+import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.ReportQueryService;
 import com.diviso.graeshoppe.service.SaleQueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
@@ -72,6 +74,8 @@ public class QueryResource {
 	/**
 	 * Rafeeq
 	 */
+	@Autowired
+	ContactService contactService;
 
 	@Autowired
 	RestHighLevelClient rhlc;
@@ -262,38 +266,39 @@ public class QueryResource {
 		return customerQueryService.findAllCustomers(pageable);
 	}
 
-	@GetMapping("/customers/{id}")
+	@GetMapping("/customers/{id}")									// 06 12 19 it's working
 	public ResponseEntity<CustomerDTO> findCustomerById(@PathVariable Long id) {
 		log.debug("<<<<<<<<< findCustomerById >>>>>>>>", id);
 		return this.customerResourceApi.getCustomerUsingGET(id);
 	}
 
-	@GetMapping("/contacts/{id}")
+	@GetMapping("/contacts/{id}")									// 6 12 19 it's working
 	public ResponseEntity<ContactDTO> findContactById(@PathVariable Long id) {
 		return this.contactResourceApi.getContactUsingGET(id);
 	}
 
-	@GetMapping("contact/{mobileNumber}")
-	public Page<Contact> findContacts(@PathVariable Long mobileNumber, Pageable page) {
+	@GetMapping("/contact/{mobileNumber}")							// 6 12 19 it,s working 
+	public List<Contact> findContacts(@PathVariable Long mobileNumber, Pageable page) {
 		log.debug("<<<<<<<<<< findContacts >>>>>>>", mobileNumber);
 
-		SearchSourceBuilder ssb = new SearchSourceBuilder();
-		ssb.query(termQuery("mobileNumber", mobileNumber));
-		SearchRequest sr = su.generateSearchRequest("contact", page.getPageSize(), page.getPageNumber(), ssb);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			rhlc.search(sr, RequestOptions.DEFAULT);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return su.getPageResult(searchResponse, page, new Contact());
+		return contactService.findContactsByMobileNumber(mobileNumber,page);
+		/*
+		 * SearchSourceBuilder ssb = new SearchSourceBuilder();
+		 * ssb.query(termQuery("mobileNumber", mobileNumber)); SearchRequest sr =
+		 * su.generateSearchRequest("contact", page.getPageSize(), page.getPageNumber(),
+		 * ssb);
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { rhlc.search(sr, RequestOptions.DEFAULT); } catch (IOException e) {
+		 * e.printStackTrace(); }
+		 * 
+		 * return su.getPageResult(searchResponse, page, new Contact());
+		 */
 
 	}
-
-	@GetMapping("orderCountByCustomerIdAndStoreId/{customerId}/{storeId}")
+				
+	@GetMapping("orderCountByCustomerIdAndStoreId/{customerId}/{storeId}")				//07 12 19 it,s working
 	public Long orderCountByCustomerIdAndStoreId(@PathVariable String customerId, @PathVariable String storeId) {
 		log.debug("<<<<<<<<<<< OrderCount >>>>>>>>>>", customerId, storeId);
 		return orderQueryService.orderCountByCustomerIdAndStoreId(customerId, storeId);
@@ -305,7 +310,7 @@ public class QueryResource {
 	 * @return
 	 * @deprecated
 	 */
-	@GetMapping("/customers/export")
+	@GetMapping("/customers/export")											//not working
 	public ResponseEntity<PdfDTO> exportCustomers() {
 		PdfDTO pdf = new PdfDTO();
 		pdf.setPdf(this.customerResourceApi.getPdfAllCustomersUsingGET().getBody());
@@ -322,7 +327,7 @@ public class QueryResource {
 	 * 
 	 * @description findAll categories by storeId
 	 */
-	@GetMapping("/findAllCateogories/{storeId}") // 29 11 19 it's working
+	@GetMapping("/findAllCateogories/{storeId}") // 6 12 19 it's working
 	public ResponseEntity<Page<Category>> findAllCategories(@PathVariable String storeId, Pageable pageable) {
 
 		return ResponseEntity.ok().body(productQueryService.findAllCategories(storeId, pageable));

@@ -55,7 +55,7 @@ public interface QueryService {
 	 * 
 	 * @param storeId
 	 * @param pageable
-	 * @return
+	 * @return 
 	 */
 	public Page<EntryLineItem> findAllEntryLineItems(String storeId, Pageable pageable);
 
