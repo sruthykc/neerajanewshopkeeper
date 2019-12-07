@@ -417,7 +417,7 @@ public class QueryResource {
 	 * 
 	 * @description find one ticket line details
 	 */
-	@GetMapping("/ticket-lines/{id}")
+	@GetMapping("/findOneTicketLines/{id}")
 	public ResponseEntity<TicketLineDTO> findOneTicketLines(@PathVariable Long id) {
 		return ticketLineResourceApi.getTicketLineUsingGET(id);
 	}
@@ -812,7 +812,7 @@ public class QueryResource {
 	 * @param storeId
 	 * @return
 	 */
-	@GetMapping("/store-banners/{storeId}") // 26 11 19 partially working
+	@GetMapping("/store-banners/{storeId}") // 26 11 19 its working
 	public ResponseEntity<Page<Banner>> findBannerByStoreId(@PathVariable String storeId,Pageable pageable ) {
 		return ResponseEntity.ok().body(storeQueryService.findBannersByStoreId(storeId,pageable));
 	}
