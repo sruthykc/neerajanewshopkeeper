@@ -73,7 +73,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query( matchQuery("name", searchTerm) );
+		builder.query( matchQuery("name", "hiba") );
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("customer", pageable.getPageSize(), pageable.getPageNumber(),
 				builder);
