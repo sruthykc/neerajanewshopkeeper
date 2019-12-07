@@ -405,7 +405,7 @@ public class QueryResource {
 	 * 
 	 * @description find ticketlines by saleId
 	 */
-	@GetMapping("/ticket-lines/{saleId}") // 29 11 19 no data in database
+	@GetMapping("/findAllTicketLinesBySaleId/{saleId}") // 29 11 19 no data in database
 	public ResponseEntity<List<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId,Pageable pageable) {
 		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId,pageable));
 	}
