@@ -80,7 +80,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	 * @param saleId
 	 */
 	@Override
-	public List<TicketLine> findTicketLinesBySaleId(Long saleId) {
+	public List<TicketLine> findTicketLinesBySaleId(Long saleId,	Pageable pageable) {
 		
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -95,7 +95,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 
 		builder.query(termQuery("sale.id", saleId));
 		
-		Pageable pageable = PageRequest.of(2, 20);
+	
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("ticketline", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);

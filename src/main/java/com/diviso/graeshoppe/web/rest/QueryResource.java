@@ -406,8 +406,8 @@ public class QueryResource {
 	 * @description find ticketlines by saleId
 	 */
 	@GetMapping("/ticket-lines/{saleId}") // 29 11 19 no data in database
-	public ResponseEntity<List<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId) {
-		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId));
+	public ResponseEntity<List<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId,Pageable pageable) {
+		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId,pageable));
 	}
 
 	/**
@@ -417,7 +417,7 @@ public class QueryResource {
 	 * 
 	 * @description find one ticket line details
 	 */
-	@GetMapping("/findOneTicketLines/{id}")
+	@GetMapping("/findOneTicketLines/{id}")//its working
 	public ResponseEntity<TicketLineDTO> findOneTicketLines(@PathVariable Long id) {
 		return ticketLineResourceApi.getTicketLineUsingGET(id);
 	}
@@ -447,28 +447,27 @@ public class QueryResource {
 		log.debug("<<<<<<<<<<< findSales >>>>>>>>", storeId);
 		return saleQueryService.findSales(storeId, pageable);
 	}
-
+//plz refactor
 	/**
 	 * @author Prince
 	 * @param storeId
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/sales/combined/{storeId}")				//it's working
-	public ResponseEntity<Page<SaleAggregate>> findAllSaleAggregates(@PathVariable String storeId, Pageable pageable) {
-		List<SaleAggregate> sales = new ArrayList<SaleAggregate>();
-		this.findSales(storeId, pageable).getContent().forEach(sale -> {
-			SaleAggregate saleAgg = new SaleAggregate();
-			saleAgg.setSale(sale);
-			sales.add(saleAgg);
-		});
-		sales.forEach(sale -> {
-			sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).getBody());
-			sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()).getBody());
-		});
-		PageImpl<SaleAggregate> res = new PageImpl<SaleAggregate>(sales);
-		return ResponseEntity.ok().body(res);
-	}
+	/*
+	 * @GetMapping("/sales/combined/{storeId}") //it's working public
+	 * ResponseEntity<Page<SaleAggregate>> findAllSaleAggregates(@PathVariable
+	 * String storeId, Pageable pageable) { List<SaleAggregate> sales = new
+	 * ArrayList<SaleAggregate>(); this.findSales(storeId,
+	 * pageable).getContent().forEach(sale -> { SaleAggregate saleAgg = new
+	 * SaleAggregate(); saleAgg.setSale(sale); sales.add(saleAgg); });
+	 * sales.forEach(sale -> {
+	 * sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).
+	 * getBody());
+	 * sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()).
+	 * getBody()); }); PageImpl<SaleAggregate> res = new
+	 * PageImpl<SaleAggregate>(sales); return ResponseEntity.ok().body(res); }
+	 */
 
 	//////////////////////////
 
