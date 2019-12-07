@@ -540,7 +540,7 @@ public class QueryResource {
 	 * @param sort
 	 * @return
 	 */
-	@GetMapping("/storeBundle/{regNo}")
+	@GetMapping("/storeBundle/{regNo}")//its working
 	public ResponseEntity<StoreBundleDTO> getStoreBundle(
 			@PathVariable String regNo/*
 										 * , Integer page, Integer size, ArrayList<String> sort
@@ -615,7 +615,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/productBundle/{id}")
+	@GetMapping("/productBundle/{id}")//its working
 	public ResponseEntity<ProductBundle> getProductBundle(@PathVariable Long id) {
 
 		Product product = productQueryService.findProductById(id);
@@ -645,7 +645,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/stockEntryBundle/{id}")
+	@GetMapping("/stockEntryBundle/{id}")//not tested
 	public ResponseEntity<StockEntryBundle> getStockEntryBundle(@PathVariable Long id) {
 
 		StockEntry stockEntry = productQueryService.findStockEntryById(id);
@@ -683,11 +683,11 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/auxilarylineitems/{iDPcode}")
-	public ResponseEntity<Page<AuxilaryLineItem>> getAuxilaryLineItemsByStoreId(@PathVariable String iDPcode,
+	@GetMapping("/auxilarylineitems/{idpCode}")
+	public ResponseEntity<Page<AuxilaryLineItem>> getAuxilaryLineItemsByIdpCode(@PathVariable String idpCode,
 			Pageable pageable) {
-		log.debug("<<<<<<<<<<<< getAuxilaryLineItemsByStoreId >>>>>>>>>", iDPcode);
-		return ResponseEntity.ok().body(productQueryService.findAuxilaryLineItemsByIDPcode(iDPcode, pageable));
+		log.debug("<<<<<<<<<<<< getAuxilaryLineItemsByStoreId >>>>>>>>>", idpCode);
+		return ResponseEntity.ok().body(productQueryService.findAuxilaryLineItemsByIDPcode(idpCode, pageable));
 
 	}
 
@@ -698,8 +698,8 @@ public class QueryResource {
 	 * @return
 	 */
 	@GetMapping("/UOM/{iDPcode}")
-	public ResponseEntity<Page<UOM>> findUOMByIDPcode(@PathVariable String iDPcode, Pageable pageable) {
-		return ResponseEntity.ok().body(productQueryService.findUOMByIDPcode(iDPcode, pageable));
+	public ResponseEntity<Page<UOM>> findUOMByIdpCode(@PathVariable String idpCode, Pageable pageable) {
+		return ResponseEntity.ok().body(productQueryService.findUOMByIDPcode(idpCode, pageable));
 	}
 
 	/**
