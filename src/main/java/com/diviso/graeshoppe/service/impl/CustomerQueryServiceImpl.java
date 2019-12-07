@@ -42,7 +42,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 
-	//@Autowired
+	@Autowired
 	private RestHighLevelClient restHighLevelClient;
 
 
@@ -50,11 +50,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 	private ServiceUtility serviceUtility;
 	
 	
-	  public CustomerQueryServiceImpl(
-	  RestHighLevelClient restHighLevelClient) {
-		  
-	  }
-	  //this.restHighLevelClient = restHighLevelClient; }
+
 	 
 
 	/**
