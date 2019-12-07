@@ -59,7 +59,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("userId", storeId)).sort("date", SortOrder.DESC);
+		builder.query(termQuery("userId.keyword", storeId)).sort("date", SortOrder.DESC);
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("sale", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);

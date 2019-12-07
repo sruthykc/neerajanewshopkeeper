@@ -241,7 +241,7 @@ public class QueryResource {
 	 * @description find a product as input an id
 	 */
 
-	@GetMapping("/products/{id}")
+	@GetMapping("/products/{id}") //its working
 	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
 		return this.productResourceApi.getProductUsingGET(id);
 	}
@@ -343,7 +343,7 @@ public class QueryResource {
 	 * 
 	 * @description getting all category details as input a name and storeid
 	 */
-	@GetMapping("/findCategoryBySearchTerm/{searchTerm}/{storeId}")
+	@GetMapping("/findCategoryBySearchTerm/{searchTerm}/{storeId}") //it's wprking
 	public Page<Category> findAllCategoryBySearchTermAndStoreId(@PathVariable String searchTerm,
 			@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<<<<< findAllCategoryBySearchTermAndStoreId >>>>>>>>>>>>", searchTerm, storeId);
@@ -358,7 +358,7 @@ public class QueryResource {
 	 * 
 	 * @description findAll categories without image as input a idpcode
 	 */
-	@GetMapping("/findAllCategoriesWithOutImage/{iDPcode}")
+	@GetMapping("/findAllCategoriesWithOutImage/{iDPcode}")					//it's working
 	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage(@PathVariable String iDPcode,
 			Pageable pageable) {
 		return ResponseEntity.ok()
@@ -377,7 +377,7 @@ public class QueryResource {
 	 * 
 	 * @description update category
 	 */
-	@PutMapping("/categories")
+	@PutMapping("/categories")   //
 	public ResponseEntity<CategoryDTO> updateCategory(CategoryDTO categoryDTO) {
 
 		return categoryResourceApi.updateCategoryUsingPUT(categoryDTO);
@@ -393,7 +393,7 @@ public class QueryResource {
 	 * 
 	 * @description getting all details in sort
 	 */
-	@GetMapping("/ticket-lines")
+	@GetMapping("/ticket-lines")				//its working
 	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) {
 		return ticketLineResourceApi.getAllTicketLinesUsingGET(page, size, sort);
 	}
@@ -431,7 +431,7 @@ public class QueryResource {
 	 * 
 	 * @description find sales by id
 	 */
-	@GetMapping("/sales/{id}")
+	@GetMapping("/sales/{id}")				//it's working
 	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
 		return this.saleResourceApi.getSaleUsingGET(id);
 	}
@@ -442,7 +442,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return sale page
 	 */
-	@GetMapping("/findallsales/{storeId}")
+	@GetMapping("/findallsales/{storeId}")			//it's working
 	public Page<Sale> findSales(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<<<< findSales >>>>>>>>", storeId);
 		return saleQueryService.findSales(storeId, pageable);
@@ -454,7 +454,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/sales/combined/{storeId}")
+	@GetMapping("/sales/combined/{storeId}")				//it's working
 	public ResponseEntity<Page<SaleAggregate>> findAllSaleAggregates(@PathVariable String storeId, Pageable pageable) {
 		List<SaleAggregate> sales = new ArrayList<SaleAggregate>();
 		this.findSales(storeId, pageable).getContent().forEach(sale -> {
@@ -486,7 +486,7 @@ public class QueryResource {
 	 * 
 	 * @description getting all stock entry as input a storeId
 	 */
-	@GetMapping("/stock-entries/{storeId}")
+	@GetMapping("/stock-entries/{storeId}")			// no data
 	public ResponseEntity<Page<StockEntry>> findAllStockEntries(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<< findAllStockEntries >>>>>>>>>", storeId);
 		return ResponseEntity.ok().body(productQueryService.findAllStockEntries(storeId, pageable));
@@ -499,7 +499,7 @@ public class QueryResource {
 	 * 
 	 * @description find one stock entries
 	 */
-	@GetMapping("/stock-entries/findbyid/{id}")
+	@GetMapping("/stock-entries/findbyid/{id}")// not tested
 	public ResponseEntity<StockEntryDTO> findOneStockEntry(@PathVariable Long id) {
 		return this.stockEntryResourceApi.getStockEntryUsingGET(id);
 	}
@@ -512,7 +512,7 @@ public class QueryResource {
 	 * @param sort
 	 * @return
 	 */
-	@GetMapping("/stock-current/{searchTerm}")
+	@GetMapping("/stock-current/{searchTerm}") 			// it's working
 	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
 			Integer size, ArrayList<String> sort) {
 		return this.stockCurrentResourceApi.searchStockCurrentsUsingGET(searchTerm, page, size, sort);
@@ -525,7 +525,7 @@ public class QueryResource {
 		return this.storeQueryService.findStoreByRegNo(regNo);
 	}
 
-	@GetMapping("/storeDTO/{regNo}")
+	@GetMapping("/storeDTO/{regNo}")			// it's working
 	public StoreDTO findStoreDTOByRegNo(@PathVariable String regNo) {
 		Store store = storeQueryService.findStoreByRegNo(regNo);
 
@@ -697,7 +697,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/UOM/{idpCode}")
+	@GetMapping("/UOM/{idpCode}") 										//7 12 19 it's working 
 	public ResponseEntity<Page<UOM>> findUOMByIdpCode(@PathVariable String idpCode, Pageable pageable) {
 		return ResponseEntity.ok().body(productQueryService.findUOMByIDPcode(idpCode, pageable));
 	}
@@ -737,7 +737,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/combolineitem/{id}")//not working
+	@GetMapping("/combolineitem/{id}")//its working
 	public ResponseEntity<ComboLineItemDTO> findCombolineItem(@PathVariable Long id) {
 		return comboLineItemResourceApi.getComboLineItemUsingGET(id);
 	}
@@ -747,7 +747,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/banner/{id}")//not working
+	@GetMapping("/banner/{id}")//its working
 	public ResponseEntity<BannerDTO> findBanner(@PathVariable Long id) {
 		return bannerResourceApi.getBannerUsingGET(id);
 	}
@@ -806,15 +806,15 @@ public class QueryResource {
 	public ResponseEntity<UOM> findUOMById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(productQueryService.findUOMById(id));
 	}
-
+// ADD Pageable for return page
 	/**
 	 * 
 	 * @param storeId
 	 * @return
 	 */
 	@GetMapping("/store-banners/{storeId}") // 26 11 19 partially working
-	public ResponseEntity<Page<Banner>> findBannerByStoreId(@PathVariable String storeId) {
-		return ResponseEntity.ok().body(storeQueryService.findBannersByStoreId(storeId));
+	public ResponseEntity<Page<Banner>> findBannerByStoreId(@PathVariable String storeId,Pageable pageable ) {
+		return ResponseEntity.ok().body(storeQueryService.findBannersByStoreId(storeId,pageable));
 	}
 
 	/**
@@ -1057,7 +1057,7 @@ public class QueryResource {
 	 * 
 	 * @document
 	 */
-	@GetMapping("/findallentrylineitems/{id}")//not working
+	@GetMapping("/findallentrylineitems/{id}")// no data
 	public Page<EntryLineItem> findAllEntryLineItemsByStockEntryId(@PathVariable String id, Pageable pageable) {
 
 		return productQueryService.findAllEntryLineItemsByStockEntryId(id, pageable);

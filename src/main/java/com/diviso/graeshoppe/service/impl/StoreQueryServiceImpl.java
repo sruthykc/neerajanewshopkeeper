@@ -285,7 +285,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * @param storeId
 	 */
 	@Override
-	public Page<Banner> findBannersByStoreId(String storeId) {
+	public Page<Banner> findBannersByStoreId(String storeId,Pageable pageable ) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -298,7 +298,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		builder.query(termQuery("store.regNo.keyword", storeId));
 
-		Pageable pageable = PageRequest.of(2, 20);
+		//Pageable pageable = PageRequest.of(2, 20);
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("banner", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
 
@@ -325,7 +325,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			 * excludeFields = new String[] { "category.*" };
 			 * searchSourceBuilder.fetchSource(includeFields, excludeFields);
 			 */
-			searchSourceBuilder.query(termQuery("store.regNo",regNo));
+			searchSourceBuilder.query(termQuery("store.regNo.keyword",regNo));
 
 			SearchRequest searchRequest = new SearchRequest("banner");
 			searchRequest.source(searchSourceBuilder);

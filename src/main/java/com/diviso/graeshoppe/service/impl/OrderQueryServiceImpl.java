@@ -312,7 +312,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(QueryBuilders.boolQuery().must(termQuery("storeId", storeId))
+		builder.query(QueryBuilders.boolQuery().must(termQuery("storeId.keyword", storeId))
 				.must(rangeQuery("date").gte(from).lte(to)));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
