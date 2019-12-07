@@ -12,5 +12,5 @@ public interface SaleQueryService {
 
 	public Page<Sale> findSales(String storeId, Pageable pageable);
 
-	public List<TicketLine> findTicketLinesBySaleId(Long saleId, Pageable pageable);
+	public Page<TicketLine> findTicketLinesBySaleId(Long saleId, Pageable pageable);
 }
