@@ -156,7 +156,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		builder.query(termQuery("storeId.keyword", storeId)).sort("id", SortOrder.DESC);
 
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("customer", pageable.getPageSize(),
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
 
 		SearchResponse searchResponse = null;
