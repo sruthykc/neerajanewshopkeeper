@@ -93,7 +93,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("sale.id", saleId));
+		builder.query(termQuery("id", 5));
 		
 	
 
