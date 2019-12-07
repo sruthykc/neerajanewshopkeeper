@@ -520,7 +520,7 @@ public class QueryResource {
 
 	///////////////////////////////
 
-	@GetMapping("/stores/{regNo}") // it's working
+	@GetMapping("/stores/{regNo}") // 07 12 19 it's working
 	public Store findStoreByRegNo(@PathVariable String regNo) {
 		return this.storeQueryService.findStoreByRegNo(regNo);
 	}
@@ -541,8 +541,10 @@ public class QueryResource {
 	 * @return
 	 */
 	@GetMapping("/storeBundle/{regNo}")
-	public ResponseEntity<StoreBundleDTO> getStoreBundle(@PathVariable String regNo, Integer page, Integer size,
-			ArrayList<String> sort) {
+	public ResponseEntity<StoreBundleDTO> getStoreBundle(
+			@PathVariable String regNo/*
+										 * , Integer page, Integer size, ArrayList<String> sort
+										 */) {
 
 		Store store = storeQueryService.findStoreByRegNo(regNo);
 
