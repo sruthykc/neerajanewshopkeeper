@@ -232,7 +232,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("receiverId", receiverId)).sort("id", SortOrder.DESC);
+		builder.query(termQuery("receiverId.keyword", receiverId)).sort("id", SortOrder.DESC);
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("notification", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);

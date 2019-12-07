@@ -1111,7 +1111,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("iDPcode", idpcode));
+		builder.query(termQuery("iDPcode.keyword", idpcode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("location", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -1145,7 +1145,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("iDPcode", idpcode));
+		builder.query(termQuery("iDPcode.keyword", idpcode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("reason", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -1180,7 +1180,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("stockentry.id", id));
+		builder.query(termQuery("stockentry.id.keyword", id));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("entrylineitem", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);

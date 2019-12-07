@@ -818,7 +818,7 @@ public class QueryResource {
 	}
 
 	/**
-	 * 
+	 * @deprecated
 	 * @param assignee
 	 * @param assigneeLike
 	 * @param candidateGroup
@@ -859,7 +859,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/findAuxItemByOrderLineId/{orderLineId}") // 26 11 19 no data in databazse
+	@GetMapping("/findAuxItemByOrderLineId/{orderLineId}") // it's working
 	public ResponseEntity<Page<AuxItem>> findAuxItemByOrderLineId(@PathVariable Long orderLineId, Pageable pageable) {
 		Page<AuxItem> auxItem = reportQueryService.findAuxItemByOrderLineId(orderLineId, pageable);
 		return ResponseEntity.ok().body(auxItem);
@@ -871,7 +871,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/findComboItemByOrderLineId/{orderLineId}") // 26 11 19 no data in databazse
+	@GetMapping("/findComboItemByOrderLineId/{orderLineId}") // 26 11 19 no data in databazse Not tested
 	public ResponseEntity<Page<ComboItem>> findComboItemByOrderLineId(@PathVariable Long orderLineId,
 			Pageable pageable) {
 		Page<ComboItem> comboItem = reportQueryService.findComboItemByOrderLineId(orderLineId, pageable);
@@ -895,7 +895,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/orderLineByOrderMasterId/{orderMasterId}")
+	@GetMapping("/orderLineByOrderMasterId/{orderMasterId}")//not tested no data in database
 	public ResponseEntity<Page<OrderLine>> findOrderLineByOrderMasterId(@PathVariable Long orderMasterId,
 			Pageable pageable) {
 		Page<OrderLine> orderLine = reportQueryService.findOrderLineByOrderMasterId(orderMasterId, pageable);
@@ -942,7 +942,7 @@ public class QueryResource {
 	 * @param orderNumber
 	 * @return
 	 */
-	@GetMapping("/getOrderDocket/{orderNumber}")
+	@GetMapping("/getOrderDocket/{orderNumber}")//its working
 	public ResponseEntity<PdfDTO> getOrderDocket(@PathVariable String orderNumber) {
 		PdfDTO pdf = new PdfDTO();
 		pdf.setPdf(this.reportResourceApi.getReportWithAuxAndComboAsPdfUsingGET(orderNumber).getBody());
@@ -955,7 +955,7 @@ public class QueryResource {
 	 * @param orderNumber
 	 * @return
 	 */
-	@GetMapping("/exportDocket/{orderNumber}")
+	@GetMapping("/exportDocket/{orderNumber}")//tested working
 	public ResponseEntity<byte[]> exportOrderDocket(@PathVariable String orderNumber) {
 		return reportResourceApi.getReportAsPdfUsingGET(orderNumber);
 
@@ -967,7 +967,7 @@ public class QueryResource {
 	 * @param storeId
 	 * @return
 	 */
-	@GetMapping("/ordersummary/{date}/{storeId}")
+	@GetMapping("/ordersummary/{date}/{storeId}")//its working
 	public ResponseEntity<PdfDTO> getOrderSummary(@PathVariable String date, @PathVariable String storeId) {
 		PdfDTO pdf = new PdfDTO();
 		pdf.setPdf(this.reportResourceApi.getReportSummaryAsPdfUsingGET(date, storeId).getBody());
@@ -981,7 +981,7 @@ public class QueryResource {
 	 * @param storeName
 	 * @return
 	 */
-	@GetMapping("/ordersummaryview/{expectedDelivery}/{storeName}")
+	@GetMapping("/ordersummaryview/{expectedDelivery}/{storeName}")//its working
 	public ResponseEntity<ReportSummary> createReportSummary(@PathVariable String expectedDelivery,
 			@PathVariable String storeName) {
 		return reportResourceApi.createReportSummaryUsingGET1(expectedDelivery, storeName);
@@ -1018,7 +1018,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/stock-entry/{id}")
+	@GetMapping("/stock-entry/{id}")//not tested
 	public ResponseEntity<StockEntryDTO> findStockEntryById(Long id) {
 
 		return stockEntryResourceApi.getStockEntryUsingGET(id);
@@ -1044,7 +1044,7 @@ public class QueryResource {
 	 * @document
 	 */
 
-	@GetMapping("/reason/{idpcode}")
+	@GetMapping("/reason/{idpcode}")//not working
 	public Page<Reason> findReasonByRegNo(@PathVariable String idpcode, Pageable pageable) {
 		return this.productQueryService.findReasonByIdpcode(idpcode, pageable);
 	}
@@ -1057,7 +1057,7 @@ public class QueryResource {
 	 * 
 	 * @document
 	 */
-	@GetMapping("/findallentrylineitems/{id}")
+	@GetMapping("/findallentrylineitems/{id}")//not working
 	public Page<EntryLineItem> findAllEntryLineItemsByStockEntryId(@PathVariable String id, Pageable pageable) {
 
 		return productQueryService.findAllEntryLineItemsByStockEntryId(id, pageable);
@@ -1090,7 +1090,7 @@ public class QueryResource {
 	 * 
 	 * @document getting allproducts as pdf for input a idpcode
 	 */
-	@GetMapping("/report/allproducts/{idpcode}")
+	@GetMapping("/report/allproducts/{idpcode}")//its working
 	public ResponseEntity<PdfDTO> getAllProducts(@PathVariable String idpcode) {
 		PdfDTO pdf = new PdfDTO();
 		pdf.setPdf(this.productResourceApi.exportProductListAsPdfUsingGET(idpcode).getBody());
@@ -1105,7 +1105,7 @@ public class QueryResource {
 	 * 
 	 * @document getallcategories by idpcode
 	 */
-	@GetMapping("/report/allcategories/{idpcode}")
+	@GetMapping("/report/allcategories/{idpcode}")//its working
 	public ResponseEntity<PdfDTO> getAllCategories(@PathVariable String idpcode) {
 		PdfDTO pdf = new PdfDTO();
 		pdf.setPdf(this.categoryResourceApi.exportCategoryListAsPdfUsingGET(idpcode).getBody());
@@ -1120,7 +1120,7 @@ public class QueryResource {
 	 * 
 	 * @document return a details from sockcurrentdetails
 	 */
-	@GetMapping("/report/currentstock/{idpcode}")
+	@GetMapping("/report/currentstock/{idpcode}")//its working
 	public ResponseEntity<PdfDTO> getCurrentStock(@PathVariable String idpcode) {
 		PdfDTO pdf = new PdfDTO();
 		pdf.setPdf(this.stockCurrentResourceApi.exportStockCurrentListAsPdfUsingGET(idpcode).getBody());
