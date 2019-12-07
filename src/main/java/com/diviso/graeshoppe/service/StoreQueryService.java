@@ -39,9 +39,9 @@ public interface StoreQueryService {
 	 * @param regNo
 	 * @return
 	 */
-	public Page<Banner> findBannersByStoreId(String regNo);
+	public Page<Banner> findBannersByStoreId(String regNo,Pageable pageable );
 
-	List<Banner> findAllBannersByStoreId(String regNo);
+	public List<Banner> findAllBannersByStoreId(String regNo);
 
 
 }

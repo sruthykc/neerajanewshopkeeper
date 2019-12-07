@@ -467,7 +467,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("product.iDPcode", storeId));
+		builder.query(termQuery("product.iDPcode.keyword", storeId));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("entrylineitem", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -501,7 +501,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("iDPcode", storeId));
+		builder.query(termQuery("iDPcode.keyword", storeId));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("stockcurrent", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -535,7 +535,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("iDPcode", storeId));
+		builder.query(termQuery("iDPcode.keyword", storeId));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("stockentry", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -570,7 +570,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 */
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.category.id", categoryId))
-				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
+				.must(QueryBuilders.termQuery("iDPcode.keyword", storeId)));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("stockcurrent", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -603,7 +603,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 */
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.id", productId))
-				.must(QueryBuilders.termQuery("product.iDPcode", storeId)));
+				.must(QueryBuilders.termQuery("product.iDPcode.keyword", storeId)));
 
 		SearchRequest searchRequest = new SearchRequest("stockcurrent");
 
@@ -636,7 +636,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 */
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.id", productId))
-				.must(QueryBuilders.termQuery("product.userId", storeId)));
+				.must(QueryBuilders.termQuery("product.userId.keyword", storeId)));
 
 		SearchRequest searchRequest = new SearchRequest("stockentry");
 
@@ -670,8 +670,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 */
 
 		builder.query(QueryBuilders.boolQuery()
-				.must(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.name", name))
-						.must(QueryBuilders.matchQuery("product.iDPcode", storeId))));
+				.must(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.name", name))
+						.must(QueryBuilders.termQuery("product.iDPcode.keyword", storeId))));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("stockcurrent", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -755,7 +755,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("iDPcode", iDPcode));
+		builder.query(termQuery("iDPcode.keyword", iDPcode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("uom", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -1253,8 +1253,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name", searchTerm).prefixLength(3))
-				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
+		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name.keyword", searchTerm).prefixLength(3))
+				.must(QueryBuilders.termQuery("iDPcode.keyword", storeId)));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -1287,7 +1287,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("iDPcode", iDPcode)));
+		builder.query(QueryBuilders.termQuery("iDPcode.keyword", iDPcode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);

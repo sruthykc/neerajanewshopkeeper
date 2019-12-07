@@ -97,12 +97,12 @@ public class TicketLine implements Serializable {
     }
 
     public TicketLine total(Double total) {
-        this.total =  price*quantity;
+        this.total = total; /* price*quantity;*/
         return this;
     }
 
     public void setTotal(Double total) {
-        this.total = price*quantity;
+        this.total = total;/*price*quantity;*/
     }
 
     public Sale getSale() {

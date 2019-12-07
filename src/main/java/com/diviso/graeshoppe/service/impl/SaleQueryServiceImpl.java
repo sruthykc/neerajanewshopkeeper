@@ -59,7 +59,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("userId", storeId)).sort("date", SortOrder.DESC);
+		builder.query(termQuery("userId.keyword", storeId)).sort("date", SortOrder.DESC);
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("sale", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -80,7 +80,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	 * @param saleId
 	 */
 	@Override
-	public List<TicketLine> findTicketLinesBySaleId(Long saleId) {
+	public Page<TicketLine> findTicketLinesBySaleId(Long saleId,	Pageable pageable) {
 		
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -93,9 +93,9 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("sale.id", saleId));
+		builder.query(termQuery("id", 5));
 		
-		Pageable pageable = PageRequest.of(2, 20);
+	
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("ticketline", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -107,7 +107,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		} catch (IOException e) { // TODO Auto-generated
 			e.printStackTrace();
 		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine()).getContent();
+		return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
 
 	}
 	

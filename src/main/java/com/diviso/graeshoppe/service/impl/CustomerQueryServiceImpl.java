@@ -42,7 +42,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 
-	//@Autowired
+	@Autowired
 	private RestHighLevelClient restHighLevelClient;
 
 
@@ -50,11 +50,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 	private ServiceUtility serviceUtility;
 	
 	
-	  public CustomerQueryServiceImpl(
-	  RestHighLevelClient restHighLevelClient) {
-		  
-	  }
-	  //this.restHighLevelClient = restHighLevelClient; }
+
 	 
 
 	/**
@@ -73,7 +69,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(/* matchQuery("name", "refe") *//* .prefixLength(3) */);
+		builder.query( matchQuery("name", searchTerm) );
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("customer", pageable.getPageSize(), pageable.getPageNumber(),
 				builder);
