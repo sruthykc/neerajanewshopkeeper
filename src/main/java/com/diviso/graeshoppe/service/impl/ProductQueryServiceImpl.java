@@ -718,7 +718,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("product.iDPcode", iDPcode));
+		builder.query(termQuery("product.iDPcode.keyword", iDPcode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("auxilarylineitem", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);

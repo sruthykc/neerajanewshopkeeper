@@ -668,7 +668,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/ordersbystoreId/{storeId}") // 26 11 19 not working
+	@GetMapping("/ordersbystoreId/{storeId}") // 26 11 19 its working
 	public Page<Order> findOrderLineByStoreId(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<<<< findOrderLineByStoreId >>>>>>>>>>", storeId);
 		return orderQueryService.findOrderByStoreId(storeId, pageable);
