@@ -2,6 +2,7 @@ package com.diviso.graeshoppe.service;
 
 import org.springframework.http.ResponseEntity;
 
+import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 
 public interface ProductCommandService {
@@ -11,5 +12,7 @@ public interface ProductCommandService {
 	public ResponseEntity<ProductDTO> updateProduct(ProductDTO productDTO);
 
     public void deleteProduct(Long id);
+    
+    public ResponseEntity<CategoryDTO> updateCategory(CategoryDTO categoryDTO);
 
 }

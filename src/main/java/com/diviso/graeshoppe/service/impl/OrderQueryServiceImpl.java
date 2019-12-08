@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
-
+import com.diviso.graeshoppe.client.report.api.OrderMasterResourceApi;
 import com.diviso.graeshoppe.service.OrderQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,6 +57,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 	@Autowired
 	private ServiceUtility serviceUtility;
+	
+	@Autowired
+	OrderMasterResourceApi orderMasterResourceApi;
+	
 
 	private RestHighLevelClient restHighLevelClient;
 

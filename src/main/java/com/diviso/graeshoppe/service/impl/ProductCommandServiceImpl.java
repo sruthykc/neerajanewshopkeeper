@@ -3,8 +3,11 @@ package com.diviso.graeshoppe.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
+import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
+import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.service.ProductCommandService;
 
@@ -13,6 +16,9 @@ public class ProductCommandServiceImpl implements ProductCommandService{
 	
 	@Autowired
 	private ProductResourceApi productResourceApi;
+	
+	@Autowired
+	CategoryResourceApi categoryResourceApi;
 
 	@Override
 	public ResponseEntity<ProductDTO> createProduct(ProductDTO productDTO) {
@@ -34,4 +40,19 @@ public class ProductCommandServiceImpl implements ProductCommandService{
 		
 	}
 
+	
+	/**
+	 * 
+	 * @param categoryDTO
+	 * @return category object
+	 * 
+	 * @description update category
+	 */
+
+	public ResponseEntity<CategoryDTO> updateCategory(CategoryDTO categoryDTO) {
+
+		return categoryResourceApi.updateCategoryUsingPUT(categoryDTO);
+
+	}
+	
 }

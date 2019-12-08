@@ -32,33 +32,47 @@ import org.springframework.data.domain.Pageable;
 //import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.client.order.model.Order;
+import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
+import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
+import com.diviso.graeshoppe.client.product.api.UomResourceApi;
 import com.diviso.graeshoppe.client.product.model.Address;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
+import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ComboLineItem;
 import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.EntryLineItem;
 import com.diviso.graeshoppe.client.product.model.Location;
 import com.diviso.graeshoppe.client.product.model.Product;
+import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.Reason;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.product.model.StockEntry;
 import com.diviso.graeshoppe.client.product.model.UOM;
+import com.diviso.graeshoppe.client.product.model.UOMDTO;
 import com.diviso.graeshoppe.domain.ResultBucket;
 import com.diviso.graeshoppe.service.ProductQueryService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.illud.freightgw.client.freight.model.Quotation;
-//import com.illud.freightgw.client.freight.model.QuotationDTO;
 
 @Service
 public class ProductQueryServiceImpl implements ProductQueryService {
 	@Autowired
 	private ServiceUtility serviceUtility;
+
+	@Autowired
+	UomResourceApi uomResourceApi;
+	
+	@Autowired
+	CategoryResourceApi categoryResourceApi;
+
+	@Autowired
+	private ProductResourceApi productResourceApi;
 
 	private RestHighLevelClient restHighLevelClient;
 
@@ -1303,5 +1317,39 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Category());
 
 	}
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
+	public ResponseEntity<UOMDTO> findUOM(Long id) {
+		return uomResourceApi.getUOMUsingGET(id);
+	}
+
+	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage( String iDPcode,
+			Pageable pageable) {
+		return ResponseEntity.ok()
+				.body(categoryResourceApi
+						.listToDToUsingPOST(findAllCategories(iDPcode, pageable).getContent())
+						.getBody().stream().map(c -> {
+							c.setImage(null);
+							return c;
+						}).collect(Collectors.toList()));
+	}
+	
+	
+	public ResponseEntity<CategoryDTO> findCategory( Long id) {
+		return categoryResourceApi.getCategoryUsingGET(id);
+	}
+	
+	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
+		return productResourceApi.getProductUsingGET(id);
+	}
+	
+	
+	
+	
+	
+	
 }

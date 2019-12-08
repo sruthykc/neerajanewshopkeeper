@@ -71,9 +71,7 @@ import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 @RestController
 @RequestMapping("/api/query")
 public class QueryResource {
-	/**
-	 * Rafeeq
-	 */
+	
 	@Autowired
 	ContactService contactService;
 
@@ -101,26 +99,11 @@ public class QueryResource {
 	@Autowired
 	SaleQueryService saleQueryService;
 
-	@Autowired
-	SaleResourceApi saleResourceApi;
 
-	@Autowired
-	UomResourceApi uomResourceApi;
-
-	@Autowired
-	CategoryResourceApi categoryResourceApi;
-
-	@Autowired
-	CustomerResourceApi customerResourceApi;
-
-	@Autowired
-	private ProductResourceApi productResourceApi;
-
-	@Autowired
-	private TicketLineResourceApi ticketLineResourceApi;
-
-	@Autowired
-	private ContactResourceApi contactResourceApi;
+	
+	
+	
+	
 
 	@Autowired
 	private StockCurrentResourceApi stockCurrentResourceApi;
@@ -161,8 +144,8 @@ public class QueryResource {
 	@Autowired
 	private ReportResourceApi reportResourceApi;
 
-	@Autowired
-	OrderMasterResourceApi orderMasterResourceApi;
+	/*@Autowired
+	OrderMasterResourceApi orderMasterResourceApi;*/
 
 	@Autowired
 	QueryResourceApi queryResourceApi;
@@ -243,7 +226,7 @@ public class QueryResource {
 
 	@GetMapping("/products/{id}") //its working
 	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
-		return this.productResourceApi.getProductUsingGET(id);
+		return this.productQueryService. findProduct(id);
 	}
 
 	////////////////////////
@@ -269,12 +252,12 @@ public class QueryResource {
 	@GetMapping("/customers/{id}")									// 06 12 19 it's working
 	public ResponseEntity<CustomerDTO> findCustomerById(@PathVariable Long id) {
 		log.debug("<<<<<<<<< findCustomerById >>>>>>>>", id);
-		return this.customerResourceApi.getCustomerUsingGET(id);
+		return customerQueryService.findCustomerById(id);
 	}
 
 	@GetMapping("/contacts/{id}")									// 6 12 19 it's working
 	public ResponseEntity<ContactDTO> findContactById(@PathVariable Long id) {
-		return this.contactResourceApi.getContactUsingGET(id);
+		return customerQueryService.findContactById(id);
 	}
 
 	@GetMapping("/contact/{mobileNumber}")							// 6 12 19 it,s working 
@@ -313,7 +296,7 @@ public class QueryResource {
 	@GetMapping("/customers/export")											//not working
 	public ResponseEntity<PdfDTO> exportCustomers() {
 		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.customerResourceApi.getPdfAllCustomersUsingGET().getBody());
+		//pdf.setPdf(this.customerResourceApi.getPdfAllCustomersUsingGET().getBody());
 		pdf.setContentType("application/pdf");
 		return ResponseEntity.ok().body(pdf);
 	}
@@ -361,13 +344,7 @@ public class QueryResource {
 	@GetMapping("/findAllCategoriesWithOutImage/{iDPcode}")					//it's working
 	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage(@PathVariable String iDPcode,
 			Pageable pageable) {
-		return ResponseEntity.ok()
-				.body(categoryResourceApi
-						.listToDToUsingPOST(productQueryService.findAllCategories(iDPcode, pageable).getContent())
-						.getBody().stream().map(c -> {
-							c.setImage(null);
-							return c;
-						}).collect(Collectors.toList()));
+		return productQueryService.findAllCategoriesWithOutImage(iDPcode,pageable);
 	}
 
 	/**
@@ -377,12 +354,12 @@ public class QueryResource {
 	 * 
 	 * @description update category
 	 */
-	@PutMapping("/categories")   //
+/*	@PutMapping("/categories")   //
 	public ResponseEntity<CategoryDTO> updateCategory(CategoryDTO categoryDTO) {
 
 		return categoryResourceApi.updateCategoryUsingPUT(categoryDTO);
 
-	}
+	}*/
 
 	/**
 	 * 
@@ -395,7 +372,7 @@ public class QueryResource {
 	 */
 	@GetMapping("/ticket-lines")				//its working
 	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) {
-		return ticketLineResourceApi.getAllTicketLinesUsingGET(page, size, sort);
+		return saleQueryService.findAllTicketlines(page, size, sort);
 	}
 
 	/**
@@ -419,22 +396,12 @@ public class QueryResource {
 	 */
 	@GetMapping("/findOneTicketLines/{id}")//its working
 	public ResponseEntity<TicketLineDTO> findOneTicketLines(@PathVariable Long id) {
-		return ticketLineResourceApi.getTicketLineUsingGET(id);
+		return saleQueryService.findOneTicketLines(id);
 	}
 
 	//////////////////////////////////
 
-	/**
-	 * 
-	 * @param id
-	 * @return sale
-	 * 
-	 * @description find sales by id
-	 */
-	@GetMapping("/sales/{id}")				//it's working
-	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
-		return this.saleResourceApi.getSaleUsingGET(id);
-	}
+	
 
 	/**
 	 * 
@@ -708,7 +675,7 @@ public class QueryResource {
 	 */
 	@GetMapping("/uom/{id}")//its working
 	public ResponseEntity<UOMDTO> findUOM(@PathVariable Long id) {
-		return uomResourceApi.getUOMUsingGET(id);
+		return productQueryService.findUOM(id);
 	}
 
 	/**
@@ -718,7 +685,7 @@ public class QueryResource {
 	 */
 	@GetMapping("/category/{id}")//its working
 	public ResponseEntity<CategoryDTO> findCategory(@PathVariable Long id) {
-		return categoryResourceApi.getCategoryUsingGET(id);
+		return productQueryService.findCategory(id);
 	}
 
 	/**
@@ -1091,10 +1058,7 @@ public class QueryResource {
 	 */
 	@GetMapping("/report/allproducts/{idpcode}")//its working
 	public ResponseEntity<PdfDTO> getAllProducts(@PathVariable String idpcode) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.productResourceApi.exportProductListAsPdfUsingGET(idpcode).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+		return reportQueryService.getAllProducts(idpcode);
 	}
 
 	/**
@@ -1106,10 +1070,7 @@ public class QueryResource {
 	 */
 	@GetMapping("/report/allcategories/{idpcode}")//its working
 	public ResponseEntity<PdfDTO> getAllCategories(@PathVariable String idpcode) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.categoryResourceApi.exportCategoryListAsPdfUsingGET(idpcode).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+	return	reportQueryService.getAllCategories(idpcode);
 	}
 
 	/**
@@ -1126,5 +1087,8 @@ public class QueryResource {
 		pdf.setContentType("application/pdf");
 		return ResponseEntity.ok().body(pdf);
 	}
-
+	@GetMapping("/sales/{id}")	
+	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
+		return saleQueryService.findSaleById(id);
+	}
 }

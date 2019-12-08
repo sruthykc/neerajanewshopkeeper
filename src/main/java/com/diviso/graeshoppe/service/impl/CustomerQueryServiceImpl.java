@@ -15,10 +15,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
+import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
+import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.Customer;
+import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.service.CustomerQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,12 +49,15 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 
 	@Autowired
 	private RestHighLevelClient restHighLevelClient;
-
-
+	@Autowired
+	CustomerResourceApi customerResourceApi;
 	@Autowired
 	private ServiceUtility serviceUtility;
 	
-	
+
+	@Autowired
+	private ContactResourceApi contactResourceApi;
+
 
 	 
 
@@ -114,6 +122,11 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		}
 		return serviceUtility.getPageResult(searchResponse, pageable, new Customer());
 	}
-
-
+	public ResponseEntity<CustomerDTO> findCustomerById(Long id) {
+		log.debug("<<<<<<<<< findCustomerById >>>>>>>>", id);
+		return customerResourceApi.getCustomerUsingGET(id);
+	}
+	public ResponseEntity<ContactDTO> findContactById( Long id) {
+		return this.contactResourceApi.getContactUsingGET(id);
+	}
 }

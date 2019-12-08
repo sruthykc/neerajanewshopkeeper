@@ -4,19 +4,24 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.client.product.model.Address;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
+import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ComboLineItem;
 import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.EntryLineItem;
 import com.diviso.graeshoppe.client.product.model.Location;
 import com.diviso.graeshoppe.client.product.model.Product;
+import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.Reason;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.product.model.StockEntry;
 import com.diviso.graeshoppe.client.product.model.UOM;
+import com.diviso.graeshoppe.client.product.model.UOMDTO;
 
 public interface ProductQueryService {
 
@@ -187,6 +192,16 @@ public interface ProductQueryService {
 	 * @return
 	 */
 	public Page<Category> findAllCategoryBySearchTermAndStoreId(String searchTerm, String storeId, Pageable pageable);
+
+	public ResponseEntity<UOMDTO> findUOM(Long id);
+	
+	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage( String iDPcode,
+			Pageable pageable);
+
+	public ResponseEntity<CategoryDTO> findCategory( Long id);
+	public ResponseEntity<ProductDTO> findProduct( Long id); 
+	
+
 
 
 }

@@ -14,15 +14,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
+import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.model.Location;
 import com.diviso.graeshoppe.client.product.model.StockEntry;
 import com.diviso.graeshoppe.client.report.model.AuxItem;
 import com.diviso.graeshoppe.client.report.model.ComboItem;
 import com.diviso.graeshoppe.client.report.model.OrderMaster;
 import com.diviso.graeshoppe.service.ReportQueryService;
+import com.diviso.graeshoppe.service.dto.PdfDTO;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,9 +42,10 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 	private ServiceUtility serviceUtility;
 
 	private RestHighLevelClient restHighLevelClient;
-
-	
-
+	@Autowired
+	CategoryResourceApi categoryResourceApi;
+	@Autowired
+	 ProductResourceApi productResourceApi;
 	public ReportQueryServiceImpl( RestHighLevelClient restHighLevelClient) {
 		
 		this.restHighLevelClient = restHighLevelClient;
@@ -186,6 +191,18 @@ public class ReportQueryServiceImpl implements ReportQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new com.diviso.graeshoppe.client.report.model.OrderLine());
 
 		
+	}
+	public ResponseEntity<PdfDTO> getAllCategories( String idpcode) {
+		PdfDTO pdf = new PdfDTO();
+		pdf.setPdf(this.categoryResourceApi.exportCategoryListAsPdfUsingGET(idpcode).getBody());
+		pdf.setContentType("application/pdf");
+		return ResponseEntity.ok().body(pdf);
+	}
+	public ResponseEntity<PdfDTO> getAllProducts( String idpcode) {
+		PdfDTO pdf = new PdfDTO();
+		pdf.setPdf(this.productResourceApi.exportProductListAsPdfUsingGET(idpcode).getBody());
+		pdf.setContentType("application/pdf");
+		return ResponseEntity.ok().body(pdf);
 	}
 
 	
