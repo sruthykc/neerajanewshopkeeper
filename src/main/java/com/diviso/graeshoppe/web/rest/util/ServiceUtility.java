@@ -1,9 +1,13 @@
 package com.diviso.graeshoppe.web.rest.util;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,77 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ServiceUtility {
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Autowired
+	RestHighLevelClient restHighLevelClient;
+	
+	public SearchResponse searchResponseForPage(String indexName, SearchSourceBuilder searchSourceBuilder,
+			Pageable pageable) {
+
+		SearchRequest searchRequest = generateSearchRequest(indexName, pageable.getPageSize(),
+				pageable.getPageNumber(), searchSourceBuilder);
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = null;
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
+		}
+		return searchResponse;
+	}
+
+	public  SearchResponse searchResponseForObject(String indexName, QueryBuilder dslQuery) {
+
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.query(dslQuery);
+
+		SearchRequest searchRequest = new SearchRequest(indexName);
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = null;
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
+		}
+		return searchResponse;
+	}
+
+	public  SearchResponse searchResponseForSourceBuilder(String indexName,SearchSourceBuilder searchSourceBuilder ) {
+
+		
+
+		SearchRequest searchRequest = new SearchRequest(indexName);
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = null;
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
+		}
+		return searchResponse;
+	}
+	
+	
+	
+	
+	
+	
+	public  <T> List getListResult(SearchResponse response, Pageable page, T t) {
+
+		SearchHit[] searchHit = response.getHits().getHits();
+
+		List<T> list = new ArrayList<>();
+
+		for (SearchHit hit : searchHit) {
+			//System.out.println("............T............"+t);
+			list.add((T)objectMapper.convertValue(hit.getSourceAsMap(), t.getClass()));
+		}
+
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public  <T> Page getPageResult(SearchResponse response, Pageable page, T t) {
 

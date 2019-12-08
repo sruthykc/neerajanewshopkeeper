@@ -16,14 +16,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.diviso.graeshoppe.client.store.api.BannerResourceApi;
+import com.diviso.graeshoppe.client.store.api.DeliveryInfoResourceApi;
+import com.diviso.graeshoppe.client.store.api.StoreAddressResourceApi;
+import com.diviso.graeshoppe.client.store.api.StoreResourceApi;
+import com.diviso.graeshoppe.client.store.api.StoreSettingsResourceApi;
+import com.diviso.graeshoppe.client.store.api.StoreTypeResourceApi;
+import com.diviso.graeshoppe.client.store.api.TypeResourceApi;
 import com.diviso.graeshoppe.client.store.model.Banner;
+import com.diviso.graeshoppe.client.store.model.BannerDTO;
 import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
+import com.diviso.graeshoppe.client.store.model.DeliveryInfoDTO;
 import com.diviso.graeshoppe.client.store.model.Review;
 import com.diviso.graeshoppe.client.store.model.Store;
+import com.diviso.graeshoppe.client.store.model.StoreAddress;
+import com.diviso.graeshoppe.client.store.model.StoreAddressDTO;
+import com.diviso.graeshoppe.client.store.model.StoreBundleDTO;
+import com.diviso.graeshoppe.client.store.model.StoreDTO;
+import com.diviso.graeshoppe.client.store.model.StoreSettings;
+import com.diviso.graeshoppe.client.store.model.StoreSettingsDTO;
 import com.diviso.graeshoppe.client.store.model.StoreType;
+import com.diviso.graeshoppe.client.store.model.StoreTypeDTO;
 import com.diviso.graeshoppe.client.store.model.Type;
+import com.diviso.graeshoppe.client.store.model.TypeDTO;
 import com.diviso.graeshoppe.client.store.model.UserRating;
 import com.diviso.graeshoppe.service.StoreQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
@@ -33,8 +52,28 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	@Autowired
 	private ServiceUtility serviceUtility ;
-
+	@Autowired
+	StoreResourceApi storeResourceApi;
 	
+	@Autowired
+	private DeliveryInfoResourceApi deliveryInfoResourceApi;
+
+	@Autowired
+	private TypeResourceApi typeResourceApi;
+
+	@Autowired
+	private StoreTypeResourceApi storeTypeResourceApi;
+
+	@Autowired
+	private BannerResourceApi bannerResourceApi;
+	
+	@Autowired
+	private StoreAddressResourceApi storeAddressResourceApi;
+
+	@Autowired
+	private StoreSettingsResourceApi storeSettingsResourceApi;
+
+
 	@Autowired
 	private ObjectMapper objectMapper;
 	
@@ -348,10 +387,80 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	
 	}
 		  
+	public StoreDTO findStoreDTOByRegNo( String regNo) {
+		Store store = findStoreByRegNo(regNo);
+
+		return storeResourceApi.getStoreUsingGET(store.getId()).getBody();
+	}
 	
+	public ResponseEntity<StoreBundleDTO> getStoreBundle( String regNo) {
+
+		Store store = findStoreByRegNo(regNo);
+
+		StoreAddress storeAdrress = store.getStoreAddress();
+
+		StoreSettings storeSettings = store.getStoreSettings();
+
+		StoreDTO storeDTO = new StoreDTO();
+
+		List<DeliveryInfoDTO> deliveryDTOs = new ArrayList<DeliveryInfoDTO>();
+
+		List<TypeDTO> typeDTOs = new ArrayList<TypeDTO>();
+
+		List<StoreTypeDTO> storeTypeDTO = new ArrayList<StoreTypeDTO>();
+
+		List<BannerDTO> bannerDTO = new ArrayList<BannerDTO>();
+
+		if (store != null) {
+			storeDTO = storeResourceApi.getStoreUsingGET(store.getId()).getBody();
+
+			deliveryDTOs.addAll(deliveryInfoResourceApi
+					.listToDtoUsingPOST1(findDeliveryInfoByStoreId(storeDTO.getId()).getContent())
+					.getBody());
+
+			typeDTOs.addAll(typeResourceApi.listToDtoUsingPOST3(findAllDeliveryTypesByStoreId(regNo))
+					.getBody());
+
+			storeTypeDTO.addAll(storeTypeResourceApi
+					.listToDtoUsingPOST2(findAllStoreTypesByStoreId(regNo)).getBody());
+
+			bannerDTO.addAll(
+					bannerResourceApi.listToDtoUsingPOST(findAllBannersByStoreId(regNo)).getBody());
+		}
+		StoreAddressDTO storeAddressDTO = new StoreAddressDTO();
+		if (storeAdrress != null) {
+			storeAddressDTO = storeAddressResourceApi.getStoreAddressUsingGET(storeAdrress.getId()).getBody();
+
+		}
+
+		StoreSettingsDTO storeSettingsDTO = new StoreSettingsDTO();
+
+		if (storeSettings != null) {
+			storeSettingsDTO = storeSettingsResourceApi.getStoreSettingsUsingGET(storeSettings.getId()).getBody();
+		}
+
+		StoreBundleDTO bundle = new StoreBundleDTO();
+
+		bundle.setStore(storeDTO);
+
+		bundle.setDeliveryInfos(deliveryDTOs);
+
+		bundle.setTypes(typeDTOs);
+
+		bundle.setBanners(bannerDTO);
+
+		bundle.setStoreType(storeTypeDTO);
+
+		bundle.setStoreSettings(storeSettingsDTO);
+
+		bundle.setStoreAddress(storeAddressDTO);
+
+		return ResponseEntity.ok().body(bundle);
+
+	}
 	
-	
-	
-	
+	public ResponseEntity<BannerDTO> findBanner(Long id) {
+		return bannerResourceApi.getBannerUsingGET(id);
+	}
 
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.client.store.model.*;
 
@@ -42,6 +44,10 @@ public interface StoreQueryService {
 	public Page<Banner> findBannersByStoreId(String regNo,Pageable pageable );
 
 	public List<Banner> findAllBannersByStoreId(String regNo);
-
+	public StoreDTO findStoreDTOByRegNo( String regNo);
+	
+	public ResponseEntity<StoreBundleDTO> getStoreBundle(String regNo);
+	public ResponseEntity<BannerDTO> findBanner(Long id) ;
+	
 
 }

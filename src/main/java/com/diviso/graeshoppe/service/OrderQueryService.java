@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.order.model.Notification;
+import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 
@@ -53,7 +54,7 @@ public interface OrderQueryService {
 	 * @param storeId
 	 * @return
 	 */
-	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId);
+	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId,Pageable pageable);
 	
 	/**
 	 * 
@@ -77,6 +78,11 @@ public interface OrderQueryService {
 
 	public Long orderCountByCustomerIdAndStoreId(String customerId, String storeId);
 	
-	
-
+	public ResponseEntity<OpenTask> getTaskDetails(String taskName,  String orderId, String storeId);
+	public ResponseEntity<List<Order>> getTasks(String assignee,
+			 String assigneeLike, String candidateGroup,
+			 String candidateGroups,
+			 String candidateUser,  String createdAfter,
+			String createdBefore,  String createdOn,
+			String name,  String nameLike);
 }
