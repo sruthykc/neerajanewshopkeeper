@@ -24,10 +24,10 @@ public interface CustomerQueryService {
 	 * @param pageable
 	 * @return
 	 */
-	public Page<Customer> findAllCustomersByName(String searchTerm, Pageable pageable);
+	public Page<Customer> findAllCustomersByName(String name, Pageable pageable);
 
 	//public Page<Customer> getAllCustomers(Pageable pageable);
-	public ResponseEntity<CustomerDTO> findCustomerById(Long id);
+	public /*ResponseEntity<CustomerDTO>*/CustomerDTO findCustomerById(Long id);
 	
-	public ResponseEntity<ContactDTO> findContactById( Long id) ;
+	public /*ResponseEntity<ContactDTO>*/ContactDTO findContactById( Long id) ;
 }
