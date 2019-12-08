@@ -50,4 +50,22 @@ public class CustomerCommandServiceImpl implements CustomerCommandService{
 		
 	}
 
+	@Override
+	public ResponseEntity<ContactDTO> createContact(ContactDTO contact) {
+		
+		return contactResourceApi.createContactUsingPOST(contact);
+	}
+
+	@Override
+	public ResponseEntity<ContactDTO> updateContact(ContactDTO contact) {
+		
+		return contactResourceApi.updateContactUsingPUT(contact);
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteContact(Long id) {
+		
+		return contactResourceApi.deleteContactUsingDELETE(id);
+	}
+
 }
