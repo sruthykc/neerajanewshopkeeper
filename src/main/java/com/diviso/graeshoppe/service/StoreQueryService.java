@@ -12,7 +12,7 @@ import com.diviso.graeshoppe.client.store.model.*;
 
 public interface StoreQueryService {
 	
-	public Page<Review> findAllReviews(String storeId, Pageable pageable);
+	//public Page<Review> findAllReviews(String storeId, Pageable pageable);
 	
 	public Page<UserRating> findAllUserRatings(String storeId, Pageable pageable);
 	

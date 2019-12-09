@@ -47,14 +47,15 @@ import com.diviso.graeshoppe.client.store.model.UserRating;
 import com.diviso.graeshoppe.service.StoreQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 public class StoreQueryServiceImpl implements StoreQueryService {
 
 	@Autowired
-	private ServiceUtility serviceUtility ;
+	private ServiceUtility serviceUtility;
 	@Autowired
 	StoreResourceApi storeResourceApi;
-	
+
 	@Autowired
 	private DeliveryInfoResourceApi deliveryInfoResourceApi;
 
@@ -66,64 +67,61 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	@Autowired
 	private BannerResourceApi bannerResourceApi;
-	
+
 	@Autowired
 	private StoreAddressResourceApi storeAddressResourceApi;
 
 	@Autowired
 	private StoreSettingsResourceApi storeSettingsResourceApi;
 
-
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	private RestHighLevelClient restHighLevelClient;
 
-
 	public StoreQueryServiceImpl(RestHighLevelClient restHighLevelClient) {
-		
+
 		this.restHighLevelClient = restHighLevelClient;
 	}
-	
+
 	/**
 	 * @param storeId
 	 * @param pageable
 	 */
-	@Override
-	public Page<Review> findAllReviews(String storeId, Pageable pageable) {
-		
-		SearchSourceBuilder builder = new SearchSourceBuilder();
+	/*
+	 * @Override public Page<Review> findAllReviews(String storeId, Pageable
+	 * pageable) {
+	 * 
+	 * SearchSourceBuilder builder = new SearchSourceBuilder();
+	 * 
+	 * 
+	 * String[] include = new String[] { "" };
+	 * 
+	 * String[] exclude = new String[] {};
+	 * 
+	 * builder.fetchSource(include, exclude);
+	 * 
+	 * 
+	 * builder.query(termQuery("store.regNo", storeId));
+	 * 
+	 * SearchRequest searchRequest = serviceUtility.generateSearchRequest("review",
+	 * pageable.getPageSize(), pageable.getPageNumber(), builder);
+	 * 
+	 * SearchResponse searchResponse = null;
+	 * 
+	 * try { searchResponse = restHighLevelClient.search(searchRequest,
+	 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+	 * e.printStackTrace(); } return serviceUtility.getPageResult(searchResponse,
+	 * pageable, new Review()); }
+	 */
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
-		builder.query(termQuery("store.regNo", storeId));
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("review", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new Review());
-	}
-	
 	/**
 	 * @param storeId
 	 * @param pageable
 	 */
 	@Override
 	public Page<UserRating> findAllUserRatings(String storeId, Pageable pageable) {
-		
+
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -147,15 +145,15 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			e.printStackTrace();
 		}
 		return serviceUtility.getPageResult(searchResponse, pageable, new UserRating());
-	
+
 	}
-	
+
 	/**
 	 * @param regNo
 	 */
 	@Override
 	public Store findStoreByRegNo(String regNo) {
-		
+
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -182,8 +180,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return serviceUtility.getObjectResult(searchResponse, new Store());
 
 	}
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -196,7 +193,6 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 */
 	@Override
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(Long id) {
-		
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
@@ -222,12 +218,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			e.printStackTrace();
 		}
 		return serviceUtility.getPageResult(searchResponse, pageable, new DeliveryInfo());
-	
 
 	}
 
-	
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -265,7 +258,6 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			e.printStackTrace();
 		}
 		Page<DeliveryInfo> deliveryinfos = serviceUtility.getPageResult(searchResponse, pageable, new Type());
-	
 
 		List<Type> types = new ArrayList<Type>();
 
@@ -277,8 +269,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return types;
 
 	}
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -315,8 +306,6 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			e.printStackTrace();
 		}
 		return serviceUtility.getPageResult(searchResponse, pageable, new StoreType()).getContent();
-	
-
 
 	}
 
@@ -324,7 +313,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * @param storeId
 	 */
 	@Override
-	public Page<Banner> findBannersByStoreId(String storeId,Pageable pageable ) {
+	public Page<Banner> findBannersByStoreId(String storeId, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -337,7 +326,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		builder.query(termQuery("store.regNo.keyword", storeId));
 
-		//Pageable pageable = PageRequest.of(2, 20);
+		// Pageable pageable = PageRequest.of(2, 20);
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("banner", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
 
@@ -349,51 +338,51 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			e.printStackTrace();
 		}
 		return serviceUtility.getPageResult(searchResponse, pageable, new DeliveryInfo());
-	
 
 	}
 
 	/**
 	 * @param regNo
 	 */
-	@Override public List<Banner> findAllBannersByStoreId(String regNo) {
-		
-		 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-			/*
-			 * String[] includeFields = new String[] { "iDPcode", "image" }; String[]
-			 * excludeFields = new String[] { "category.*" };
-			 * searchSourceBuilder.fetchSource(includeFields, excludeFields);
-			 */
-			searchSourceBuilder.query(termQuery("store.regNo.keyword",regNo));
+	@Override
+	public List<Banner> findAllBannersByStoreId(String regNo) {
 
-			SearchRequest searchRequest = new SearchRequest("banner");
-			searchRequest.source(searchSourceBuilder);
-			SearchResponse searchResponse = null;
-			try {
-				searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-			} catch (IOException e) { // TODO Auto-generated
-				e.printStackTrace();
-			}
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		/*
+		 * String[] includeFields = new String[] { "iDPcode", "image" }; String[]
+		 * excludeFields = new String[] { "category.*" };
+		 * searchSourceBuilder.fetchSource(includeFields, excludeFields);
+		 */
+		searchSourceBuilder.query(termQuery("store.regNo.keyword", regNo));
 
-			SearchHit[] searchHit = searchResponse.getHits().getHits();
+		SearchRequest searchRequest = new SearchRequest("banner");
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = null;
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated
+			e.printStackTrace();
+		}
 
-			List<Banner> bannerList = new ArrayList<>();
+		SearchHit[] searchHit = searchResponse.getHits().getHits();
 
-			for (SearchHit hit : searchHit) {
-				bannerList.add(objectMapper.convertValue(hit.getSourceAsMap(), Banner.class));
-			}
+		List<Banner> bannerList = new ArrayList<>();
 
-			return bannerList;
-	
+		for (SearchHit hit : searchHit) {
+			bannerList.add(objectMapper.convertValue(hit.getSourceAsMap(), Banner.class));
+		}
+
+		return bannerList;
+
 	}
-		  
-	public StoreDTO findStoreDTOByRegNo( String regNo) {
+
+	public StoreDTO findStoreDTOByRegNo(String regNo) {
 		Store store = findStoreByRegNo(regNo);
 
 		return storeResourceApi.getStoreUsingGET(store.getId()).getBody();
 	}
-	
-	public ResponseEntity<StoreBundleDTO> getStoreBundle( String regNo) {
+
+	public ResponseEntity<StoreBundleDTO> getStoreBundle(String regNo) {
 
 		Store store = findStoreByRegNo(regNo);
 
@@ -415,17 +404,13 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			storeDTO = storeResourceApi.getStoreUsingGET(store.getId()).getBody();
 
 			deliveryDTOs.addAll(deliveryInfoResourceApi
-					.listToDtoUsingPOST1(findDeliveryInfoByStoreId(storeDTO.getId()).getContent())
-					.getBody());
+					.listToDtoUsingPOST1(findDeliveryInfoByStoreId(storeDTO.getId()).getContent()).getBody());
 
-			typeDTOs.addAll(typeResourceApi.listToDtoUsingPOST3(findAllDeliveryTypesByStoreId(regNo))
-					.getBody());
+			typeDTOs.addAll(typeResourceApi.listToDtoUsingPOST3(findAllDeliveryTypesByStoreId(regNo)).getBody());
 
-			storeTypeDTO.addAll(storeTypeResourceApi
-					.listToDtoUsingPOST2(findAllStoreTypesByStoreId(regNo)).getBody());
+			storeTypeDTO.addAll(storeTypeResourceApi.listToDtoUsingPOST2(findAllStoreTypesByStoreId(regNo)).getBody());
 
-			bannerDTO.addAll(
-					bannerResourceApi.listToDtoUsingPOST(findAllBannersByStoreId(regNo)).getBody());
+			bannerDTO.addAll(bannerResourceApi.listToDtoUsingPOST(findAllBannersByStoreId(regNo)).getBody());
 		}
 		StoreAddressDTO storeAddressDTO = new StoreAddressDTO();
 		if (storeAdrress != null) {
@@ -458,7 +443,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return ResponseEntity.ok().body(bundle);
 
 	}
-	
+
 	public ResponseEntity<BannerDTO> findBanner(Long id) {
 		return bannerResourceApi.getBannerUsingGET(id);
 	}
