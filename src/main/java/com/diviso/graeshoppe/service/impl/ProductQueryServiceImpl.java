@@ -32,34 +32,68 @@ import org.springframework.data.domain.Pageable;
 //import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.client.order.model.Order;
+import com.diviso.graeshoppe.client.product.api.AuxilaryLineItemResourceApi;
+import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
+import com.diviso.graeshoppe.client.product.api.ComboLineItemResourceApi;
+import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
+import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
+import com.diviso.graeshoppe.client.product.api.StockEntryResourceApi;
+import com.diviso.graeshoppe.client.product.api.UomResourceApi;
 import com.diviso.graeshoppe.client.product.model.Address;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItemDTO;
 import com.diviso.graeshoppe.client.product.model.Category;
+import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ComboLineItem;
+import com.diviso.graeshoppe.client.product.model.ComboLineItemDTO;
 import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.EntryLineItem;
 import com.diviso.graeshoppe.client.product.model.Location;
 import com.diviso.graeshoppe.client.product.model.Product;
+import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.Reason;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
+import com.diviso.graeshoppe.client.product.model.StockCurrentDTO;
 import com.diviso.graeshoppe.client.product.model.StockEntry;
+import com.diviso.graeshoppe.client.product.model.StockEntryDTO;
 import com.diviso.graeshoppe.client.product.model.UOM;
+import com.diviso.graeshoppe.client.product.model.UOMDTO;
 import com.diviso.graeshoppe.domain.ResultBucket;
 import com.diviso.graeshoppe.service.ProductQueryService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.illud.freightgw.client.freight.model.Quotation;
-//import com.illud.freightgw.client.freight.model.QuotationDTO;
 
 @Service
 public class ProductQueryServiceImpl implements ProductQueryService {
 	@Autowired
 	private ServiceUtility serviceUtility;
 
+	@Autowired
+	UomResourceApi uomResourceApi;
+	
+	@Autowired
+	CategoryResourceApi categoryResourceApi;
+
+	@Autowired
+	private ProductResourceApi productResourceApi;
+	@Autowired
+	StockCurrentResourceApi stockCurrentResourceApi;
+
+	@Autowired
+	private StockEntryResourceApi stockEntryResourceApi;
+
+	
+	@Autowired
+	ComboLineItemResourceApi comboLineItemResourceApi;
+
+	@Autowired
+	private AuxilaryLineItemResourceApi auxilaryLineItemResourceApi;
+	
 	private RestHighLevelClient restHighLevelClient;
 
 	
@@ -77,23 +111,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 		
-//		public ResponseEntity<List<QuotationDTO>> findAllQuotationsByCompanyIdAndFreightId(Long companyId, Long freightId,
-//				Pageable pageable) {
-//			log.debug("<<<<< findAllQuotationsByCompanyIdAndFreightId>>>>>>", companyId, freightId);
-//			SearchQuery sq = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery()
-//					.must(termQuery("companyId", companyId)).must(termQuery("freightId", freightId))).withPageable(pageable).build();
-//			return quotationResourceApi
-//					.createQuotationsDtoListUsingPOST(esTemplate.queryForPage(sq, Quotation.class).getContent());
-//			
-
+//		
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("category.id", categoryId))
 				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
 
@@ -120,13 +140,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+		
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name", searchTerm).prefixLength(3))
 				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
@@ -157,13 +171,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+		
 
 		builder.query(termQuery("iDPcode", storeId)).sort("id", SortOrder.DESC);
 
@@ -195,13 +203,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	public Page<Product> findProducts(Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(matchAllQuery());
 
@@ -234,13 +236,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+		
 
 		builder.query(termQuery("iDPcode", iDPcode));
 
@@ -285,14 +281,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(termQuery("iDPcode", storeId));
 
 		Pageable pageable = PageRequest.of(2, 20);
@@ -335,13 +324,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	public Product findProductById(Long id) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("id", id));
 
@@ -372,13 +355,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	public Page<Category> findAllCategories(Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(matchAllQuery());
 
@@ -431,23 +408,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		
 		
 		
-		/*
-		 * SearchQuery searchQuery = new
-		 * NativeSearchQueryBuilder().withQuery(matchAllQuery())
-		 * .withSearchType(QUERY_THEN_FETCH).withIndices("uom").withTypes("uom")
-		 * .addAggregation(AggregationBuilders.terms("distinct_uom").field(
-		 * "name.keyword")).build();
-		 * 
-		 * AggregatedPage<UOM> result = elasticsearchTemplate.queryForPage(searchQuery,
-		 * UOM.class); TermsAggregation uomAgg = result.getAggregation("distinct_uom",
-		 * TermsAggregation.class);
-		 * 
-		 * System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<" +
-		 * uomAgg.getBuckets().size());
-		 * 
-		 * for (int i = 0; i < uomAgg.getBuckets().size(); i++) {
-		 * uomList.add(uomAgg.getBuckets().get(i).getKey()); }
-		 */
+	
 		return uomList;
 	}
 
@@ -459,13 +420,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+		
 
 		builder.query(termQuery("product.iDPcode.keyword", storeId));
 
@@ -493,14 +448,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	public Page<StockCurrent> findAllStockCurrents(String storeId, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(termQuery("iDPcode.keyword", storeId));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("stockcurrent", pageable.getPageSize(),
@@ -527,13 +475,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("iDPcode.keyword", storeId));
 
@@ -561,13 +503,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.category.id", categoryId))
 				.must(QueryBuilders.termQuery("iDPcode.keyword", storeId)));
@@ -594,13 +530,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.id", productId))
 				.must(QueryBuilders.termQuery("product.iDPcode.keyword", storeId)));
@@ -627,13 +557,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.id", productId))
 				.must(QueryBuilders.termQuery("product.userId.keyword", storeId)));
@@ -661,14 +585,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(QueryBuilders.boolQuery()
 				.must(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.name", name))
 						.must(QueryBuilders.termQuery("product.iDPcode.keyword", storeId))));
@@ -710,14 +627,6 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
 		builder.query(termQuery("product.iDPcode.keyword", iDPcode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("auxilarylineitem", pageable.getPageSize(),
@@ -747,13 +656,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	public Page<UOM> findUOMByIDPcode(String iDPcode, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("iDPcode.keyword", iDPcode));
 
@@ -784,14 +687,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	public Category findCategoryById(Long id) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(termQuery("id", id));
 
 		SearchRequest searchRequest = new SearchRequest("category");
@@ -821,13 +717,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+		
 
 		builder.query(termQuery("id", id));
 
@@ -860,13 +750,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("product.id", id));
 
@@ -901,14 +785,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(termQuery("product.id", productId));
 
 		Pageable pageable = PageRequest.of(2, 20);
@@ -936,14 +813,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(termQuery("id", id));
 
 		SearchRequest searchRequest = new SearchRequest("stockentry");
@@ -969,13 +839,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("id", productId));
 
@@ -1002,14 +866,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(termQuery("stockentry.id", id));
 
 		Pageable pageable = PageRequest.of(2, 20);
@@ -1037,13 +894,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("id", id));
 
@@ -1069,13 +920,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("id", id));
 
@@ -1103,13 +948,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("iDPcode.keyword", idpcode));
 
@@ -1137,13 +976,6 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
 
 		builder.query(termQuery("iDPcode.keyword", idpcode));
 
@@ -1172,13 +1004,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("stockentry.id.keyword", id));
 
@@ -1206,13 +1032,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
+	
 
 		builder.query(termQuery("id", id));
 
@@ -1245,14 +1065,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name.keyword", searchTerm).prefixLength(3))
 				.must(QueryBuilders.termQuery("iDPcode.keyword", storeId)));
 
@@ -1279,14 +1092,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		/*
-		 * String[] include = new String[] { "" };
-		 * 
-		 * String[] exclude = new String[] {};
-		 * 
-		 * builder.fetchSource(include, exclude);
-		 */
-
+	
 		builder.query(QueryBuilders.termQuery("iDPcode.keyword", iDPcode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),
@@ -1303,5 +1109,55 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Category());
 
 	}
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 
+	public ResponseEntity<UOMDTO> findUOM(Long id) {
+		return uomResourceApi.getUOMUsingGET(id);
+	}
+
+	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage( String iDPcode,
+			Pageable pageable) {
+		return ResponseEntity.ok()
+				.body(categoryResourceApi
+						.listToDToUsingPOST(findAllCategories(iDPcode, pageable).getContent())
+						.getBody().stream().map(c -> {
+							c.setImage(null);
+							return c;
+						}).collect(Collectors.toList()));
+	}
+	
+	
+	public ResponseEntity<CategoryDTO> findCategory( Long id) {
+		return categoryResourceApi.getCategoryUsingGET(id);
+	}
+	
+	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
+		return productResourceApi.getProductUsingGET(id);
+	}
+	
+	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
+			Integer size, ArrayList<String> sort) {
+		return stockCurrentResourceApi.searchStockCurrentsUsingGET(searchTerm, page, size, sort);
+	}
+	
+	public ResponseEntity<StockEntryDTO> findOneStockEntry( Long id) {
+		return this.stockEntryResourceApi.getStockEntryUsingGET(id);
+	}
+	public ResponseEntity<StockEntryDTO> findStockEntryDTOById(Long id) {
+
+		return stockEntryResourceApi.getStockEntryUsingGET(id);
+	}
+	public ResponseEntity<ComboLineItemDTO> findCombolineItem( Long id) {
+		return comboLineItemResourceApi.getComboLineItemUsingGET(id);
+	}
+	public ResponseEntity<AuxilaryLineItemDTO> findAuxilaryLineItem( Long id) {
+		return auxilaryLineItemResourceApi.getAuxilaryLineItemUsingGET(id);
+	}
+	
+	
+	
 }

@@ -56,7 +56,7 @@ import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.client.store.api.*;
 import com.diviso.graeshoppe.client.store.model.*;
-import com.diviso.graeshoppe.service.ContactService;
+
 import com.diviso.graeshoppe.service.CustomerQueryService;
 import com.diviso.graeshoppe.service.OrderQueryService;
 import com.diviso.graeshoppe.service.ProductQueryService;
@@ -71,17 +71,6 @@ import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 @RestController
 @RequestMapping("/api/query")
 public class QueryResource {
-	/**
-	 * Rafeeq
-	 */
-	@Autowired
-	ContactService contactService;
-
-	@Autowired
-	RestHighLevelClient rhlc;
-
-	@Autowired
-	ServiceUtility su;
 
 	@Autowired
 	OrderQueryService orderQueryService;
@@ -102,70 +91,7 @@ public class QueryResource {
 	SaleQueryService saleQueryService;
 
 	@Autowired
-	SaleResourceApi saleResourceApi;
-
-	@Autowired
-	UomResourceApi uomResourceApi;
-
-	@Autowired
-	CategoryResourceApi categoryResourceApi;
-
-	@Autowired
-	CustomerResourceApi customerResourceApi;
-
-	@Autowired
-	private ProductResourceApi productResourceApi;
-
-	@Autowired
-	private TicketLineResourceApi ticketLineResourceApi;
-
-	@Autowired
-	private ContactResourceApi contactResourceApi;
-
-	@Autowired
-	private StockCurrentResourceApi stockCurrentResourceApi;
-
-	@Autowired
-	private StockEntryResourceApi stockEntryResourceApi;
-
-	@Autowired
-	private StoreResourceApi storeResourceApi;
-
-	@Autowired
-	private DeliveryInfoResourceApi deliveryInfoResourceApi;
-
-	@Autowired
-	private TypeResourceApi typeResourceApi;
-
-	@Autowired
-	private StoreTypeResourceApi storeTypeResourceApi;
-
-	@Autowired
-	private BannerResourceApi bannerResourceApi;
-
-	@Autowired
-	ComboLineItemResourceApi comboLineItemResourceApi;
-
-	@Autowired
-	private AuxilaryLineItemResourceApi auxilaryLineItemResourceApi;
-
-	@Autowired
-	private StoreAddressResourceApi storeAddressResourceApi;
-
-	@Autowired
-	private StoreSettingsResourceApi storeSettingsResourceApi;
-
-	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
-
-	@Autowired
-	private ReportResourceApi reportResourceApi;
-
-	@Autowired
-	OrderMasterResourceApi orderMasterResourceApi;
-
-	@Autowired
-	QueryResourceApi queryResourceApi;
 
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
@@ -182,7 +108,7 @@ public class QueryResource {
 	@GetMapping("/taskDetails/{taskName}/{orderId}/{storeId}")
 	public ResponseEntity<OpenTask> getTaskDetails(@PathVariable String taskName, @PathVariable String orderId,
 			@PathVariable String storeId) {
-		return orderQueryResourceApi.getTaskDetailsUsingGET(taskName, orderId, storeId);
+		return orderQueryService.getTaskDetails(taskName, orderId, storeId);
 
 	}
 
@@ -241,9 +167,9 @@ public class QueryResource {
 	 * @description find a product as input an id
 	 */
 
-	@GetMapping("/products/{id}") //its working
+	@GetMapping("/products/{id}") // its working
 	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
-		return this.productResourceApi.getProductUsingGET(id);
+		return this.productQueryService.findProduct(id);
 	}
 
 	////////////////////////
@@ -266,39 +192,46 @@ public class QueryResource {
 		return customerQueryService.findAllCustomers(pageable);
 	}
 
-	@GetMapping("/customers/{id}")									// 06 12 19 it's working
+	@GetMapping("/customers/{id}") // 06 12 19 it's working
 	public ResponseEntity<CustomerDTO> findCustomerById(@PathVariable Long id) {
-		log.debug("<<<<<<<<< findCustomerById >>>>>>>>", id);
-		return this.customerResourceApi.getCustomerUsingGET(id);
-	}
-
-	@GetMapping("/contacts/{id}")									// 6 12 19 it's working
-	public ResponseEntity<ContactDTO> findContactById(@PathVariable Long id) {
-		return this.contactResourceApi.getContactUsingGET(id);
-	}
-
-	@GetMapping("/contact/{mobileNumber}")							// 6 12 19 it,s working 
-	public List<Contact> findContacts(@PathVariable Long mobileNumber, Pageable page) {
-		log.debug("<<<<<<<<<< findContacts >>>>>>>", mobileNumber);
-
-		return contactService.findContactsByMobileNumber(mobileNumber,page);
+		CustomerDTO result = customerQueryService.findCustomerById(id);
+		return ResponseEntity.ok().body(result);
 		/*
-		 * SearchSourceBuilder ssb = new SearchSourceBuilder();
-		 * ssb.query(termQuery("mobileNumber", mobileNumber)); SearchRequest sr =
-		 * su.generateSearchRequest("contact", page.getPageSize(), page.getPageNumber(),
-		 * ssb);
-		 * 
-		 * SearchResponse searchResponse = null;
-		 * 
-		 * try { rhlc.search(sr, RequestOptions.DEFAULT); } catch (IOException e) {
-		 * e.printStackTrace(); }
-		 * 
-		 * return su.getPageResult(searchResponse, page, new Contact());
+		 * log.debug("<<<<<<<<< findCustomerById >>>>>>>>", id); return
+		 * customerQueryService.findCustomerById(id);
 		 */
-
 	}
-				
-	@GetMapping("orderCountByCustomerIdAndStoreId/{customerId}/{storeId}")				//07 12 19 it,s working
+
+	@GetMapping("/contacts/{id}") // 6 12 19 it's working
+	public ResponseEntity<ContactDTO> findContactById(@PathVariable Long id) {
+		ContactDTO result = customerQueryService.findContactById(id);
+		return ResponseEntity.ok().body(result);
+	}
+
+	/*
+	 * @GetMapping("/contact/{mobileNumber}") // 6 12 19 it,s working public
+	 * List<Contact> findContacts(@PathVariable Long mobileNumber, Pageable page) {
+	 * log.debug("<<<<<<<<<< findContacts >>>>>>>", mobileNumber);
+	 * 
+	 * return contactService.findContactsByMobileNumber(mobileNumber,page);
+	 */
+	/*
+	 * SearchSourceBuilder ssb = new SearchSourceBuilder();
+	 * ssb.query(termQuery("mobileNumber", mobileNumber)); SearchRequest sr =
+	 * su.generateSearchRequest("contact", page.getPageSize(), page.getPageNumber(),
+	 * ssb);
+	 * 
+	 * SearchResponse searchResponse = null;
+	 * 
+	 * try { rhlc.search(sr, RequestOptions.DEFAULT); } catch (IOException e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * return su.getPageResult(searchResponse, page, new Contact());
+	 */
+
+	// }
+
+	@GetMapping("orderCountByCustomerIdAndStoreId/{customerId}/{storeId}") // 07 12 19 it,s working
 	public Long orderCountByCustomerIdAndStoreId(@PathVariable String customerId, @PathVariable String storeId) {
 		log.debug("<<<<<<<<<<< OrderCount >>>>>>>>>>", customerId, storeId);
 		return orderQueryService.orderCountByCustomerIdAndStoreId(customerId, storeId);
@@ -310,10 +243,10 @@ public class QueryResource {
 	 * @return
 	 * @deprecated
 	 */
-	@GetMapping("/customers/export")											//not working
+	@GetMapping("/customers/export") // not working
 	public ResponseEntity<PdfDTO> exportCustomers() {
 		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.customerResourceApi.getPdfAllCustomersUsingGET().getBody());
+		// pdf.setPdf(this.customerResourceApi.getPdfAllCustomersUsingGET().getBody());
 		pdf.setContentType("application/pdf");
 		return ResponseEntity.ok().body(pdf);
 	}
@@ -358,16 +291,10 @@ public class QueryResource {
 	 * 
 	 * @description findAll categories without image as input a idpcode
 	 */
-	@GetMapping("/findAllCategoriesWithOutImage/{iDPcode}")					//it's working
+	@GetMapping("/findAllCategoriesWithOutImage/{iDPcode}") // it's working
 	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage(@PathVariable String iDPcode,
 			Pageable pageable) {
-		return ResponseEntity.ok()
-				.body(categoryResourceApi
-						.listToDToUsingPOST(productQueryService.findAllCategories(iDPcode, pageable).getContent())
-						.getBody().stream().map(c -> {
-							c.setImage(null);
-							return c;
-						}).collect(Collectors.toList()));
+		return productQueryService.findAllCategoriesWithOutImage(iDPcode, pageable);
 	}
 
 	/**
@@ -377,12 +304,14 @@ public class QueryResource {
 	 * 
 	 * @description update category
 	 */
-	@PutMapping("/categories")   //
-	public ResponseEntity<CategoryDTO> updateCategory(CategoryDTO categoryDTO) {
-
-		return categoryResourceApi.updateCategoryUsingPUT(categoryDTO);
-
-	}
+	/*
+	 * @PutMapping("/categories") // public ResponseEntity<CategoryDTO>
+	 * updateCategory(CategoryDTO categoryDTO) {
+	 * 
+	 * return categoryResourceApi.updateCategoryUsingPUT(categoryDTO);
+	 * 
+	 * }
+	 */
 
 	/**
 	 * 
@@ -393,9 +322,9 @@ public class QueryResource {
 	 * 
 	 * @description getting all details in sort
 	 */
-	@GetMapping("/ticket-lines")				//its working
+	@GetMapping("/ticket-lines") // its working
 	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) {
-		return ticketLineResourceApi.getAllTicketLinesUsingGET(page, size, sort);
+		return saleQueryService.findAllTicketlines(page, size, sort);
 	}
 
 	/**
@@ -406,8 +335,8 @@ public class QueryResource {
 	 * @description find ticketlines by saleId
 	 */
 	@GetMapping("/findAllTicketLinesBySaleId/{saleId}") // 29 11 19 its working
-	public ResponseEntity<Page<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId,Pageable pageable) {
-		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId,pageable));
+	public ResponseEntity<Page<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId, Pageable pageable) {
+		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId, pageable));
 	}
 
 	/**
@@ -417,24 +346,12 @@ public class QueryResource {
 	 * 
 	 * @description find one ticket line details
 	 */
-	@GetMapping("/findOneTicketLines/{id}")//its working
+	@GetMapping("/findOneTicketLines/{id}") // its working
 	public ResponseEntity<TicketLineDTO> findOneTicketLines(@PathVariable Long id) {
-		return ticketLineResourceApi.getTicketLineUsingGET(id);
+		return saleQueryService.findOneTicketLines(id);
 	}
 
 	//////////////////////////////////
-
-	/**
-	 * 
-	 * @param id
-	 * @return sale
-	 * 
-	 * @description find sales by id
-	 */
-	@GetMapping("/sales/{id}")				//it's working
-	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
-		return this.saleResourceApi.getSaleUsingGET(id);
-	}
 
 	/**
 	 * 
@@ -442,12 +359,13 @@ public class QueryResource {
 	 * @param pageable
 	 * @return sale page
 	 */
-	@GetMapping("/findallsales/{storeId}")			//it's working
+	@GetMapping("/findallsales/{storeId}") // it's working
 	public Page<Sale> findSales(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<<<< findSales >>>>>>>>", storeId);
 		return saleQueryService.findSales(storeId, pageable);
 	}
-//plz refactor
+
+	// plz refactor
 	/**
 	 * @author Prince
 	 * @param storeId
@@ -485,7 +403,7 @@ public class QueryResource {
 	 * 
 	 * @description getting all stock entry as input a storeId
 	 */
-	@GetMapping("/stock-entries/{storeId}")			// no data
+	@GetMapping("/stock-entries/{storeId}") // no data
 	public ResponseEntity<Page<StockEntry>> findAllStockEntries(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<< findAllStockEntries >>>>>>>>>", storeId);
 		return ResponseEntity.ok().body(productQueryService.findAllStockEntries(storeId, pageable));
@@ -498,9 +416,9 @@ public class QueryResource {
 	 * 
 	 * @description find one stock entries
 	 */
-	@GetMapping("/stock-entries/findbyid/{id}")// not tested
+	@GetMapping("/stock-entries/findbyid/{id}") // not tested
 	public ResponseEntity<StockEntryDTO> findOneStockEntry(@PathVariable Long id) {
-		return this.stockEntryResourceApi.getStockEntryUsingGET(id);
+		return productQueryService.findOneStockEntry(id);
 	}
 
 	/**
@@ -511,10 +429,10 @@ public class QueryResource {
 	 * @param sort
 	 * @return
 	 */
-	@GetMapping("/stock-current/{searchTerm}") 			// it's working
+	@GetMapping("/stock-current/{searchTerm}") // it's working
 	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
 			Integer size, ArrayList<String> sort) {
-		return this.stockCurrentResourceApi.searchStockCurrentsUsingGET(searchTerm, page, size, sort);
+		return productQueryService.searchStockCurrents(searchTerm, page, size, sort);
 	}
 
 	///////////////////////////////
@@ -524,11 +442,10 @@ public class QueryResource {
 		return this.storeQueryService.findStoreByRegNo(regNo);
 	}
 
-	@GetMapping("/storeDTO/{regNo}")			// it's working
+	@GetMapping("/storeDTO/{regNo}") // it's working
 	public StoreDTO findStoreDTOByRegNo(@PathVariable String regNo) {
-		Store store = storeQueryService.findStoreByRegNo(regNo);
 
-		return storeResourceApi.getStoreUsingGET(store.getId()).getBody();
+		return storeQueryService.findStoreDTOByRegNo(regNo);
 	}
 
 	/**
@@ -539,73 +456,10 @@ public class QueryResource {
 	 * @param sort
 	 * @return
 	 */
-	@GetMapping("/storeBundle/{regNo}")//its working
-	public ResponseEntity<StoreBundleDTO> getStoreBundle(
-			@PathVariable String regNo/*
-										 * , Integer page, Integer size, ArrayList<String> sort
-										 */) {
+	@GetMapping("/storeBundle/{regNo}") // its working
+	public ResponseEntity<StoreBundleDTO> getStoreBundle(@PathVariable String regNo) {
 
-		Store store = storeQueryService.findStoreByRegNo(regNo);
-
-		StoreAddress storeAdrress = store.getStoreAddress();
-
-		StoreSettings storeSettings = store.getStoreSettings();
-
-		StoreDTO storeDTO = new StoreDTO();
-
-		List<DeliveryInfoDTO> deliveryDTOs = new ArrayList<DeliveryInfoDTO>();
-
-		List<TypeDTO> typeDTOs = new ArrayList<TypeDTO>();
-
-		List<StoreTypeDTO> storeTypeDTO = new ArrayList<StoreTypeDTO>();
-
-		List<BannerDTO> bannerDTO = new ArrayList<BannerDTO>();
-
-		if (store != null) {
-			storeDTO = storeResourceApi.getStoreUsingGET(store.getId()).getBody();
-
-			deliveryDTOs.addAll(deliveryInfoResourceApi
-					.listToDtoUsingPOST1(storeQueryService.findDeliveryInfoByStoreId(storeDTO.getId()).getContent())
-					.getBody());
-
-			typeDTOs.addAll(typeResourceApi.listToDtoUsingPOST3(storeQueryService.findAllDeliveryTypesByStoreId(regNo))
-					.getBody());
-
-			storeTypeDTO.addAll(storeTypeResourceApi
-					.listToDtoUsingPOST2(storeQueryService.findAllStoreTypesByStoreId(regNo)).getBody());
-
-			bannerDTO.addAll(
-					bannerResourceApi.listToDtoUsingPOST(storeQueryService.findAllBannersByStoreId(regNo)).getBody());
-		}
-		StoreAddressDTO storeAddressDTO = new StoreAddressDTO();
-		if (storeAdrress != null) {
-			storeAddressDTO = storeAddressResourceApi.getStoreAddressUsingGET(storeAdrress.getId()).getBody();
-
-		}
-
-		StoreSettingsDTO storeSettingsDTO = new StoreSettingsDTO();
-
-		if (storeSettings != null) {
-			storeSettingsDTO = storeSettingsResourceApi.getStoreSettingsUsingGET(storeSettings.getId()).getBody();
-		}
-
-		StoreBundleDTO bundle = new StoreBundleDTO();
-
-		bundle.setStore(storeDTO);
-
-		bundle.setDeliveryInfos(deliveryDTOs);
-
-		bundle.setTypes(typeDTOs);
-
-		bundle.setBanners(bannerDTO);
-
-		bundle.setStoreType(storeTypeDTO);
-
-		bundle.setStoreSettings(storeSettingsDTO);
-
-		bundle.setStoreAddress(storeAddressDTO);
-
-		return ResponseEntity.ok().body(bundle);
+		return storeQueryService.getStoreBundle(regNo);
 
 	}
 
@@ -614,7 +468,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/productBundle/{id}")//its working
+	@GetMapping("/productBundle/{id}") // its working
 	public ResponseEntity<ProductBundle> getProductBundle(@PathVariable Long id) {
 
 		Product product = productQueryService.findProductById(id);
@@ -644,7 +498,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/stockEntryBundle/{id}")//not tested
+	@GetMapping("/stockEntryBundle/{id}") // not tested
 	public ResponseEntity<StockEntryBundle> getStockEntryBundle(@PathVariable Long id) {
 
 		StockEntry stockEntry = productQueryService.findStockEntryById(id);
@@ -682,7 +536,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/auxilarylineitems/{idpCode}")//its working
+	@GetMapping("/auxilarylineitems/{idpCode}") // its working
 	public ResponseEntity<Page<AuxilaryLineItem>> getAuxilaryLineItemsByIdpCode(@PathVariable String idpCode,
 			Pageable pageable) {
 		log.debug("<<<<<<<<<<<< getAuxilaryLineItemsByStoreId >>>>>>>>>", idpCode);
@@ -696,7 +550,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/UOM/{idpCode}") 										//7 12 19 it's working 
+	@GetMapping("/UOM/{idpCode}") // 7 12 19 it's working
 	public ResponseEntity<Page<UOM>> findUOMByIdpCode(@PathVariable String idpCode, Pageable pageable) {
 		return ResponseEntity.ok().body(productQueryService.findUOMByIDPcode(idpCode, pageable));
 	}
@@ -706,9 +560,9 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/uom/{id}")//its working
+	@GetMapping("/uom/{id}") // its working
 	public ResponseEntity<UOMDTO> findUOM(@PathVariable Long id) {
-		return uomResourceApi.getUOMUsingGET(id);
+		return productQueryService.findUOM(id);
 	}
 
 	/**
@@ -716,9 +570,9 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/category/{id}")//its working
+	@GetMapping("/category/{id}") // its working
 	public ResponseEntity<CategoryDTO> findCategory(@PathVariable Long id) {
-		return categoryResourceApi.getCategoryUsingGET(id);
+		return productQueryService.findCategory(id);
 	}
 
 	/**
@@ -726,9 +580,9 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/auxilaryitem/{id}")//its working
+	@GetMapping("/auxilaryitem/{id}") // its working
 	public ResponseEntity<AuxilaryLineItemDTO> findAuxilaryLineItem(@PathVariable Long id) {
-		return auxilaryLineItemResourceApi.getAuxilaryLineItemUsingGET(id);
+		return productQueryService.findAuxilaryLineItem(id);
 	}
 
 	/**
@@ -736,9 +590,9 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/combolineitem/{id}")//its working
+	@GetMapping("/combolineitem/{id}") // its working
 	public ResponseEntity<ComboLineItemDTO> findCombolineItem(@PathVariable Long id) {
-		return comboLineItemResourceApi.getComboLineItemUsingGET(id);
+		return productQueryService.findCombolineItem(id);
 	}
 
 	/**
@@ -746,9 +600,9 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/banner/{id}")//its working
+	@GetMapping("/banner/{id}") // its working
 	public ResponseEntity<BannerDTO> findBanner(@PathVariable Long id) {
-		return bannerResourceApi.getBannerUsingGET(id);
+		return storeQueryService.findBanner(id);
 	}
 
 	/**
@@ -801,19 +655,20 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/uombyid/{id}")// 26 11 19 it's working
+	@GetMapping("/uombyid/{id}") // 26 11 19 it's working
 	public ResponseEntity<UOM> findUOMById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(productQueryService.findUOMById(id));
 	}
-// ADD Pageable for return page
+
+	// ADD Pageable for return page
 	/**
 	 * 
 	 * @param storeId
 	 * @return
 	 */
 	@GetMapping("/store-banners/{storeId}") // 26 11 19 its working
-	public ResponseEntity<Page<Banner>> findBannerByStoreId(@PathVariable String storeId,Pageable pageable ) {
-		return ResponseEntity.ok().body(storeQueryService.findBannersByStoreId(storeId,pageable));
+	public ResponseEntity<Page<Banner>> findBannerByStoreId(@PathVariable String storeId, Pageable pageable) {
+		return ResponseEntity.ok().body(storeQueryService.findBannersByStoreId(storeId, pageable));
 	}
 
 	/**
@@ -830,16 +685,26 @@ public class QueryResource {
 	 * @param nameLike
 	 * @return
 	 */
-	@GetMapping("/opentasks")
-	public ResponseEntity<List<OpenTask>> getOpenTasks(@RequestParam(required = false) String assignee,
-			@RequestParam(required = false) String assigneeLike, @RequestParam(required = false) String candidateGroup,
-			@RequestParam(required = false) String candidateGroups,
-			@RequestParam(required = false) String candidateUser, @RequestParam(required = false) String createdAfter,
-			@RequestParam(required = false) String createdBefore, @RequestParam(required = false) String createdOn,
-			@RequestParam(required = false) String name, @RequestParam(required = false) String nameLike) {
-		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups,
-				candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
-	}
+	/*
+	 * @GetMapping("/opentasks") public ResponseEntity<List<OpenTask>>
+	 * getOpenTasks(@RequestParam(required = false) String assignee,
+	 * 
+	 * @RequestParam(required = false) String assigneeLike, @RequestParam(required =
+	 * false) String candidateGroup,
+	 * 
+	 * @RequestParam(required = false) String candidateGroups,
+	 * 
+	 * @RequestParam(required = false) String candidateUser, @RequestParam(required
+	 * = false) String createdAfter,
+	 * 
+	 * @RequestParam(required = false) String createdBefore, @RequestParam(required
+	 * = false) String createdOn,
+	 * 
+	 * @RequestParam(required = false) String name, @RequestParam(required = false)
+	 * String nameLike) { return orderQueryResourceApi.getTasksUsingGET(assignee,
+	 * assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter,
+	 * createdBefore, createdOn, name, nameLike); }
+	 */
 
 	/**
 	 * 
@@ -894,7 +759,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/orderLineByOrderMasterId/{orderMasterId}")//not tested no data in database
+	@GetMapping("/orderLineByOrderMasterId/{orderMasterId}") // not tested no data in database
 	public ResponseEntity<Page<OrderLine>> findOrderLineByOrderMasterId(@PathVariable Long orderMasterId,
 			Pageable pageable) {
 		Page<OrderLine> orderLine = reportQueryService.findOrderLineByOrderMasterId(orderMasterId, pageable);
@@ -941,12 +806,10 @@ public class QueryResource {
 	 * @param orderNumber
 	 * @return
 	 */
-	@GetMapping("/getOrderDocket/{orderNumber}")//its working
+	@GetMapping("/getOrderDocket/{orderNumber}") // its working
 	public ResponseEntity<PdfDTO> getOrderDocket(@PathVariable String orderNumber) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.reportResourceApi.getReportWithAuxAndComboAsPdfUsingGET(orderNumber).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+
+		return reportQueryService.getOrderDocket(orderNumber);
 	}
 
 	/**
@@ -954,9 +817,9 @@ public class QueryResource {
 	 * @param orderNumber
 	 * @return
 	 */
-	@GetMapping("/exportDocket/{orderNumber}")//tested working
+	@GetMapping("/exportDocket/{orderNumber}") // tested working
 	public ResponseEntity<byte[]> exportOrderDocket(@PathVariable String orderNumber) {
-		return reportResourceApi.getReportAsPdfUsingGET(orderNumber);
+		return reportQueryService.exportOrderDocket(orderNumber);
 
 	}
 
@@ -966,12 +829,9 @@ public class QueryResource {
 	 * @param storeId
 	 * @return
 	 */
-	@GetMapping("/ordersummary/{date}/{storeId}")//its working
+	@GetMapping("/ordersummary/{date}/{storeId}") // its working
 	public ResponseEntity<PdfDTO> getOrderSummary(@PathVariable String date, @PathVariable String storeId) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.reportResourceApi.getReportSummaryAsPdfUsingGET(date, storeId).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+		return reportQueryService.getOrderSummary(date, storeId);
 	}
 
 	/**
@@ -980,10 +840,10 @@ public class QueryResource {
 	 * @param storeName
 	 * @return
 	 */
-	@GetMapping("/ordersummaryview/{expectedDelivery}/{storeName}")//its working
+	@GetMapping("/ordersummaryview/{expectedDelivery}/{storeName}") // its working
 	public ResponseEntity<ReportSummary> createReportSummary(@PathVariable String expectedDelivery,
 			@PathVariable String storeName) {
-		return reportResourceApi.createReportSummaryUsingGET1(expectedDelivery, storeName);
+		return reportQueryService.createReportSummary(expectedDelivery, storeName);
 	}
 
 	/**
@@ -1017,10 +877,10 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/stock-entry/{id}")//not tested
+	@GetMapping("/stock-entry/{id}") // not tested
 	public ResponseEntity<StockEntryDTO> findStockEntryById(Long id) {
 
-		return stockEntryResourceApi.getStockEntryUsingGET(id);
+		return productQueryService.findStockEntryDTOById(id);
 	}
 
 	/**
@@ -1043,7 +903,7 @@ public class QueryResource {
 	 * @document
 	 */
 
-	@GetMapping("/reason/{idpcode}")//not working
+	@GetMapping("/reason/{idpcode}") // not working
 	public Page<Reason> findReasonByRegNo(@PathVariable String idpcode, Pageable pageable) {
 		return this.productQueryService.findReasonByIdpcode(idpcode, pageable);
 	}
@@ -1056,7 +916,7 @@ public class QueryResource {
 	 * 
 	 * @document
 	 */
-	@GetMapping("/findallentrylineitems/{id}")// no data
+	@GetMapping("/findallentrylineitems/{id}") // no data
 	public Page<EntryLineItem> findAllEntryLineItemsByStockEntryId(@PathVariable String id, Pageable pageable) {
 
 		return productQueryService.findAllEntryLineItemsByStockEntryId(id, pageable);
@@ -1089,12 +949,9 @@ public class QueryResource {
 	 * 
 	 * @document getting allproducts as pdf for input a idpcode
 	 */
-	@GetMapping("/report/allproducts/{idpcode}")//its working
+	@GetMapping("/report/allproducts/{idpcode}") // its working
 	public ResponseEntity<PdfDTO> getAllProducts(@PathVariable String idpcode) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.productResourceApi.exportProductListAsPdfUsingGET(idpcode).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+		return reportQueryService.getAllProducts(idpcode);
 	}
 
 	/**
@@ -1104,12 +961,9 @@ public class QueryResource {
 	 * 
 	 * @document getallcategories by idpcode
 	 */
-	@GetMapping("/report/allcategories/{idpcode}")//its working
+	@GetMapping("/report/allcategories/{idpcode}") // its working
 	public ResponseEntity<PdfDTO> getAllCategories(@PathVariable String idpcode) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.categoryResourceApi.exportCategoryListAsPdfUsingGET(idpcode).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+		return reportQueryService.getAllCategories(idpcode);
 	}
 
 	/**
@@ -1119,12 +973,14 @@ public class QueryResource {
 	 * 
 	 * @document return a details from sockcurrentdetails
 	 */
-	@GetMapping("/report/currentstock/{idpcode}")//its working
+	@GetMapping("/report/currentstock/{idpcode}") // its working
 	public ResponseEntity<PdfDTO> getCurrentStock(@PathVariable String idpcode) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.stockCurrentResourceApi.exportStockCurrentListAsPdfUsingGET(idpcode).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+		return reportQueryService.getCurrentStock(idpcode);
+
 	}
 
+	@GetMapping("/sales/{id}")
+	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
+		return saleQueryService.findSaleById(id);
+	}
 }

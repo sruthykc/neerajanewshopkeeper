@@ -3,6 +3,7 @@ package com.diviso.graeshoppe.service.impl;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.action.search.SearchRequest;
@@ -19,12 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.client.product.model.Product;
+import com.diviso.graeshoppe.client.sale.api.SaleResourceApi;
+import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
+import com.diviso.graeshoppe.client.sale.model.SaleDTO;
+import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.service.SaleQueryService;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +41,11 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	@Autowired
 	private ServiceUtility serviceUtility;
 
+	@Autowired
+	SaleResourceApi saleResourceApi;
+
+	@Autowired
+	private TicketLineResourceApi ticketLineResourceApi;
 	private RestHighLevelClient restHighLevelClient;
 
 	
@@ -110,5 +122,24 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
 
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return sale
+	 * 
+	 * @description find sales by id
+	 */
+				//it's working
+	public ResponseEntity<SaleDTO> findSaleById( Long id) {
+		return this.saleResourceApi.getSaleUsingGET(id);
+	}
+	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) {
+		return ticketLineResourceApi.getAllTicketLinesUsingGET(page, size, sort);
+	}
+	public ResponseEntity<TicketLineDTO> findOneTicketLines( Long id) {
+		return ticketLineResourceApi.getTicketLineUsingGET(id);
+	}
+	
 	
 }
