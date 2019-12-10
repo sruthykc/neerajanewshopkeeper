@@ -292,9 +292,9 @@ public class QueryResource {
 	 * @description findAll categories without image as input a idpcode
 	 */
 	@GetMapping("/findAllCategoriesWithOutImage/{iDPcode}") // it's working
-	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage(@PathVariable String iDPcode,
+	public ResponseEntity<Page<CategoryDTO>> findAllCategoriesWithOutImage(@PathVariable String iDPcode,
 			Pageable pageable) {
-		return productQueryService.findAllCategoriesWithOutImage(iDPcode, pageable);
+		return  ResponseEntity.ok().body(productQueryService.findAllCategoriesWithOutImage(iDPcode, pageable));
 	}
 
 	/**
@@ -602,7 +602,8 @@ public class QueryResource {
 	 */
 	@GetMapping("/banner/{id}") // its working
 	public ResponseEntity<BannerDTO> findBanner(@PathVariable Long id) {
-		return storeQueryService.findBanner(id);
+		BannerDTO bannerDTO=storeQueryService.findBanner(id);
+		return ResponseEntity.ok().body(bannerDTO);
 	}
 
 	/**
