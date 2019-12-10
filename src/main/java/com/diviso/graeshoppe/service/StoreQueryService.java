@@ -12,27 +12,10 @@ import com.diviso.graeshoppe.client.store.model.*;
 
 public interface StoreQueryService {
 	
+
 	
 	public Store findStoreByRegNo(String regNo);
 	
-	/**
-	 * @param id
-	 * @return
-	 */
-//	public Page<DeliveryInfo> findDeliveryInfoByStoreId(Long id);
-	
-	/**
-	 * @param storeId
-	 * @param pageable
-	 * @return
-	 */
-	
-	
-	/**
-	 * @param regNo
-	 * @return
-	 */
-	//public List<StoreType> findAllStoreTypesByStoreId(String regNo);
 	
 	/**
 	 * @param regNo

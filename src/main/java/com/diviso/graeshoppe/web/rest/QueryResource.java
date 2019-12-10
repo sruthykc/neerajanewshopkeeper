@@ -180,13 +180,13 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/findAllCustomersByName/{searchTerm}") // 26 11 19 not working
+	@GetMapping("/findAllCustomersByName/{searchTerm}") // 26 11 19 its working
 	public Page<Customer> findAllCustomersByName(@PathVariable String searchTerm, Pageable pageable) {
 		log.debug("<<<<<<<< findAllCustomer by search term >>>>>>>>>>", searchTerm);
 		return customerQueryService.findAllCustomersByName(searchTerm, pageable);
 	}
 
-	@GetMapping("/findAllCustomers") // 26 11 19 not working public
+	@GetMapping("/findAllCustomers") // 26 11 19 its working
 	Page<Customer> findAllCustomers(Pageable pageable) {
 		log.debug("<<<<<<<<<< findAllCustomers >>>>>>>>>>");
 		return customerQueryService.findAllCustomers(pageable);
@@ -276,7 +276,7 @@ public class QueryResource {
 	 * 
 	 * @description getting all category details as input a name and storeid
 	 */
-	@GetMapping("/findCategoryBySearchTerm/{searchTerm}/{storeId}") // it's wprking
+	@GetMapping("/findCategoryBySearchTerm/{searchTerm}/{storeId}") //it's working
 	public Page<Category> findAllCategoryBySearchTermAndStoreId(@PathVariable String searchTerm,
 			@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<<<<< findAllCategoryBySearchTermAndStoreId >>>>>>>>>>>>", searchTerm, storeId);
@@ -389,7 +389,7 @@ public class QueryResource {
 
 	//////////////////////////
 
-	@GetMapping("/entryLineItem/{storeId}")
+	@GetMapping("/entryLineItem/{storeId}") 		//no data
 	public ResponseEntity<List<EntryLineItem>> findAllEntryLineItems(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<<< findAllEntryLineItems >>>>>>>>>>", storeId);
 		return ResponseEntity.ok().body(this.productQueryService.findAllEntryLineItems(storeId, pageable).getContent());
@@ -566,7 +566,7 @@ public class QueryResource {
 	}
 
 	/**
-	 * 
+	 *  
 	 * @param id
 	 * @return
 	 */
