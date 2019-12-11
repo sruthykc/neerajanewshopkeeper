@@ -200,7 +200,7 @@ public interface ProductQueryService {
 
 	public ResponseEntity<UOMDTO> findUOM(Long id);
 	
-	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage( String iDPcode,
+	public Page<CategoryDTO> findAllCategoriesWithOutImage( String iDPcode,
 			Pageable pageable);
 
 	public ResponseEntity<CategoryDTO> findCategory( Long id);

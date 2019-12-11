@@ -12,30 +12,10 @@ import com.diviso.graeshoppe.client.store.model.*;
 
 public interface StoreQueryService {
 	
-	//public Page<Review> findAllReviews(String storeId, Pageable pageable);
-	
-	public Page<UserRating> findAllUserRatings(String storeId, Pageable pageable);
+
 	
 	public Store findStoreByRegNo(String regNo);
 	
-	/**
-	 * @param id
-	 * @return
-	 */
-	public Page<DeliveryInfo> findDeliveryInfoByStoreId(Long id);
-	
-	/**
-	 * @param storeId
-	 * @param pageable
-	 * @return
-	 */
-	List<Type> findAllDeliveryTypesByStoreId(String storeId);
-	
-	/**
-	 * @param regNo
-	 * @return
-	 */
-	public List<StoreType> findAllStoreTypesByStoreId(String regNo);
 	
 	/**
 	 * @param regNo
@@ -43,11 +23,11 @@ public interface StoreQueryService {
 	 */
 	public Page<Banner> findBannersByStoreId(String regNo,Pageable pageable );
 
-	public List<Banner> findAllBannersByStoreId(String regNo);
+	
 	public StoreDTO findStoreDTOByRegNo( String regNo);
 	
 	public ResponseEntity<StoreBundleDTO> getStoreBundle(String regNo);
-	public ResponseEntity<BannerDTO> findBanner(Long id) ;
+	public /*ResponseEntity<BannerDTO> */BannerDTO findBanner(Long id) ;
 	
 
 }

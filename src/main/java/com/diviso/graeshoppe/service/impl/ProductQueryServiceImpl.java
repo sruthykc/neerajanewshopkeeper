@@ -16,6 +16,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.util.PageCacheRecycler;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
@@ -65,6 +66,7 @@ import com.diviso.graeshoppe.client.product.model.UOM;
 import com.diviso.graeshoppe.client.product.model.UOMDTO;
 import com.diviso.graeshoppe.domain.ResultBucket;
 import com.diviso.graeshoppe.service.ProductQueryService;
+import com.diviso.graeshoppe.service.mapper.*;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -76,6 +78,13 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	
 	@Autowired
 	private ServiceUtility serviceUtility;
+	
+	@Autowired
+	ObjectMapper objectMapper;
+	@Autowired
+	CategoryMapper categoryMapper;
+	
+	
 
 	@Autowired
 	UomResourceApi uomResourceApi;
@@ -1145,15 +1154,46 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return uomResourceApi.getUOMUsingGET(id);
 	}
 
-	public ResponseEntity<List<CategoryDTO>> findAllCategoriesWithOutImage( String iDPcode,
+	public Page<CategoryDTO> findAllCategoriesWithOutImage( String iDPcode,
 			Pageable pageable) {
-		return ResponseEntity.ok()
-				.body(categoryResourceApi
-						.listToDToUsingPOST(findAllCategories(iDPcode, pageable).getContent())
-						.getBody().stream().map(c -> {
-							c.setImage(null);
-							return c;
-						}).collect(Collectors.toList()));
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+
+		
+		builder.query(QueryBuilders.termQuery("iDPcode.keyword", iDPcode));
+
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),
+				pageable.getPageNumber(), builder);
+
+		SearchResponse searchResponse = null;
+
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated
+			e.printStackTrace();
+		}
+
+		//Page serviceUtility.getPageResult(searchResponse, pageable, new Category());
+		
+		SearchHit[] searchHit = searchResponse.getHits().getHits();
+
+		List<CategoryDTO> list = new ArrayList<>();
+		
+		
+
+		for (SearchHit hit : searchHit) {
+			//System.out.println("............T............"+t);
+			
+			
+			Category category=objectMapper.convertValue(hit.getSourceAsMap(),Category.class);
+			CategoryDTO categoryDTO = categoryMapper.toDto(category);
+			list.add(categoryDTO);
+		}
+
+		return new PageImpl(list, pageable, searchResponse.getHits().getTotalHits());
+		
+		
+		
+		
 	}
 	
 	
