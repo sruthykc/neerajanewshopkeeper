@@ -14,6 +14,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.util.PageCacheRecycler;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
@@ -70,6 +71,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ProductQueryServiceImpl implements ProductQueryService {
+	
+	Logger log = LoggerFactory.getLogger(ProductQueryServiceImpl.class);
+	
 	@Autowired
 	private ServiceUtility serviceUtility;
 
@@ -108,26 +112,35 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 */
 	@Override
 	public Page<Product> findProductByCategoryId(Long categoryId, String storeId, Pageable pageable) {
+		log.debug("<<<<<<<<< findProductByCategoryId >>>>>>>>>",categoryId,storeId);
+		QueryBuilder qb = QueryBuilders.boolQuery()
+				.must(termQuery("categoryId",categoryId))
+				.must(termQuery("storeId.keyword",storeId));
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(qb);
+		SearchResponse sr = serviceUtility.searchResponseForPage("product", builder, pageable);
+		
+		return serviceUtility.getPageResult(sr, pageable, new Product());
 
 	
 		
-//		
-		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("category.id", categoryId))
-				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-		
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new Product());
+	
+		/*
+		 * builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery(
+		 * "category.id", categoryId)) .must(QueryBuilders.matchQuery("iDPcode",
+		 * storeId)));
+		 * 
+		 * SearchRequest searchRequest = serviceUtility.generateSearchRequest("product",
+		 * pageable.getPageSize(), pageable.getPageNumber(), builder);
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); } return serviceUtility.getPageResult(searchResponse,
+		 * pageable, new Product());
+		 */
 	}
 
 	/**
@@ -137,26 +150,31 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 */
 	@Override
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, String storeId, Pageable pageable) {
+		log.debug("<<<<<<<<<< findAllProductBySearchTerm >>>>>>>>>",searchTerm,storeId);
+		QueryBuilder qb = QueryBuilders.boolQuery()
+				.must(QueryBuilders.matchQuery("name", searchTerm).prefixLength(3))
+				.must(QueryBuilders.matchQuery(storeId, storeId));
 
-		SearchSourceBuilder builder = new SearchSourceBuilder();
+		SearchSourceBuilder builder = new SearchSourceBuilder();	
+		builder.query(qb);
+		SearchResponse sr = serviceUtility.searchResponseForPage("product", builder, pageable);
+		return serviceUtility.getPageResult(sr, pageable, new Product());
 
-		
-
-		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name", searchTerm).prefixLength(3))
-				.must(QueryBuilders.matchQuery("iDPcode", storeId)));
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new Product() );
-
+		/*
+		 * builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name",
+		 * searchTerm).prefixLength(3)) .must(QueryBuilders.matchQuery("iDPcode",
+		 * storeId)));
+		 * 
+		 * SearchRequest searchRequest = serviceUtility.generateSearchRequest("product",
+		 * pageable.getPageSize(), pageable.getPageNumber(), builder);
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); } return serviceUtility.getPageResult(searchResponse,
+		 * pageable, new Product() );
+		 */
 	}
 
 	/**
@@ -164,29 +182,31 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 */
 	@Override
 	public Page<Product> findAllProducts(String storeId, Pageable pageable) {
-
-		if (findProducts(pageable) == null) {
-			throw new BadRequestAlertException("NO products exist", "Product", "no products");
-		}
-
-		SearchSourceBuilder builder = new SearchSourceBuilder();
-
+		log.debug("<<<<<<<<<< findAllProducts >>>>>>>>",storeId);
+		
+		QueryBuilder qb = termQuery("storeId.keyword",storeId);
+		SearchSourceBuilder ssb = new SearchSourceBuilder();
+		ssb.query(qb);
+		SearchResponse sr = serviceUtility.searchResponseForPage("product", ssb, pageable);
+		return serviceUtility.getPageResult(sr, pageable, new Product());
 		
 
-		builder.query(termQuery("iDPcode", storeId)).sort("id", SortOrder.DESC);
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new Product() );
-
+		/*
+		 * if (findProducts(pageable) == null) { throw new
+		 * BadRequestAlertException("NO products exist", "Product", "no products"); }
+		 * SearchSourceBuilder builder = new SearchSourceBuilder();
+		 * builder.query(termQuery("iDPcode", storeId)).sort("id", SortOrder.DESC);
+		 * 
+		 * SearchRequest searchRequest = serviceUtility.generateSearchRequest("product",
+		 * pageable.getPageSize(), pageable.getPageNumber(), builder);
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); } return serviceUtility.getPageResult(searchResponse,
+		 * pageable, new Product() );
+		 */
 	}
 
 	/*
@@ -201,24 +221,27 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 */
 	@Override
 	public Page<Product> findProducts(Pageable pageable) {
+		log.debug("<<<<<<<<<<<< findProducts >>>>>>>>>>>>",pageable);
+		
 		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(matchAllQuery());
+		SearchResponse sr = serviceUtility.searchResponseForPage("product", builder, pageable);
+		return serviceUtility.getPageResult(sr, pageable, new Product());
 
 	
-
-		builder.query(matchAllQuery());
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new Product() );
-
+		/*
+		 * builder.query(matchAllQuery());
+		 * 
+		 * SearchRequest searchRequest = serviceUtility.generateSearchRequest("product",
+		 * pageable.getPageSize(), pageable.getPageNumber(), builder);
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); } return serviceUtility.getPageResult(searchResponse,
+		 * pageable, new Product() );
+		 */
 	}
 
 	/*
@@ -233,39 +256,42 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 */
 	@Override
 	public Page<Product> findNotAuxNotComboProductsByIDPcode(String iDPcode, Pageable pageable) {
-
+		log.debug("<<<<<<<  findNotAuxNotComboProductsByIDPcode >>>>>>>>",iDPcode);
+		QueryBuilder qb =QueryBuilders.termQuery("iDPcode.keyword", iDPcode);
 		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(qb);
+		SearchResponse sr =serviceUtility.searchResponseForPage("product", builder, pageable);
+		return serviceUtility.getPageResult(sr, pageable, new Product());
 
 		
 
-		builder.query(termQuery("iDPcode", iDPcode));
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-
-		List<Product> products = serviceUtility.getPageResult(searchResponse, pageable, new Product() )
-				.getContent();
-
-		List<Product> notAuxNotComboProducts = new ArrayList<Product>();
-
-		products.forEach(p -> {
-
-			if ((p.isIsAuxilaryItem() == false) && (p.getComboLineItems() == null)) {
-
-				notAuxNotComboProducts.add(p);
-			}
-
-		});
-
-		return new PageImpl(notAuxNotComboProducts);
+		/*
+		 * builder.query(termQuery("iDPcode", iDPcode));
+		 * 
+		 * SearchRequest searchRequest = serviceUtility.generateSearchRequest("product",
+		 * pageable.getPageSize(), pageable.getPageNumber(), builder);
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); }
+		 * 
+		 * List<Product> products = serviceUtility.getPageResult(searchResponse,
+		 * pageable, new Product() ) .getContent();
+		 * 
+		 * List<Product> notAuxNotComboProducts = new ArrayList<Product>();
+		 * 
+		 * products.forEach(p -> {
+		 * 
+		 * if ((p.isIsAuxilaryItem() == false) && (p.getComboLineItems() == null)) {
+		 * 
+		 * notAuxNotComboProducts.add(p); }
+		 * 
+		 * });
+		 * 
+		 * return new PageImpl(notAuxNotComboProducts);
+		 */
 	}
 
 	/*

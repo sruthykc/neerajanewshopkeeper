@@ -498,7 +498,7 @@ public class QueryResource {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/stockEntryBundle/{id}") // not tested
+	@GetMapping("/stockEntryBundle/{id}") // not tested 
 	public ResponseEntity<StockEntryBundle> getStockEntryBundle(@PathVariable Long id) {
 
 		StockEntry stockEntry = productQueryService.findStockEntryById(id);

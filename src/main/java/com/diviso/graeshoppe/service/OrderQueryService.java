@@ -85,4 +85,6 @@ public interface OrderQueryService {
 			 String candidateUser,  String createdAfter,
 			String createdBefore,  String createdOn,
 			String name,  String nameLike);
+
+	//List<OrderLine> findOrderLinesByOrderId(Long orderId, Pageable pageable);
 }
