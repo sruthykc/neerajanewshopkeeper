@@ -36,8 +36,8 @@
     },
     "generator-jhipster-swagger-cli": {
         "promptValues": {
-            "inputSpec": "http://dev.ci1.divisosofttech.com:8088/v2/api-docs",
-            "cliName": "customer"
+            "inputSpec": "http://dev.ci1.divisosofttech.com:8086/v2/api-docs",
+            "cliName": "sale"
         },
         "apis": {
             "store": {
@@ -45,6 +45,12 @@
             },
             "customer": {
                 "spec": "http://dev.ci1.divisosofttech.com:8088/v2/api-docs"
+            },
+            "shopkeepergateway": {
+                "spec": "http://dev.ci1.divisosofttech.com:8086/v2/api-docs"
+            },
+            "sale": {
+                "spec": "http://dev.ci1.divisosofttech.com:8086/v2/api-docs"
             }
         }
     }

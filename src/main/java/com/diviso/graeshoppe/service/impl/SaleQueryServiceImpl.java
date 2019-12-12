@@ -11,6 +11,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -28,8 +29,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.sale.api.SaleResourceApi;
 import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
-import com.diviso.graeshoppe.client.sale.domain.Sale;
-import com.diviso.graeshoppe.client.sale.domain.TicketLine;
+import com.diviso.graeshoppe.client.sale.model.Sale;
+import com.diviso.graeshoppe.client.sale.model.TicketLine;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.service.SaleQueryService;
@@ -92,9 +93,9 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	 * @param saleId
 	 */
 	@Override
-	public Page<TicketLine> findTicketLinesBySaleId(Long saleId,	Pageable pageable) {
+	public List<TicketLine> findAllTicketLinesBySaleId(Long saleId) {
 		
-
+		List<TicketLine> ticketLines =new ArrayList<TicketLine>();
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -109,9 +110,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		
 	
 
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("ticketline", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
+		SearchRequest searchRequest = new SearchRequest("ticketline");
 		SearchResponse searchResponse = null;
 
 		try {
@@ -119,9 +118,13 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		} catch (IOException e) { // TODO Auto-generated
 			e.printStackTrace();
 		}
-		
-		
-		return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
+		for(SearchHit hit: searchResponse.getHits()) {
+			TicketLine ticketLine = new ObjectMapper().convertValue(hit.getSourceAsString(), TicketLine.class);
+			ticketLines.add(ticketLine); //new ObjectMapper().convertValue [return a jason object]
+										//new ObjectMapper().readValue [return a string value]
+		}
+		return ticketLines;
+		//return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
 
 	}
 	

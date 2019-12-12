@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * TicketLineDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-30T15:12:46.034+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T12:31:38.737+05:30[Asia/Calcutta]")
 
 public class TicketLineDTO   {
   @JsonProperty("id")
@@ -22,8 +22,8 @@ public class TicketLineDTO   {
   @JsonProperty("price")
   private Double price = null;
 
-  @JsonProperty("productId")
-  private Long productId = null;
+  @JsonProperty("productName")
+  private String productName = null;
 
   @JsonProperty("quantity")
   private Integer quantity = null;
@@ -74,24 +74,24 @@ public class TicketLineDTO   {
     this.price = price;
   }
 
-  public TicketLineDTO productId(Long productId) {
-    this.productId = productId;
+  public TicketLineDTO productName(String productName) {
+    this.productName = productName;
     return this;
   }
 
   /**
-   * Get productId
-   * @return productId
+   * Get productName
+   * @return productName
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getProductId() {
-    return productId;
+  public String getProductName() {
+    return productName;
   }
 
-  public void setProductId(Long productId) {
-    this.productId = productId;
+  public void setProductName(String productName) {
+    this.productName = productName;
   }
 
   public TicketLineDTO quantity(Integer quantity) {
@@ -166,7 +166,7 @@ public class TicketLineDTO   {
     TicketLineDTO ticketLineDTO = (TicketLineDTO) o;
     return Objects.equals(this.id, ticketLineDTO.id) &&
         Objects.equals(this.price, ticketLineDTO.price) &&
-        Objects.equals(this.productId, ticketLineDTO.productId) &&
+        Objects.equals(this.productName, ticketLineDTO.productName) &&
         Objects.equals(this.quantity, ticketLineDTO.quantity) &&
         Objects.equals(this.saleId, ticketLineDTO.saleId) &&
         Objects.equals(this.total, ticketLineDTO.total);
@@ -174,7 +174,7 @@ public class TicketLineDTO   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, price, productId, quantity, saleId, total);
+    return Objects.hash(id, price, productName, quantity, saleId, total);
   }
 
   @Override
@@ -184,7 +184,7 @@ public class TicketLineDTO   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
-    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
+    sb.append("    productName: ").append(toIndentedString(productName)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("    saleId: ").append(toIndentedString(saleId)).append("\n");
     sb.append("    total: ").append(toIndentedString(total)).append("\n");

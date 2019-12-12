@@ -51,8 +51,8 @@ import com.diviso.graeshoppe.client.report.api.ReportResourceApi;
 import com.diviso.graeshoppe.client.report.model.*;
 import com.diviso.graeshoppe.client.sale.api.SaleResourceApi;
 import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
-import com.diviso.graeshoppe.client.sale.domain.Sale;
-import com.diviso.graeshoppe.client.sale.domain.TicketLine;
+import com.diviso.graeshoppe.client.sale.model.Sale;
+import com.diviso.graeshoppe.client.sale.model.TicketLine;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.client.store.api.*;
@@ -338,11 +338,14 @@ public class QueryResource {
 	 * 
 	 * @description find ticketlines by saleId
 	 */
-	@GetMapping("/findAllTicketLinesBySaleId/{saleId}") // 29 11 19 its working
-	public ResponseEntity<Page<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId, Pageable pageable) {
-		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId, pageable));
-	}
-
+	/*
+	 * @GetMapping("/findAllTicketLinesBySaleId/{saleId}") // 29 11 19 its working
+	 * public ResponseEntity<List<TicketLine>>
+	 * findAllTicketLinesBySaleId(@PathVariable Long saleId, Pageable pageable) {
+	 * return
+	 * ResponseEntity.ok().body(saleQueryService.findAllTicketLinesBySaleId(saleId,
+	 * pageable)); }
+	 */
 	/**
 	 * 
 	 * @param id
@@ -388,7 +391,7 @@ public class QueryResource {
 		});
 		sales.forEach(sale -> {
 			sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).getBody());
-			sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()));
+			sale.setTicketLines(saleQueryService.findAllTicketLinesBySaleId(sale.getSale().getId()));
 		});
 		PageImpl<SaleAggregate> res = new PageImpl<SaleAggregate>(sales);
 		return ResponseEntity.ok().body(res);
