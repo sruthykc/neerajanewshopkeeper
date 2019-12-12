@@ -29,7 +29,7 @@ public interface ProductMapper extends EntityMapper<ProductDTO, Product> {
     @Mapping(source = "taxCategoryId", target = "taxCategory")
     @Mapping(source = "unitId", target = "unit")
     @Mapping(source = "locationId", target = "location")
-    @Mapping(source = "supplierId", target = "supplier")
+    //@Mapping(source = "supplierId", target = "supplier")
     @Mapping(source = "manufacturerId", target = "manufacturer")
     @Mapping(source = "brandId", target = "brand")
     @Mapping(source = "discountId", target = "discount")
