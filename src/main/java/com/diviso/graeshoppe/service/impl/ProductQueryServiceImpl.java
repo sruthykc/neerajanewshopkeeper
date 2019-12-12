@@ -1185,6 +1185,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 			
 			
 			Category category=objectMapper.convertValue(hit.getSourceAsMap(),Category.class);
+			System.out.println("categoryKKKKKKKKKKKKKKKKKKKKKKKKK"+category);
 			CategoryDTO categoryDTO = categoryMapper.toDto(category);
 			list.add(categoryDTO);
 		}
