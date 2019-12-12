@@ -85,6 +85,17 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Autowired
 	CategoryMapper categoryMapper;
 
+	
+	@Autowired
+	ProductMapper productMapper;
+	@Autowired
+	StockEntryMapper stockEntryMapper;
+	@Autowired
+	UOMMapper uomMapper;
+	@Autowired
+	AuxilaryLineItemMapper auxilaryLineItemMapper;
+	@Autowired
+	ComboLineItemMapper comboLineItemMapper;
 	@Autowired
 	UomResourceApi uomResourceApi;
 
@@ -446,8 +457,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @param storeId
 	 */
 	@Override
-	public Page<EntryLineItem> findAllEntryLineItems(String storeId, Pageable pageable) {
-		QueryBuilder qb = QueryBuilders.termQuery("product.iDPcode.keyword", storeId);
+	public Page<EntryLineItem> findAllEntryLineItemsByIdpCode(String idpCode, Pageable pageable) {
+		QueryBuilder qb = QueryBuilders.termQuery("product.iDPcode.keyword", idpCode);
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);
 		SearchResponse sr = serviceUtility.searchResponseForPage("entrylineitem", builder, pageable);
@@ -505,9 +516,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * 
 	 */
 	@Override
-	public Page<StockEntry> findAllStockEntries(String storeId, Pageable pageable) {
+	public Page<StockEntry> findAllStockEntriesbyIdpCode(String idpCode, Pageable pageable) {
 
-		QueryBuilder qb =QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword", storeId));
+		QueryBuilder qb =QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword",idpCode));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);
 		SearchResponse sr = serviceUtility.searchResponseForPage("stockentry", builder, pageable);
@@ -1105,13 +1116,13 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * 
 	 */
 	@Override
-	public Page<Category> findAllCategoriesByNameAndStoreId(String name, String storeId, Pageable pageable) {
+	public Page<Category> findAllCategoriesByNameAndIdpCode(String name, String idpCode, Pageable pageable) {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		builder.query(
 				QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name.keyword", name).prefixLength(3))
-						.must(QueryBuilders.termQuery("iDPcode.keyword", storeId)));
+						.must(QueryBuilders.termQuery("iDPcode.keyword", idpCode)));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -1132,11 +1143,11 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @param iDPcode
 	 */
 	@Override
-	public Page<Category> findAllCategories(String iDPcode, Pageable pageable) {
+	public Page<Category> findAllCategoriesByIdpCode(String idpCode, Pageable pageable) {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		builder.query(QueryBuilders.termQuery("iDPcode.keyword", iDPcode));
+		builder.query(QueryBuilders.termQuery("iDPcode.keyword", idpCode));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),
 				pageable.getPageNumber(), builder);
@@ -1153,17 +1164,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
+	
 
-	public ResponseEntity<UOMDTO> findUOM(Long id) {
-		return uomResourceApi.getUOMUsingGET(id);
-	}
-
-	public Page<CategoryDTO> findAllCategoriesWithOutImage(String iDPcode, Pageable pageable) {
+	public Page<CategoryDTO> findAllCategoryDTOsByIdpCode(String iDPcode, Pageable pageable) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		builder.query(QueryBuilders.termQuery("iDPcode.keyword", iDPcode));
@@ -1203,35 +1206,84 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	}
 
 
-	/*public ResponseEntity<CategoryDTO> findCategory(Long id) {
-
-		return categoryResourceApi.getCategoryUsingGET(id);
-	}*/
-
-	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
-		return productResourceApi.getProductUsingGET(id);
+	public CategoryDTO findCategoryDTOById(Long id) {
+		QueryBuilder queryDsl = QueryBuilders.termQuery("id", id);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryDsl);
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("category", queryDsl);
+		Category category =serviceUtility.getObjectResult(searchResponse, new Category());
+		return categoryMapper.toDto(category);
+	//	return categoryResourceApi.getCategoryUsingGET(id);
 	}
 
-	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
+	public ProductDTO findProductDTOById(@PathVariable Long id) {
+		QueryBuilder queryDsl = QueryBuilders.termQuery("id", id);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryDsl);
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("product", queryDsl);
+		Product product =serviceUtility.getObjectResult(searchResponse, new Product());
+		return productMapper.toDto(product);
+		//return productResourceApi.getProductUsingGET(id);
+	}
+
+	public StockEntryDTO findStockEntryDTOById(Long id) {
+		QueryBuilder queryDsl = QueryBuilders.termQuery("id", id);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryDsl);
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("stockentry", queryDsl);
+		StockEntry stockEntry =serviceUtility.getObjectResult(searchResponse, new StockEntry());
+		return stockEntryMapper.toDto(stockEntry);
+		//return stockEntryResourceApi.getStockEntryUsingGET(id);
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+
+	public UOMDTO findUOMDTOById(Long id) {
+		QueryBuilder queryDsl = QueryBuilders.termQuery("id", id);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryDsl);
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("uom", queryDsl);
+		UOM uom =serviceUtility.getObjectResult(searchResponse, new UOM());
+		return uomMapper.toDto(uom);
+		//return uomResourceApi.getUOMUsingGET(id);
+	}
+	
+	public AuxilaryLineItemDTO findAuxilaryLineItemById(Long id) {
+		QueryBuilder queryDsl = QueryBuilders.termQuery("id", id);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryDsl);
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("auxilaryLineItem", queryDsl);
+	AuxilaryLineItem auxilaryLineItem =serviceUtility.getObjectResult(searchResponse, new AuxilaryLineItem());
+		return auxilaryLineItemMapper.toDto(auxilaryLineItem);
+		
+		
+		//return auxilaryLineItemResourceApi.getAuxilaryLineItemUsingGET(id);
+	}
+	public ComboLineItemDTO findCombolineItemById(Long id) {
+		QueryBuilder queryDsl = QueryBuilders.termQuery("id", id);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryDsl);
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("comboLineItem", queryDsl);
+		ComboLineItem comboLineItem =serviceUtility.getObjectResult(searchResponse, new ComboLineItem());
+		return comboLineItemMapper.toDto(comboLineItem);
+		//return comboLineItemResourceApi.getComboLineItemUsingGET(id);
+	}
+
+	
+	
+	/*public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
 			Integer size, ArrayList<String> sort) {
 		return stockCurrentResourceApi.searchStockCurrentsUsingGET(searchTerm, page, size, sort);
-	}
+	}*/
 
-	public ResponseEntity<StockEntryDTO> findOneStockEntry(Long id) {
-		return this.stockEntryResourceApi.getStockEntryUsingGET(id);
-	}
 
-	public ResponseEntity<StockEntryDTO> findStockEntryDTOById(Long id) {
+	
 
-		return stockEntryResourceApi.getStockEntryUsingGET(id);
-	}
+	
 
-	public ResponseEntity<ComboLineItemDTO> findCombolineItem(Long id) {
-		return comboLineItemResourceApi.getComboLineItemUsingGET(id);
-	}
-
-	public ResponseEntity<AuxilaryLineItemDTO> findAuxilaryLineItem(Long id) {
-		return auxilaryLineItemResourceApi.getAuxilaryLineItemUsingGET(id);
-	}
 
 }

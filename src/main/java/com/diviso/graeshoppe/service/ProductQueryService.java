@@ -61,11 +61,11 @@ public interface ProductQueryService {
 	
 	public List<String> findAllUom(Pageable pageable);
 	
-	public Page<EntryLineItem> findAllEntryLineItems(String storeId, Pageable pageable);
+	public Page<EntryLineItem> findAllEntryLineItemsByIdpCode(String idpCode, Pageable pageable);
 	
 	public Page<StockCurrent> findAllStockCurrents(String storeId, Pageable pageable);
 	
-	public Page<StockEntry> findAllStockEntries(String storeId, Pageable pageable);
+	public Page<StockEntry> findAllStockEntriesbyIdpCode(String idpCode, Pageable pageable);
 	
 	public Page<StockCurrent> findAllStockCurrentByCategoryId(Long categoryId, String storeId, Pageable pageable);
 	
@@ -188,7 +188,7 @@ public interface ProductQueryService {
 	 * @param pageable
 	 * @return
 	 */
-	Page<Category> findAllCategories(String storeId, Pageable pageable);
+	Page<Category> findAllCategoriesByIdpCode(String idpCode, Pageable pageable);
 
 	/**
 	 * 
@@ -197,22 +197,27 @@ public interface ProductQueryService {
 	 * @param pageable
 	 * @return
 	 */
-	public Page<Category> findAllCategoriesByNameAndStoreId(String name, String storeId, Pageable pageable);
+	//findAllCategoriesByNameAndStoreId
+	public Page<Category> findAllCategoriesByNameAndIdpCode(String name, String idpCode, Pageable pageable);
 
-	public ResponseEntity<UOMDTO> findUOM(Long id);
-	
-	public Page<CategoryDTO> findAllCategoriesWithOutImage( String iDPcode,
+	public UOMDTO findUOMDTOById(Long id);
+	//findAllCategoriesWithOutImage
+	public Page<CategoryDTO> findAllCategoryDTOsByIdpCode( String iDPcode,
 			Pageable pageable);
 
-	public ResponseEntity<CategoryDTO> findCategory( Long id);
-	public ResponseEntity<ProductDTO> findProduct( Long id); 
-	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
-			Integer size, ArrayList<String> sort);
+	public CategoryDTO findCategoryDTOById(Long id);
+	public ProductDTO findProductDTOById( Long id); 
+/*	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
+			Integer size, ArrayList<String> sort);*/
 
-	public ResponseEntity<StockEntryDTO> findOneStockEntry(Long id) ;
-	public ResponseEntity<StockEntryDTO> findStockEntryDTOById(Long id);
-	public ResponseEntity<ComboLineItemDTO> findCombolineItem( Long id) ;
-	public ResponseEntity<AuxilaryLineItemDTO> findAuxilaryLineItem( Long id) ;
+	//public ResponseEntity<StockEntryDTO> findOneStockEntry(Long id) ;
+	public StockEntryDTO findStockEntryDTOById(Long id);
+	public ComboLineItemDTO findCombolineItemById( Long id) ;
+	public AuxilaryLineItemDTO findAuxilaryLineItemById( Long id) ;
+
+	
+
+	
 
 		
 	

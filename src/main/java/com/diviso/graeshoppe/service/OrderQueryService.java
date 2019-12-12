@@ -25,7 +25,7 @@ public interface OrderQueryService {
 	 * @param deliveryType
 	 * @param pageable
 	 */
-	public Page<Order> findOrderByStatusNameAndDeliveryType(String statusName, String storeId, String deliveryType,Pageable pageable);
+	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(String statusName, String storeId, String deliveryType,Pageable pageable);
 
 	/**
 	 * @param storeId

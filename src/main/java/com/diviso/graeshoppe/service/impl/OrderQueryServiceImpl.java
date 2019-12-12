@@ -96,7 +96,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @param deliverytype
 	 */
 	@Override
-	public Page<Order> findOrderByStatusNameAndDeliveryType(String statusName, String storeId, String deliveryType,
+	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(String statusName, String storeId, String deliveryType,
 			Pageable pageable) {
 		log.debug("<<<<<<<<<< findOrderByStatusNameAndDeliveryType >>>>>>>>>",statusName,deliveryType);
 
