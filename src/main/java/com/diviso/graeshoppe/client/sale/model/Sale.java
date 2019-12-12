@@ -1,19 +1,5 @@
- /*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package com.diviso.graeshoppe.client.sale.domain;
+package com.diviso.graeshoppe.client.sale.model;
+
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -22,29 +8,33 @@ import java.util.Objects;
 import java.util.Set;
 
 
-
-
 /**
- * TODO Provide a detailed description here 
- * @author MayaSanjeev
- * mayabytatech, maya.k.k@lxisoft.com
+ * A Sale.
  */
+
 
 public class Sale implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    
+
     private Long id;
 
-    private String userId;
+    private String saleUniqueId;
+
+    private String idpCode;
+
+    private String storeName;
 
     private Long customerId;
 
-   
     private Instant date;
 
+    private String paymentRef;
+
+    private String paymentMode;
+
     private Double grandTotal;
+
 
     private Set<TicketLine> ticketLines = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -56,17 +46,43 @@ public class Sale implements Serializable {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getSaleUniqueId() {
+        return saleUniqueId;
     }
 
-    public Sale userId(String userId) {
-        this.userId = userId;
+    public Sale saleUniqueId(String saleUniqueId) {
+        this.saleUniqueId = saleUniqueId;
         return this;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setSaleUniqueId(String saleUniqueId) {
+        this.saleUniqueId = saleUniqueId;
+    }
+
+    public String getIdpCode() {
+        return idpCode;
+    }
+
+    public Sale idpCode(String idpCode) {
+        this.idpCode = idpCode;
+        return this;
+    }
+
+    public void setIdpCode(String idpCode) {
+        this.idpCode = idpCode;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public Sale storeName(String storeName) {
+        this.storeName = storeName;
+        return this;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
     public Long getCustomerId() {
@@ -93,6 +109,32 @@ public class Sale implements Serializable {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public String getPaymentRef() {
+        return paymentRef;
+    }
+
+    public Sale paymentRef(String paymentRef) {
+        this.paymentRef = paymentRef;
+        return this;
+    }
+
+    public void setPaymentRef(String paymentRef) {
+        this.paymentRef = paymentRef;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public Sale paymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+        return this;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
     }
 
     public Double getGrandTotal() {
@@ -158,9 +200,13 @@ public class Sale implements Serializable {
     public String toString() {
         return "Sale{" +
             "id=" + getId() +
-            ", userId='" + getUserId() + "'" +
+            ", saleUniqueId='" + getSaleUniqueId() + "'" +
+            ", idpCode='" + getIdpCode() + "'" +
+            ", storeName='" + getStoreName() + "'" +
             ", customerId=" + getCustomerId() +
             ", date='" + getDate() + "'" +
+            ", paymentRef='" + getPaymentRef() + "'" +
+            ", paymentMode='" + getPaymentMode() + "'" +
             ", grandTotal=" + getGrandTotal() +
             "}";
     }

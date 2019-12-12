@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -16,14 +14,14 @@ import javax.validation.constraints.*;
  * SaleDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-30T15:12:46.034+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T12:31:38.737+05:30[Asia/Calcutta]")
 
 public class SaleDTO   {
   @JsonProperty("customerId")
   private Long customerId = null;
 
   @JsonProperty("date")
-  private Instant date = null;
+  private OffsetDateTime date = null;
 
   @JsonProperty("grandTotal")
   private Double grandTotal = null;
@@ -31,8 +29,20 @@ public class SaleDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("userId")
-  private String userId = null;
+  @JsonProperty("idpCode")
+  private String idpCode = null;
+
+  @JsonProperty("paymentMode")
+  private String paymentMode = null;
+
+  @JsonProperty("paymentRef")
+  private String paymentRef = null;
+
+  @JsonProperty("saleUniqueId")
+  private String saleUniqueId = null;
+
+  @JsonProperty("storeName")
+  private String storeName = null;
 
   public SaleDTO customerId(Long customerId) {
     this.customerId = customerId;
@@ -54,7 +64,7 @@ public class SaleDTO   {
     this.customerId = customerId;
   }
 
-  public SaleDTO date(Instant date) {
+  public SaleDTO date(OffsetDateTime date) {
     this.date = date;
     return this;
   }
@@ -67,11 +77,11 @@ public class SaleDTO   {
 
   @Valid
 
-  public Instant getDate() {
+  public OffsetDateTime getDate() {
     return date;
   }
 
-  public void setDate(Instant date) {
+  public void setDate(OffsetDateTime date) {
     this.date = date;
   }
 
@@ -115,24 +125,104 @@ public class SaleDTO   {
     this.id = id;
   }
 
-  public SaleDTO userId(String userId) {
-    this.userId = userId;
+  public SaleDTO idpCode(String idpCode) {
+    this.idpCode = idpCode;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * Get idpCode
+   * @return idpCode
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getUserId() {
-    return userId;
+  public String getIdpCode() {
+    return idpCode;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setIdpCode(String idpCode) {
+    this.idpCode = idpCode;
+  }
+
+  public SaleDTO paymentMode(String paymentMode) {
+    this.paymentMode = paymentMode;
+    return this;
+  }
+
+  /**
+   * Get paymentMode
+   * @return paymentMode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getPaymentMode() {
+    return paymentMode;
+  }
+
+  public void setPaymentMode(String paymentMode) {
+    this.paymentMode = paymentMode;
+  }
+
+  public SaleDTO paymentRef(String paymentRef) {
+    this.paymentRef = paymentRef;
+    return this;
+  }
+
+  /**
+   * Get paymentRef
+   * @return paymentRef
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getPaymentRef() {
+    return paymentRef;
+  }
+
+  public void setPaymentRef(String paymentRef) {
+    this.paymentRef = paymentRef;
+  }
+
+  public SaleDTO saleUniqueId(String saleUniqueId) {
+    this.saleUniqueId = saleUniqueId;
+    return this;
+  }
+
+  /**
+   * Get saleUniqueId
+   * @return saleUniqueId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getSaleUniqueId() {
+    return saleUniqueId;
+  }
+
+  public void setSaleUniqueId(String saleUniqueId) {
+    this.saleUniqueId = saleUniqueId;
+  }
+
+  public SaleDTO storeName(String storeName) {
+    this.storeName = storeName;
+    return this;
+  }
+
+  /**
+   * Get storeName
+   * @return storeName
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getStoreName() {
+    return storeName;
+  }
+
+  public void setStoreName(String storeName) {
+    this.storeName = storeName;
   }
 
 
@@ -149,12 +239,16 @@ public class SaleDTO   {
         Objects.equals(this.date, saleDTO.date) &&
         Objects.equals(this.grandTotal, saleDTO.grandTotal) &&
         Objects.equals(this.id, saleDTO.id) &&
-        Objects.equals(this.userId, saleDTO.userId);
+        Objects.equals(this.idpCode, saleDTO.idpCode) &&
+        Objects.equals(this.paymentMode, saleDTO.paymentMode) &&
+        Objects.equals(this.paymentRef, saleDTO.paymentRef) &&
+        Objects.equals(this.saleUniqueId, saleDTO.saleUniqueId) &&
+        Objects.equals(this.storeName, saleDTO.storeName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(customerId, date, grandTotal, id, userId);
+    return Objects.hash(customerId, date, grandTotal, id, idpCode, paymentMode, paymentRef, saleUniqueId, storeName);
   }
 
   @Override
@@ -166,7 +260,11 @@ public class SaleDTO   {
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    grandTotal: ").append(toIndentedString(grandTotal)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    idpCode: ").append(toIndentedString(idpCode)).append("\n");
+    sb.append("    paymentMode: ").append(toIndentedString(paymentMode)).append("\n");
+    sb.append("    paymentRef: ").append(toIndentedString(paymentRef)).append("\n");
+    sb.append("    saleUniqueId: ").append(toIndentedString(saleUniqueId)).append("\n");
+    sb.append("    storeName: ").append(toIndentedString(storeName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

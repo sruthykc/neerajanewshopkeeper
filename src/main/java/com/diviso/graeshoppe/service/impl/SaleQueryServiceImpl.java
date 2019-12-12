@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.sale.api.SaleResourceApi;
 import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
-import com.diviso.graeshoppe.client.sale.domain.Sale;
-import com.diviso.graeshoppe.client.sale.domain.TicketLine;
+import com.diviso.graeshoppe.client.sale.model.Sale;
+import com.diviso.graeshoppe.client.sale.model.TicketLine;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.service.SaleQueryService;
@@ -120,7 +120,8 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		}
 		for(SearchHit hit: searchResponse.getHits()) {
 			TicketLine ticketLine = new ObjectMapper().convertValue(hit.getSourceAsString(), TicketLine.class);
-			ticketLines.add(ticketLine); //new ObjectMapper().convert
+			ticketLines.add(ticketLine); //new ObjectMapper().convertValue [return a jason object]
+										//new ObjectMapper().readValue [return a string value]
 		}
 		return ticketLines;
 		//return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());

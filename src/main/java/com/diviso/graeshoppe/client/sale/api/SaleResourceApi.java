@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-30T15:12:46.034+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T12:31:38.737+05:30[Asia/Calcutta]")
 
 @Api(value = "SaleResource", description = "the SaleResource API")
 public interface SaleResourceApi {
@@ -77,6 +77,18 @@ public interface SaleResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<SaleDTO> getSaleUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "printSale", nickname = "printSaleUsingGET", notes = "", response = byte[].class, tags={ "sale-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = byte[].class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/printSale/{saleId}/{idpCode}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<byte[]> printSaleUsingGET(@ApiParam(value = "idpCode",required=true) @PathVariable("idpCode") String idpCode,@ApiParam(value = "saleId",required=true) @PathVariable("saleId") Long saleId);
 
 
     @ApiOperation(value = "searchSales", nickname = "searchSalesUsingGET", notes = "", response = SaleDTO.class, responseContainer = "List", tags={ "sale-resource", })

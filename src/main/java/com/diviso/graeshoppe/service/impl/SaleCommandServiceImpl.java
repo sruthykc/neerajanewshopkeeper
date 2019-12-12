@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.service.impl;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class SaleCommandServiceImpl implements SaleCommandService{
 
 	@Override
 	public ResponseEntity<SaleDTO> createSale(SaleDTO saleDTO) {	
-		saleDTO.date(Instant.now());
+		saleDTO.date(OffsetDateTime.now());
 		return saleResourceApi.createSaleUsingPOST(saleDTO);
 		
 	}

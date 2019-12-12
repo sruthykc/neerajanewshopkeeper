@@ -3,8 +3,8 @@ package com.diviso.graeshoppe.service.dto;
 import java.util.List;
 
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
-import com.diviso.graeshoppe.client.sale.domain.Sale;
-import com.diviso.graeshoppe.client.sale.domain.TicketLine;
+import com.diviso.graeshoppe.client.sale.model.Sale;
+import com.diviso.graeshoppe.client.sale.model.TicketLine;
 
 public class SaleAggregate {
 	
