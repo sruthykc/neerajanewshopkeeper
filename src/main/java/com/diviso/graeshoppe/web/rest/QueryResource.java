@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.client.aggregators.SaleAggregate;
 import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
 import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
 import com.diviso.graeshoppe.client.customer.model.Contact;
@@ -65,7 +66,7 @@ import com.diviso.graeshoppe.service.ReportQueryService;
 import com.diviso.graeshoppe.service.SaleQueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
 import com.diviso.graeshoppe.service.dto.PdfDTO;
-import com.diviso.graeshoppe.service.dto.SaleAggregate;
+
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 
 @RestController
@@ -372,20 +373,23 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	/*
-	 * @GetMapping("/sales/combined/{storeId}") //it's working public
-	 * ResponseEntity<Page<SaleAggregate>> findAllSaleAggregates(@PathVariable
-	 * String storeId, Pageable pageable) { List<SaleAggregate> sales = new
-	 * ArrayList<SaleAggregate>(); this.findSales(storeId,
-	 * pageable).getContent().forEach(sale -> { SaleAggregate saleAgg = new
-	 * SaleAggregate(); saleAgg.setSale(sale); sales.add(saleAgg); });
-	 * sales.forEach(sale -> {
-	 * sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).
-	 * getBody());
-	 * sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()).
-	 * getBody()); }); PageImpl<SaleAggregate> res = new
-	 * PageImpl<SaleAggregate>(sales); return ResponseEntity.ok().body(res); }
-	 */
+	
+	
+	@GetMapping("/sales/combined/{storeId}") // it's working public
+	ResponseEntity<Page<SaleAggregate>> findAllSaleAggregates(@PathVariable String storeId, Pageable pageable) {
+		List<SaleAggregate> sales = new ArrayList<SaleAggregate>();
+		this.findSales(storeId, pageable).getContent().forEach(sale -> {
+			SaleAggregate saleAgg = new SaleAggregate();
+			saleAgg.setSale(sale);
+			sales.add(saleAgg);
+		});
+		sales.forEach(sale -> {
+			sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).getBody());
+			sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()));
+		});
+		PageImpl<SaleAggregate> res = new PageImpl<SaleAggregate>(sales);
+		return ResponseEntity.ok().body(res);
+	}
 
 	//////////////////////////
 
@@ -626,8 +630,8 @@ public class QueryResource {
 	 * @return
 	 */
 	@GetMapping("/auxilary-products/{storeId}") // 26 11 19 it's working
-	public ResponseEntity<Page<Product>> getAllAuxilaryProduct(@PathVariable String storeId) {
-		return ResponseEntity.ok().body(productQueryService.findAllAuxilaryProducts(storeId));
+	public ResponseEntity<Page<Product>> getAllAuxilaryProduct(@PathVariable String storeId,Pageable pageable) {
+		return ResponseEntity.ok().body(productQueryService.findAllAuxilaryProducts(storeId,pageable));
 
 	}
 

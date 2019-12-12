@@ -46,9 +46,10 @@ public interface ProductQueryService {
 	public Page<Product> findNotAuxNotComboProductsByIDPcode(String iDPcode, Pageable pageable);
 	
 	/**
+	 * @param pageable 
 	 * @return
 	 */
-	public Page<Product> findAllAuxilaryProducts(String storeId);
+	public Page<Product> findAllAuxilaryProducts(String storeId, Pageable pageable);
 	
 	/**
 	 * @param id
