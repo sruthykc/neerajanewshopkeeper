@@ -10,7 +10,7 @@ import com.diviso.graeshoppe.client.product.model.CategoryDTO;
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface CategoryMapper extends EntityMapper<CategoryDTO, Category> {
-	  @Override
+	 /* @Override
 	 @Mapping(source = "id", target = "id")
 	 @Mapping(source = "iDPcode", target = "idpCode")
 	 @Mapping(source = "name", target = "name")
@@ -18,7 +18,7 @@ public interface CategoryMapper extends EntityMapper<CategoryDTO, Category> {
 	 @Mapping(source = "imageContentType", target = "imageContentType")
 	 @Mapping(source = "imageLink", target = "imageLink")
 	 @Mapping(source = "description", target = "description")
-	CategoryDTO toDto(Category category);
+	CategoryDTO toDto(Category category);*/
 
     @Mapping(target = "products", ignore = true)
     Category toEntity(CategoryDTO categoryDTO);

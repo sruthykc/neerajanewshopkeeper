@@ -16,239 +16,109 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-28T15:55:43.394+05:30[Asia/Kolkata]")
 
-public class CategoryDTO   {
-  @JsonProperty("description")
-  private String description = null;
+public class CategoryDTO {
 
- 
+    private Long id;
 
-  @JsonProperty("id")
-  private Long id = null;
+    private String iDPcode;
 
-  @JsonProperty("image")
-  private byte[] image = null;
-  
-  
-  public String getImageLink() {
-	return imageLink;
-}
+    private String name;
 
-public void setImageLink(String imageLink) {
-	this.imageLink = imageLink;
-}
+    
+    private byte[] image;
 
-@JsonProperty("imagelink")
-  private String imageLink = null;
+    private String imageContentType;
+    private String imageLink;
 
-  @JsonProperty("imageContentType")
-  private String imageContentType = null;
-
-  @JsonProperty("name")
-  private String name = null;
-
-  
-  private String idpCode;
-  
-  
-  public CategoryDTO description(String description) {
-    this.description = description;
-    return this;
-  }
-
-  /**
-   * Get description
-   * @return description
-  **/
-  @ApiModelProperty(value = "")
+    private String description;
 
 
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  /*public CategoryDTO iDPcode(String iDPcode) {
-    this.iDPcode = iDPcode;
-    return this;
-  }*/
-
-  /**
-   * Get iDPcode
-   * @return iDPcode
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getIdpCode() {
-    return idpCode;
-  }
-
-  public void setIdpCode(String iDPcode) {
-    this.idpCode = idpCode;
-  }
-
-  public CategoryDTO id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public CategoryDTO image(byte[] image) {
-    this.image = image;
-    return this;
-  }
-
-  /**
-   * Get image
-   * @return image
-  **/
-  @ApiModelProperty(value = "")
-
-//@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
-  public byte[] getImage() {
-    return image;
-  }
-
-  public void setImage(byte[] image) {
-    this.image = image;
-  }
-
-  public CategoryDTO imageContentType(String imageContentType) {
-    this.imageContentType = imageContentType;
-    return this;
-  }
-
-  /**
-   * Get imageContentType
-   * @return imageContentType
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getImageContentType() {
-    return imageContentType;
-  }
-
-  public void setImageContentType(String imageContentType) {
-    this.imageContentType = imageContentType;
-  }
-
-  public CategoryDTO name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-
-
-
-  @Override
-public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((description == null) ? 0 : description.hashCode());
-	result = prime * result + ((idpCode == null) ? 0 : idpCode.hashCode());
-	result = prime * result + ((id == null) ? 0 : id.hashCode());
-	result = prime * result + Arrays.hashCode(image);
-	result = prime * result + ((imageContentType == null) ? 0 : imageContentType.hashCode());
-	result = prime * result + ((imageLink == null) ? 0 : imageLink.hashCode());
-	result = prime * result + ((name == null) ? 0 : name.hashCode());
-	return result;
-}
-
-@Override
-public boolean equals(Object obj) {
-	if (this == obj)
-		return true;
-	if (obj == null)
-		return false;
-	if (getClass() != obj.getClass())
-		return false;
-	CategoryDTO other = (CategoryDTO) obj;
-	if (description == null) {
-		if (other.description != null)
-			return false;
-	} else if (!description.equals(other.description))
-		return false;
-	if (idpCode == null) {
-		if (other.idpCode != null)
-			return false;
-	} else if (!idpCode.equals(other.idpCode))
-		return false;
-	if (id == null) {
-		if (other.id != null)
-			return false;
-	} else if (!id.equals(other.id))
-		return false;
-	if (!Arrays.equals(image, other.image))
-		return false;
-	if (imageContentType == null) {
-		if (other.imageContentType != null)
-			return false;
-	} else if (!imageContentType.equals(other.imageContentType))
-		return false;
-	if (imageLink == null) {
-		if (other.imageLink != null)
-			return false;
-	} else if (!imageLink.equals(other.imageLink))
-		return false;
-	if (name == null) {
-		if (other.name != null)
-			return false;
-	} else if (!name.equals(other.name))
-		return false;
-	return true;
-}
-
-
-
-@Override
-public String toString() {
-	return "CategoryDTO [description=" + description + ", idpCode=" + idpCode + ", id=" + id + ", image="
-			+ Arrays.toString(image) + ", imageLink=" + imageLink + ", imageContentType=" + imageContentType + ", name="
-			+ name + "]";
-}
-
-/**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public Long getId() {
+        return id;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
-}
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getiDPcode() {
+        return iDPcode;
+    }
+
+    public void setiDPcode(String iDPcode) {
+        this.iDPcode = iDPcode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        CategoryDTO categoryDTO = (CategoryDTO) o;
+        if (categoryDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), categoryDTO.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryDTO{" +
+            "id=" + getId() +
+            ", iDPcode='" + getiDPcode() + "'" +
+            ", name='" + getName() + "'" +
+            ", image='" + getImage() + "'" +
+            ", imageLink='" + getImageLink() + "'" +
+            ", description='" + getDescription() + "'" +
+            "}";
+    }
+}
