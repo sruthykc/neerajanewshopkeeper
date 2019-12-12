@@ -1202,7 +1202,13 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	}
 	
 	
-	public ResponseEntity<CategoryDTO> findCategory( Long id) {
+	
+	
+	
+	//findCategory to findCategoryById 
+	
+	public /*ResponseEntity<CategoryDTO>*/  CategoryDTO  findCategoryById( Long id) {
+		
 		return categoryResourceApi.getCategoryUsingGET(id);
 	}
 	
