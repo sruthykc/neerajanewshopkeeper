@@ -126,23 +126,21 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	@Override
 	public Store findStoreByRegNo(String regNo) {
 
+		QueryBuilder queryBuilder = QueryBuilders.termQuery("regNo.keyword", regNo);
 		SearchSourceBuilder builder = new SearchSourceBuilder();
-
-		builder.query(termQuery("regNo", regNo));
-
-		SearchRequest searchRequest = new SearchRequest("store");
-
-		searchRequest.source(builder);
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-
+		builder.query(queryBuilder);
+		
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("store", queryBuilder);
 		return serviceUtility.getObjectResult(searchResponse, new Store());
 
+				
+		/*
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); }
+		 * 
+		 * return serviceUtility.getObjectResult(searchResponse, new Store());
+		 */
 	}
 
 	/*
@@ -157,32 +155,44 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 */
 
 	private List<DeliveryInfoDTO> findDeliveryInfoByStoreId(Long id) {
-
+		
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+				.must(QueryBuilders.termQuery("store.id", id));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryBuilder);
 
-		builder.query(termQuery("store.id", id));
-
-		SearchRequest searchRequest = new SearchRequest("deliveryinfo");
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-
+		SearchResponse searchResponse = serviceUtility.searchResponseForSourceBuilder("deliveryinfo", builder);
 		SearchHit[] searchHit = searchResponse.getHits().getHits();
 
 		List<DeliveryInfoDTO> deliveryInfoDTOList = new ArrayList<>();
-
-		for (SearchHit hit : searchHit) {
+		for(SearchHit hit :searchHit) {
 			DeliveryInfo deliveryInfo = objectMapper.convertValue(hit.getSourceAsMap(), DeliveryInfo.class);
 			DeliveryInfoDTO deliveryInfoDTO = deliveryInfoMapper.toDto(deliveryInfo);
 			deliveryInfoDTOList.add(deliveryInfoDTO);
 		}
-
-		return deliveryInfoDTOList;
+		return deliveryInfoDTOList; 
+		/*
+		 * builder.query(termQuery("store.id", id));
+		 * 
+		 * SearchRequest searchRequest = new SearchRequest("deliveryinfo");
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); }
+		 * 
+		 * SearchHit[] searchHit = searchResponse.getHits().getHits();
+		 * 
+		 * List<DeliveryInfoDTO> deliveryInfoDTOList = new ArrayList<>();
+		 * 
+		 * for (SearchHit hit : searchHit) { DeliveryInfo deliveryInfo =
+		 * objectMapper.convertValue(hit.getSourceAsMap(), DeliveryInfo.class);
+		 * DeliveryInfoDTO deliveryInfoDTO = deliveryInfoMapper.toDto(deliveryInfo);
+		 * deliveryInfoDTOList.add(deliveryInfoDTO); }
+		 * 
+		 * return deliveryInfoDTOList;
+		 */
 		// return serviceUtility.getPageResult(searchResponse, pageable, new
 		// DeliveryInfo());
 

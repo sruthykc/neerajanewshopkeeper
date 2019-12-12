@@ -10,6 +10,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -49,53 +50,56 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	private TicketLineResourceApi ticketLineResourceApi;
 	private RestHighLevelClient restHighLevelClient;
 
-	
-	public SaleQueryServiceImpl( RestHighLevelClient restHighLevelClient) {
-	
+	public SaleQueryServiceImpl(RestHighLevelClient restHighLevelClient) {
+
 		this.restHighLevelClient = restHighLevelClient;
 	}
 
-	
 	/**
 	 * @param storeId
 	 */
 	@Override
 	public Page<Sale> findSales(String storeId, Pageable pageable) {
-		
-		SearchSourceBuilder builder = new SearchSourceBuilder();
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+				.must(QueryBuilders.termQuery("userId.keyword", storeId));
 
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryBuilder);
+		SearchResponse searchResponse = serviceUtility.searchResponseForPage("sale", builder, pageable);
+		return serviceUtility.getPageResult(searchResponse, pageable, new Sale());
+		
+		
 		/*
 		 * String[] include = new String[] { "" };
 		 * 
 		 * String[] exclude = new String[] {};
 		 * 
 		 * builder.fetchSource(include, exclude);
+		 * 
+		 * 
+		 * builder.query(termQuery("userId.keyword", storeId)).sort("date",
+		 * SortOrder.DESC);
+		 * 
+		 * SearchRequest searchRequest = serviceUtility.generateSearchRequest("sale",
+		 * pageable.getPageSize(), pageable.getPageNumber(), builder);
+		 * 
+		 * SearchResponse searchResponse = null;
+		 * 
+		 * try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) { // TODO Auto-generated
+		 * e.printStackTrace(); } return serviceUtility.getPageResult(searchResponse,
+		 * pageable, new Sale());
 		 */
 
-		builder.query(termQuery("userId.keyword", storeId)).sort("date", SortOrder.DESC);
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("sale", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-		return serviceUtility.getPageResult(searchResponse, pageable, new Sale());
-
-
 	}
-	
+
 	/**
 	 * @param saleId
 	 */
 	@Override
 	public List<TicketLine> findAllTicketLinesBySaleId(Long saleId) {
-		
-		List<TicketLine> ticketLines =new ArrayList<TicketLine>();
+
+		List<TicketLine> ticketLines = new ArrayList<TicketLine>();
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -106,9 +110,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("id",saleId ));
-		
-	
+		builder.query(termQuery("id", saleId));
 
 		SearchRequest searchRequest = new SearchRequest("ticketline");
 		SearchResponse searchResponse = null;
@@ -118,16 +120,17 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		} catch (IOException e) { // TODO Auto-generated
 			e.printStackTrace();
 		}
-		for(SearchHit hit: searchResponse.getHits()) {
+		for (SearchHit hit : searchResponse.getHits()) {
 			TicketLine ticketLine = new ObjectMapper().convertValue(hit.getSourceAsString(), TicketLine.class);
-			ticketLines.add(ticketLine); //new ObjectMapper().convertValue [return a jason object]
-										//new ObjectMapper().readValue [return a string value]
+			ticketLines.add(ticketLine); // new ObjectMapper().convertValue [return a jason object]
+											// new ObjectMapper().readValue [return a string value]
 		}
 		return ticketLines;
-		//return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
+		// return serviceUtility.getPageResult(searchResponse, pageable, new
+		// TicketLine());
 
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -135,16 +138,17 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	 * 
 	 * @description find sales by id
 	 */
-				//it's working
-	public ResponseEntity<SaleDTO> findSaleById( Long id) {
+	// it's working
+	public ResponseEntity<SaleDTO> findSaleById(Long id) {
 		return this.saleResourceApi.getSaleUsingGET(id);
 	}
+
 	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) {
 		return ticketLineResourceApi.getAllTicketLinesUsingGET(page, size, sort);
 	}
-	public ResponseEntity<TicketLineDTO> findOneTicketLines( Long id) {
+
+	public ResponseEntity<TicketLineDTO> findOneTicketLines(Long id) {
 		return ticketLineResourceApi.getTicketLineUsingGET(id);
 	}
-	
-	
+
 }
