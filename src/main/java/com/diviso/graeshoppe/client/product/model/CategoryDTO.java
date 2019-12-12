@@ -82,11 +82,11 @@ public void setImageLink(String imageLink) {
   @ApiModelProperty(value = "")
 
 
-  public String getIDPcode() {
+  public String getIdpCode() {
     return idpCode;
   }
 
-  public void setIDPcode(String iDPcode) {
+  public void setIdpCode(String iDPcode) {
     this.idpCode = idpCode;
   }
 
