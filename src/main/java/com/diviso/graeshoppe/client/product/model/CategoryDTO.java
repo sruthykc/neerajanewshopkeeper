@@ -20,8 +20,7 @@ public class CategoryDTO   {
   @JsonProperty("description")
   private String description = null;
 
-  @JsonProperty("iDPcode")
-  private String iDPcode = null;
+ 
 
   @JsonProperty("id")
   private Long id = null;
@@ -47,6 +46,10 @@ public void setImageLink(String imageLink) {
   @JsonProperty("name")
   private String name = null;
 
+  
+  private String iDPcode;
+  
+  
   public CategoryDTO description(String description) {
     this.description = description;
     return this;
@@ -67,10 +70,10 @@ public void setImageLink(String imageLink) {
     this.description = description;
   }
 
-  public CategoryDTO iDPcode(String iDPcode) {
+  /*public CategoryDTO iDPcode(String iDPcode) {
     this.iDPcode = iDPcode;
     return this;
-  }
+  }*/
 
   /**
    * Get iDPcode
