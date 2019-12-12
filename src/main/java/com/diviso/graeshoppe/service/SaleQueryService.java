@@ -17,9 +17,13 @@ public interface SaleQueryService {
 
 	public Page<Sale> findSales(String storeId, Pageable pageable);
 
-	public Page<TicketLine> findTicketLinesBySaleId(Long saleId, Pageable pageable);
+	//public List<TicketLine> findAllTicketLinesBySaleId(Long saleId);
 	public ResponseEntity<SaleDTO> findSaleById( Long id);
 	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) ;
-	public ResponseEntity<TicketLineDTO> findOneTicketLines( Long id); 
+	public ResponseEntity<TicketLineDTO> findOneTicketLines( Long id);
+
+	public List<TicketLine> findAllTicketLinesBySaleId(Long saleId);
+
+	
 
 }

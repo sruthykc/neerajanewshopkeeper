@@ -335,11 +335,14 @@ public class QueryResource {
 	 * 
 	 * @description find ticketlines by saleId
 	 */
-	@GetMapping("/findAllTicketLinesBySaleId/{saleId}") // 29 11 19 its working
-	public ResponseEntity<Page<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId, Pageable pageable) {
-		return ResponseEntity.ok().body(saleQueryService.findTicketLinesBySaleId(saleId, pageable));
-	}
-
+	/*
+	 * @GetMapping("/findAllTicketLinesBySaleId/{saleId}") // 29 11 19 its working
+	 * public ResponseEntity<List<TicketLine>>
+	 * findAllTicketLinesBySaleId(@PathVariable Long saleId, Pageable pageable) {
+	 * return
+	 * ResponseEntity.ok().body(saleQueryService.findAllTicketLinesBySaleId(saleId,
+	 * pageable)); }
+	 */
 	/**
 	 * 
 	 * @param id
@@ -385,7 +388,7 @@ public class QueryResource {
 		});
 		sales.forEach(sale -> {
 			sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).getBody());
-			sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()));
+			sale.setTicketLines(saleQueryService.findAllTicketLinesBySaleId(sale.getSale().getId()));
 		});
 		PageImpl<SaleAggregate> res = new PageImpl<SaleAggregate>(sales);
 		return ResponseEntity.ok().body(res);

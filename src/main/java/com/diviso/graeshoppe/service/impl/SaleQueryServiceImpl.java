@@ -11,6 +11,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -92,9 +93,9 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	 * @param saleId
 	 */
 	@Override
-	public Page<TicketLine> findTicketLinesBySaleId(Long saleId,	Pageable pageable) {
+	public List<TicketLine> findAllTicketLinesBySaleId(Long saleId) {
 		
-
+		List<TicketLine> ticketLines =new ArrayList<TicketLine>();
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		/*
@@ -109,9 +110,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		
 	
 
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("ticketline", pageable.getPageSize(),
-				pageable.getPageNumber(), builder);
-
+		SearchRequest searchRequest = new SearchRequest("ticketline");
 		SearchResponse searchResponse = null;
 
 		try {
@@ -119,9 +118,12 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		} catch (IOException e) { // TODO Auto-generated
 			e.printStackTrace();
 		}
-		
-		
-		return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
+		for(SearchHit hit: searchResponse.getHits()) {
+			TicketLine ticketLine = new ObjectMapper().convertValue(hit.getSourceAsString(), TicketLine.class);
+			ticketLines.add(ticketLine); //new ObjectMapper().convert
+		}
+		return ticketLines;
+		//return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
 
 	}
 	
