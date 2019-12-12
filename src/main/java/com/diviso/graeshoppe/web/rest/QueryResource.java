@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.client.aggregators.SaleAggregate;
 import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
 import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
 import com.diviso.graeshoppe.client.customer.model.Contact;
@@ -65,7 +66,7 @@ import com.diviso.graeshoppe.service.ReportQueryService;
 import com.diviso.graeshoppe.service.SaleQueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
 import com.diviso.graeshoppe.service.dto.PdfDTO;
-import com.diviso.graeshoppe.service.dto.SaleAggregate;
+
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 
 @RestController
@@ -92,6 +93,9 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
+	
+	
+	
 
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
@@ -105,7 +109,7 @@ public class QueryResource {
 	 * @description input a taskName ,orderId and storeId to get a task details
 	 */
 
-	@GetMapping("/taskDetails/{taskName}/{orderId}/{storeId}")
+	@GetMapping("/getTaskDetails/{taskName}/{orderId}/{storeId}")
 	public ResponseEntity<OpenTask> getTaskDetails(@PathVariable String taskName, @PathVariable String orderId,
 			@PathVariable String storeId) {
 		return orderQueryService.getTaskDetails(taskName, orderId, storeId);
@@ -124,7 +128,7 @@ public class QueryResource {
 	 *              in page
 	 */
 
-	@GetMapping("/orderStatus/{statusName}/{storeId}/{deliveryType}") // 27 11 19 it's working
+	@GetMapping("/findOrderByStatusName/{statusName}/{storeId}/{deliveryType}") // 27 11 19 it's working
 	public Page<Order> findOrderByStatusName(@PathVariable String statusName, @PathVariable String storeId,
 			@PathVariable String deliveryType, Pageable pageable) {
 		return orderQueryService.findOrderByStatusNameAndDeliveryType(statusName, storeId, deliveryType, pageable);
@@ -140,10 +144,10 @@ public class QueryResource {
 	 * @description getting all products in page as input a name and storeId
 	 */
 
-	@GetMapping("/findProductBySearchTerm/{searchTerm}/{storeId}") // 26 11 19 it,s working
-	public Page<Product> findAllProductBySearchTerm(@PathVariable String searchTerm, @PathVariable String storeId,
+	@GetMapping("/findAllProductByNameAndStoreId/{name}/{storeId}") // 26 11 19 it,s working
+	public Page<Product> findAllProductByNameAndStoreId(@PathVariable String name, @PathVariable String storeId,
 			Pageable pageable) {
-		return productQueryService.findAllProductBySearchTerm(searchTerm, storeId, pageable);
+		return productQueryService.findAllProductByNameAndStoreId(name, storeId, pageable);
 	}
 
 	/**
@@ -154,8 +158,8 @@ public class QueryResource {
 	 * 
 	 * @description getting all products in page as input an idpcode
 	 */
-	@GetMapping("/findAllProducts/{iDPcode}") // 26 11 19 it,s working
-	public Page<Product> findAllProducts(@PathVariable String iDPcode, Pageable pageable) {
+	@GetMapping("/findAllProductsByIDPCode/{iDPcode}") // 26 11 19 it,s working
+	public Page<Product> findAllProductsByIDPCode(@PathVariable String iDPcode, Pageable pageable) {
 		return productQueryService.findAllProducts(iDPcode, pageable);
 	}
 
@@ -167,8 +171,8 @@ public class QueryResource {
 	 * @description find a product as input an id
 	 */
 
-	@GetMapping("/products/{id}") // its working
-	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
+	@GetMapping("/findProductDTOById/{id}") // its working
+	public ResponseEntity<ProductDTO> findProductDTOById(@PathVariable Long id) {
 		return this.productQueryService.findProduct(id);
 	}
 
@@ -180,10 +184,10 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/findAllCustomersByName/{searchTerm}") // 26 11 19 its working
-	public Page<Customer> findAllCustomersByName(@PathVariable String searchTerm, Pageable pageable) {
-		log.debug("<<<<<<<< findAllCustomer by search term >>>>>>>>>>", searchTerm);
-		return customerQueryService.findAllCustomersByName(searchTerm, pageable);
+	@GetMapping("/findAllCustomersByName/{name}") // 26 11 19 its working
+	public Page<Customer> findAllCustomersByName(@PathVariable String name, Pageable pageable) {
+		log.debug("<<<<<<<< findAllCustomer by search term >>>>>>>>>>", name);
+		return customerQueryService.findAllCustomersByName(name, pageable);
 	}
 
 	@GetMapping("/findAllCustomers") // 26 11 19 its working
@@ -192,7 +196,7 @@ public class QueryResource {
 		return customerQueryService.findAllCustomers(pageable);
 	}
 
-	@GetMapping("/customers/{id}") // 06 12 19 it's working
+	@GetMapping("/findCustomerById/{id}") // 06 12 19 it's working
 	public ResponseEntity<CustomerDTO> findCustomerById(@PathVariable Long id) {
 		CustomerDTO result = customerQueryService.findCustomerById(id);
 		return ResponseEntity.ok().body(result);
@@ -202,7 +206,7 @@ public class QueryResource {
 		 */
 	}
 
-	@GetMapping("/contacts/{id}") // 6 12 19 it's working
+	@GetMapping("/findContactById/{id}") // 6 12 19 it's working
 	public ResponseEntity<ContactDTO> findContactById(@PathVariable Long id) {
 		ContactDTO result = customerQueryService.findContactById(id);
 		return ResponseEntity.ok().body(result);
@@ -260,8 +264,8 @@ public class QueryResource {
 	 * 
 	 * @description findAll categories by storeId
 	 */
-	@GetMapping("/findAllCateogories/{storeId}") // 6 12 19 it's working
-	public ResponseEntity<Page<Category>> findAllCategories(@PathVariable String storeId, Pageable pageable) {
+	@GetMapping("/findAllCategoriesByStoreId/{storeId}") // 6 12 19 it's working
+	public ResponseEntity<Page<Category>> findAllCategoriesByStoreId(@PathVariable String storeId, Pageable pageable) {
 
 		return ResponseEntity.ok().body(productQueryService.findAllCategories(storeId, pageable));
 
@@ -276,11 +280,11 @@ public class QueryResource {
 	 * 
 	 * @description getting all category details as input a name and storeid
 	 */
-	@GetMapping("/findCategoryBySearchTerm/{searchTerm}/{storeId}") //it's working
-	public Page<Category> findAllCategoryBySearchTermAndStoreId(@PathVariable String searchTerm,
+	@GetMapping("/findAllCategoriesByNameAndStoreId/{name}/{storeId}") //it's working
+	public Page<Category> findAllCategoriesByNameAndStoreId(@PathVariable String name,
 			@PathVariable String storeId, Pageable pageable) {
-		log.debug("<<<<<<<<<<<< findAllCategoryBySearchTermAndStoreId >>>>>>>>>>>>", searchTerm, storeId);
-		return productQueryService.findAllCategoryBySearchTermAndStoreId(searchTerm, storeId, pageable);
+		log.debug("<<<<<<<<<<<< findAllCategoryBySearchTermAndStoreId >>>>>>>>>>>>", name, storeId);
+		return productQueryService.findAllCategoriesByNameAndStoreId(name, storeId, pageable);
 	}
 
 	/**
@@ -291,10 +295,10 @@ public class QueryResource {
 	 * 
 	 * @description findAll categories without image as input a idpcode
 	 */
-	@GetMapping("/findAllCategoriesWithOutImage/{iDPcode}") // it's working
-	public ResponseEntity<Page<CategoryDTO>> findAllCategoriesWithOutImage(@PathVariable String iDPcode,
+	@GetMapping("/findAllCategoriesByIdpCode/{idpCode}") // it's working
+	public ResponseEntity<Page<CategoryDTO>> findAllCategoriesByIdpCode(@PathVariable String idpCode,
 			Pageable pageable) {
-		return  ResponseEntity.ok().body(productQueryService.findAllCategoriesWithOutImage(iDPcode, pageable));
+		return  ResponseEntity.ok().body(productQueryService.findAllCategoriesWithOutImage(idpCode, pageable));
 	}
 
 	/**
@@ -372,27 +376,30 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	/*
-	 * @GetMapping("/sales/combined/{storeId}") //it's working public
-	 * ResponseEntity<Page<SaleAggregate>> findAllSaleAggregates(@PathVariable
-	 * String storeId, Pageable pageable) { List<SaleAggregate> sales = new
-	 * ArrayList<SaleAggregate>(); this.findSales(storeId,
-	 * pageable).getContent().forEach(sale -> { SaleAggregate saleAgg = new
-	 * SaleAggregate(); saleAgg.setSale(sale); sales.add(saleAgg); });
-	 * sales.forEach(sale -> {
-	 * sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).
-	 * getBody());
-	 * sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()).
-	 * getBody()); }); PageImpl<SaleAggregate> res = new
-	 * PageImpl<SaleAggregate>(sales); return ResponseEntity.ok().body(res); }
-	 */
+	
+	
+	@GetMapping("/findAllSaleAggregates/combined/{storeId}") // it's working public
+	ResponseEntity<Page<SaleAggregate>> findAllSaleAggregates(@PathVariable String storeId, Pageable pageable) {
+		List<SaleAggregate> sales = new ArrayList<SaleAggregate>();
+		this.findSales(storeId, pageable).getContent().forEach(sale -> {
+			SaleAggregate saleAgg = new SaleAggregate();
+			saleAgg.setSale(sale);
+			sales.add(saleAgg);
+		});
+		sales.forEach(sale -> {
+			sale.setCustomer(this.findCustomerById(sale.getSale().getCustomerId()).getBody());
+			sale.setTicketLines(this.findAllTicketLinesBySaleId(sale.getSale().getId()));
+		});
+		PageImpl<SaleAggregate> res = new PageImpl<SaleAggregate>(sales);
+		return ResponseEntity.ok().body(res);
+	}
 
 	//////////////////////////
 
-	@GetMapping("/entryLineItem/{storeId}") 		//no data
-	public ResponseEntity<List<EntryLineItem>> findAllEntryLineItems(@PathVariable String storeId, Pageable pageable) {
+	@GetMapping("/findAllEntryLineItemsByStoreId/{storeId}") 		//no data
+	public ResponseEntity<List<EntryLineItem>> findAllEntryLineItemsByStoreId(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<<< findAllEntryLineItems >>>>>>>>>>", storeId);
-		return ResponseEntity.ok().body(this.productQueryService.findAllEntryLineItems(storeId, pageable).getContent());
+		return ResponseEntity.ok().body(this.productQueryService.findAllEntryLineItemsByStoreId(storeId, pageable).getContent());
 	}
 
 	/**
@@ -403,8 +410,8 @@ public class QueryResource {
 	 * 
 	 * @description getting all stock entry as input a storeId
 	 */
-	@GetMapping("/stock-entries/{storeId}") // no data
-	public ResponseEntity<Page<StockEntry>> findAllStockEntries(@PathVariable String storeId, Pageable pageable) {
+	@GetMapping("/findAllStockEntriesByStoreId/{storeId}") // no data
+	public ResponseEntity<Page<StockEntry>> findAllStockEntriesByStoreId(@PathVariable String storeId, Pageable pageable) {
 		log.debug("<<<<<< findAllStockEntries >>>>>>>>>", storeId);
 		return ResponseEntity.ok().body(productQueryService.findAllStockEntries(storeId, pageable));
 	}
@@ -416,8 +423,8 @@ public class QueryResource {
 	 * 
 	 * @description find one stock entries
 	 */
-	@GetMapping("/stock-entries/findbyid/{id}") // not tested
-	public ResponseEntity<StockEntryDTO> findOneStockEntry(@PathVariable Long id) {
+	@GetMapping("/findStockEntryById/findbyid/{id}") // not tested
+	public ResponseEntity<StockEntryDTO> findStockEntryById(@PathVariable Long id) {
 		return productQueryService.findOneStockEntry(id);
 	}
 
@@ -571,7 +578,7 @@ public class QueryResource {
 	 * @return
 	 */
 	@GetMapping("/category/{id}") // its working
-	public ResponseEntity<CategoryDTO> findCategory(@PathVariable Long id) {
+	public ResponseEntity<CategoryDTO> findCategoryDTOById(@PathVariable Long id) {
 		return productQueryService.findCategory(id);
 	}
 
@@ -626,8 +633,8 @@ public class QueryResource {
 	 * @return
 	 */
 	@GetMapping("/auxilary-products/{storeId}") // 26 11 19 it's working
-	public ResponseEntity<Page<Product>> getAllAuxilaryProduct(@PathVariable String storeId) {
-		return ResponseEntity.ok().body(productQueryService.findAllAuxilaryProducts(storeId));
+	public ResponseEntity<Page<Product>> getAllAuxilaryProduct(@PathVariable String storeId,Pageable pageable) {
+		return ResponseEntity.ok().body(productQueryService.findAllAuxilaryProducts(storeId,pageable));
 
 	}
 
@@ -932,7 +939,7 @@ public class QueryResource {
 	 * 
 	 * @document findnotification count
 	 */
-	@GetMapping("/findnotificationcount/{receiverId}/{status}") // not working
+	@GetMapping("/findNotificationCountByReceiverIdAndStatusName/{receiverId}/{status}") // not working
 	Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status) {
 		return orderQueryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
@@ -950,8 +957,8 @@ public class QueryResource {
 	 * 
 	 * @document getting allproducts as pdf for input a idpcode
 	 */
-	@GetMapping("/report/allproducts/{idpcode}") // its working
-	public ResponseEntity<PdfDTO> getAllProducts(@PathVariable String idpcode) {
+	@GetMapping("/report/getAllProductsByIdpCode/{idpcode}") // its working
+	public ResponseEntity<PdfDTO> getAllProductsByIdpCode(@PathVariable String idpcode) {
 		return reportQueryService.getAllProducts(idpcode);
 	}
 
@@ -962,8 +969,8 @@ public class QueryResource {
 	 * 
 	 * @document getallcategories by idpcode
 	 */
-	@GetMapping("/report/allcategories/{idpcode}") // its working
-	public ResponseEntity<PdfDTO> getAllCategories(@PathVariable String idpcode) {
+	@GetMapping("/report/getAllCategoriesByIdpCode/{idpcode}") // its working
+	public ResponseEntity<PdfDTO> getAllCategoriesByIdpCode(@PathVariable String idpcode) {
 		return reportQueryService.getAllCategories(idpcode);
 	}
 
@@ -974,13 +981,13 @@ public class QueryResource {
 	 * 
 	 * @document return a details from sockcurrentdetails
 	 */
-	@GetMapping("/report/currentstock/{idpcode}") // its working
-	public ResponseEntity<PdfDTO> getCurrentStock(@PathVariable String idpcode) {
+	@GetMapping("/report/getCurrentStockByIdpCode/{idpcode}") // its working
+	public ResponseEntity<PdfDTO> getCurrentStockByIdpCode(@PathVariable String idpcode) {
 		return reportQueryService.getCurrentStock(idpcode);
 
 	}
 
-	@GetMapping("/sales/{id}")
+	@GetMapping("/findSaleById/{id}")
 	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
 		return saleQueryService.findSaleById(id);
 	}

@@ -32,7 +32,7 @@ public interface ProductQueryService {
 
 	public Page<Product> findProductByCategoryId(Long categoryId, String storeId, Pageable pageable);
 	
-	public Page<Product> findAllProductBySearchTerm(String searchTerm, String storeId, Pageable pageable);
+	public Page<Product> findAllProductByNameAndStoreId(String name, String storeId, Pageable pageable);
 	
 	public Page<Product> findAllProducts(String storeId, Pageable pageable);
 	
@@ -46,9 +46,10 @@ public interface ProductQueryService {
 	public Page<Product> findNotAuxNotComboProductsByIDPcode(String iDPcode, Pageable pageable);
 	
 	/**
+	 * @param pageable 
 	 * @return
 	 */
-	public Page<Product> findAllAuxilaryProducts(String storeId);
+	public Page<Product> findAllAuxilaryProducts(String storeId, Pageable pageable);
 	
 	/**
 	 * @param id
@@ -196,7 +197,7 @@ public interface ProductQueryService {
 	 * @param pageable
 	 * @return
 	 */
-	public Page<Category> findAllCategoryBySearchTermAndStoreId(String searchTerm, String storeId, Pageable pageable);
+	public Page<Category> findAllCategoriesByNameAndStoreId(String name, String storeId, Pageable pageable);
 
 	public ResponseEntity<UOMDTO> findUOM(Long id);
 	
@@ -212,6 +213,8 @@ public interface ProductQueryService {
 	public ResponseEntity<StockEntryDTO> findStockEntryDTOById(Long id);
 	public ResponseEntity<ComboLineItemDTO> findCombolineItem( Long id) ;
 	public ResponseEntity<AuxilaryLineItemDTO> findAuxilaryLineItem( Long id) ;
+
+		
 	
 	
 

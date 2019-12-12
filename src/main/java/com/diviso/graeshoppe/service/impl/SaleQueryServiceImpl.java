@@ -105,7 +105,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("id", 5));
+		builder.query(termQuery("id",saleId ));
 		
 	
 
@@ -119,6 +119,8 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		} catch (IOException e) { // TODO Auto-generated
 			e.printStackTrace();
 		}
+		
+		
 		return serviceUtility.getPageResult(searchResponse, pageable, new TicketLine());
 
 	}
