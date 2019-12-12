@@ -47,7 +47,7 @@ public void setImageLink(String imageLink) {
   private String name = null;
 
   
-  private String iDPcode;
+  private String idpCode;
   
   
   public CategoryDTO description(String description) {
@@ -83,11 +83,11 @@ public void setImageLink(String imageLink) {
 
 
   public String getIDPcode() {
-    return iDPcode;
+    return idpCode;
   }
 
   public void setIDPcode(String iDPcode) {
-    this.iDPcode = iDPcode;
+    this.idpCode = idpCode;
   }
 
   public CategoryDTO id(Long id) {
@@ -178,7 +178,7 @@ public int hashCode() {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + ((description == null) ? 0 : description.hashCode());
-	result = prime * result + ((iDPcode == null) ? 0 : iDPcode.hashCode());
+	result = prime * result + ((idpCode == null) ? 0 : idpCode.hashCode());
 	result = prime * result + ((id == null) ? 0 : id.hashCode());
 	result = prime * result + Arrays.hashCode(image);
 	result = prime * result + ((imageContentType == null) ? 0 : imageContentType.hashCode());
@@ -201,10 +201,10 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!description.equals(other.description))
 		return false;
-	if (iDPcode == null) {
-		if (other.iDPcode != null)
+	if (idpCode == null) {
+		if (other.idpCode != null)
 			return false;
-	} else if (!iDPcode.equals(other.iDPcode))
+	} else if (!idpCode.equals(other.idpCode))
 		return false;
 	if (id == null) {
 		if (other.id != null)
@@ -235,7 +235,7 @@ public boolean equals(Object obj) {
 
 @Override
 public String toString() {
-	return "CategoryDTO [description=" + description + ", iDPcode=" + iDPcode + ", id=" + id + ", image="
+	return "CategoryDTO [description=" + description + ", idpCode=" + idpCode + ", id=" + id + ", image="
 			+ Arrays.toString(image) + ", imageLink=" + imageLink + ", imageContentType=" + imageContentType + ", name="
 			+ name + "]";
 }
