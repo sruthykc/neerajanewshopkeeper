@@ -31,48 +31,48 @@ import com.diviso.graeshoppe.client.product.model.UOMDTO;
 public interface ProductQueryService {
 
 	public Page<Product> findProductByCategoryId(Long categoryId, String storeId, Pageable pageable);
-	
+
 	public Page<Product> findAllProductByNameAndStoreId(String name, String storeId, Pageable pageable);
-	
+
 	public Page<Product> findAllProducts(String storeId, Pageable pageable);
-	
+
 	public Page<Product> findProducts(Pageable pageable);
-	
+
 	/**
 	 * @param iDPcode
 	 * @param pageable
 	 * @return
 	 */
 	public Page<Product> findNotAuxNotComboProductsByIDPcode(String iDPcode, Pageable pageable);
-	
+
 	/**
-	 * @param pageable 
+	 * @param pageable
 	 * @return
 	 */
 	public Page<Product> findAllAuxilaryProducts(String storeId, Pageable pageable);
-	
+
 	/**
 	 * @param id
 	 * @return
 	 */
 	public Product findProductById(Long id);
-	
+
 	public Page<Category> findAllCategories(Pageable pageable);
-	
+
 	public List<String> findAllUom(Pageable pageable);
-	
+
 	public Page<EntryLineItem> findAllEntryLineItemsByIdpCode(String idpCode, Pageable pageable);
-	
+
 	public Page<StockCurrent> findAllStockCurrents(String storeId, Pageable pageable);
-	
+
 	public Page<StockEntry> findAllStockEntriesbyIdpCode(String idpCode, Pageable pageable);
-	
+
 	public Page<StockCurrent> findAllStockCurrentByCategoryId(Long categoryId, String storeId, Pageable pageable);
-	
+
 	public StockCurrent findStockCurrentByProductId(Long productId, String storeId);
-	
+
 	public StockEntry findStockEntryByProductId(Long productId, String storeId);
-	
+
 	public Page<StockCurrent> findStockCurrentByProductName(String name, String storeId, Pageable pageable);
 
 	/**
@@ -81,34 +81,31 @@ public interface ProductQueryService {
 	 * @return
 	 */
 	public Page<AuxilaryLineItem> findAuxilaryLineItemsByIDPcode(String iDPcode, Pageable pageable);
-	
+
 	/**
 	 * @param storeId
 	 * @param pageable
 	 * @return
 	 */
 	public Page<UOM> findUOMByIDPcode(String iDPcode, Pageable pageable);
-	
-	
+
 	/**
 	 * @param id
 	 * @return
 	 */
 	public Category findCategoryById(Long id);
-	
-	
+
 	/**
 	 * @param id
 	 * @return
 	 */
 	public UOM findUOMById(Long id);
-	
-	
+
 	/**
 	 * @param id
 	 */
 	public List<ComboLineItem> finAllComboLineItemsByProductId(Long id);
-	
+
 	/**
 	 * @param productId
 	 * 
@@ -121,35 +118,35 @@ public interface ProductQueryService {
 	 * @return
 	 */
 	public StockEntry findStockEntryById(Long id);
-	
+
 	/**
 	 * 
 	 * @param productId
 	 * @return
 	 */
 	public Discount findDiscountByProductId(Long productId);
-	
+
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
 	public List<EntryLineItem> findAllEntryLineItemsByStockEntryId(Long id);
-	
+
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
 	public Reason findReasonByStockEntryId(Long id);
-	
+
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
 	public Location findLocationByStockEntryId(Long id);
-	
+
 	/**
 	 * 
 	 * @param idpcode
@@ -157,7 +154,7 @@ public interface ProductQueryService {
 	 * @return
 	 */
 	public Page<Location> findLocationByIdpcode(String idpcode, Pageable pageable);
-	
+
 	/**
 	 * 
 	 * @param idpcode
@@ -165,7 +162,7 @@ public interface ProductQueryService {
 	 * @return
 	 */
 	public Page<Reason> findReasonByIdpcode(String idpcode, Pageable pageable);
-	
+
 	/**
 	 * 
 	 * @param id
@@ -180,9 +177,10 @@ public interface ProductQueryService {
 	 * @return
 	 */
 	public Address findAddressByStockEntryId(Long id);
-	
-	//public Page<Category> findAllCategoryBySearchTerm(String searchTerm, String storeId, Pageable pageable);
-	
+
+	// public Page<Category> findAllCategoryBySearchTerm(String searchTerm, String
+	// storeId, Pageable pageable);
+
 	/**
 	 * @param storeId
 	 * @param pageable
@@ -197,30 +195,28 @@ public interface ProductQueryService {
 	 * @param pageable
 	 * @return
 	 */
-	//findAllCategoriesByNameAndStoreId
+	// findAllCategoriesByNameAndStoreId
 	public Page<Category> findAllCategoriesByNameAndIdpCode(String name, String idpCode, Pageable pageable);
 
 	public UOMDTO findUOMDTOById(Long id);
-	//findAllCategoriesWithOutImage
-	public Page<CategoryDTO> findAllCategoryDTOsByIdpCode( String iDPcode,
-			Pageable pageable);
+
+	// findAllCategoriesWithOutImage
+	public Page<CategoryDTO> findAllCategoryDTOsByIdpCode(String iDPcode, Pageable pageable);
 
 	public CategoryDTO findCategoryDTOById(Long id);
-	public ProductDTO findProductDTOById( Long id); 
-/*	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
-			Integer size, ArrayList<String> sort);*/
 
-	//public ResponseEntity<StockEntryDTO> findOneStockEntry(Long id) ;
+	public ProductDTO findProductDTOById(Long id);
+	/*
+	 * public ResponseEntity<List<StockCurrentDTO>>
+	 * searchStockCurrents(@PathVariable String searchTerm, Integer page, Integer
+	 * size, ArrayList<String> sort);
+	 */
+
+	// public ResponseEntity<StockEntryDTO> findOneStockEntry(Long id) ;
 	public StockEntryDTO findStockEntryDTOById(Long id);
-	public ComboLineItemDTO findCombolineItemById( Long id) ;
-	public AuxilaryLineItemDTO findAuxilaryLineItemById( Long id) ;
 
-	
+	public ComboLineItemDTO findCombolineItemById(Long id);
 
-	
-
-		
-	
-	
+	public AuxilaryLineItemDTO findAuxilaryLineItemById(Long id);
 
 }
