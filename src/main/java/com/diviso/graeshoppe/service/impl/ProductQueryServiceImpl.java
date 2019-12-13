@@ -548,7 +548,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public Page<StockCurrent> findAllStockCurrentByCategoryId(Long categoryId, String storeId, Pageable pageable) {
 
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.category.id", categoryId))
+		QueryBuilder qb = QueryBuilders.boolQuery()
+				.must(QueryBuilders.matchQuery("product.category.id", categoryId))
 				.must(QueryBuilders.termQuery("iDPcode.keyword", storeId));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);

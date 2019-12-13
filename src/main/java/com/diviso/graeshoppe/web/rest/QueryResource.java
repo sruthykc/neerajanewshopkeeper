@@ -93,6 +93,9 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
+	
+	@Autowired
+	SaleResourceApi saleResourceApi;
 
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
@@ -242,7 +245,7 @@ public class QueryResource {
 	@GetMapping("/findAllCategoriesByNameAndIdpCode/{name}/{idpCode}") // it's working
 	public Page<Category> findAllCategoriesByNameAndIdpCode(@PathVariable String name, @PathVariable String idpCode,
 			Pageable pageable) {
-		log.debug("<<<<<<<<<<<< findAllCategoryBySearchTermAndIdpCode >>>>>>>>>>>>", name, idpCode);
+		log.debug("<<<<<<<<<<<< findAllCategoryByNameAndIdpCode >>>>>>>>>>>>", name, idpCode);
 		return productQueryService.findAllCategoriesByNameAndIdpCode(name, idpCode, pageable);
 	}
 
@@ -908,9 +911,7 @@ public class QueryResource {
 	 *              in page
 	 */
 	// findOrderByStatusName
-	@GetMapping("/ findOrderByStatusNameAndStoreIdAndDeliveryType/{statusName}/{storeId}/{deliveryType}") // 27 11 19
-																											// it's
-																											// working
+	@GetMapping("/ findOrderByStatusNameAndStoreIdAndDeliveryType/{statusName}/{storeId}/{deliveryType}") // 27 11 19																										// it's																										// working
 	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(@PathVariable String statusName,
 			@PathVariable String storeId, @PathVariable String deliveryType, Pageable pageable) {
 		return orderQueryService.findOrderByStatusNameAndStoreIdAndDeliveryType(statusName, storeId, deliveryType,
@@ -987,4 +988,12 @@ public class QueryResource {
 		return orderQueryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
 
+	@GetMapping("/printSale/{saleId}/{idpCode}")
+	public ResponseEntity<PdfDTO> printSale(@PathVariable Long saleId,@PathVariable String idpCode) {
+		PdfDTO pdf = new PdfDTO();
+		pdf.setPdf(this.saleResourceApi.printSaleUsingGET(idpCode, saleId).getBody());
+		pdf.setContentType("application/pdf");
+		return ResponseEntity.ok().body(pdf);
+		
+	}
 }
