@@ -59,9 +59,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class OrderQueryServiceImpl implements OrderQueryService {
 
-	/*
-	 * int i = 0; Long count = 0L;
-	 */
 
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 	@Autowired
@@ -438,7 +435,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(QueryBuilders.boolQuery().must(termQuery("status.keyword", status))
-				.must(QueryBuilders.matchQuery("receiverId", receiverId)));
+				.must(QueryBuilders.termQuery("receiverId.keyword", receiverId)));
 
 		countRequest.source(searchSourceBuilder);
 		CountResponse countResponse = null;

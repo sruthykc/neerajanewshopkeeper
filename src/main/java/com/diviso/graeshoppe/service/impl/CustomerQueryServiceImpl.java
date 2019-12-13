@@ -56,14 +56,11 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 	
 	@Autowired
 	private RestHighLevelClient restHighLevelClient;
-	/*@Autowired
-	CustomerResourceApi customerResourceApi;*/
+	
 	@Autowired
 	private ServiceUtility serviceUtility;
 	
 
-	/*@Autowired
-	private ContactResourceApi contactResourceApi;*/
 	@Autowired
 	ContactMapper contactMapper;
 	 

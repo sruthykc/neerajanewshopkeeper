@@ -34,7 +34,7 @@ public interface ProductQueryService {
 
 	public Page<Product> findAllProductByNameAndStoreId(String name, String storeId, Pageable pageable);
 
-	public Page<Product> findAllProducts(String storeId, Pageable pageable);
+	public Page<Product> findAllProductsByIdpCode(String idpCode, Pageable pageable);
 
 	public Page<Product> findProducts(Pageable pageable);
 

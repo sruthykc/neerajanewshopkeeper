@@ -142,9 +142,9 @@ public class ServiceUtility {
 			
 		} else {
 
-			offset = totalElement;
+			offset = (pageNumber * totalElement);
 
-			totalElements = (pageNumber * totalElement);
+			totalElements = totalElement;
 			
 
 		}
