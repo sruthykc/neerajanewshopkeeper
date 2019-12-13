@@ -99,43 +99,42 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(String statusName, String storeId, String deliveryType,
 			Pageable pageable) {
 		log.debug("<<<<<<<<<< findOrderByStatusNameAndDeliveryType >>>>>>>>>",statusName,deliveryType);
-
 		SearchSourceBuilder builder = new SearchSourceBuilder();
-		SearchResponse response = null;
+		SearchRequest searchRequest = null;
+		SearchResponse searchResponse = null;
+		/*
+		 * SearchSourceBuilder builder = new SearchSourceBuilder(); SearchResponse
+		 * response = null;
+		 * 
+		 * 
+		 * if(deliveryType.equals("all")) { QueryBuilder qb = QueryBuilders.boolQuery()
+		 * .must(QueryBuilders.matchQuery("statusName", statusName))
+		 * .must(QueryBuilders.matchQuery("storeId", storeId))
+		 * .must(QueryBuilders.matchQuery("deliveryType", deliveryType));
+		 * builder.query(qb);
+		 * 
+		 * response=serviceUtility.searchResponseForPage("order", builder, pageable);
+		 * 
+		 * } else { QueryBuilder qb = QueryBuilders.boolQuery()
+		 * .must(QueryBuilders.matchQuery("statusName", statusName))
+		 * .must(QueryBuilders.matchQuery("storeId", storeId))
+		 * .must(QueryBuilders.matchQuery("deliveryType", deliveryType));
+		 * builder.query(qb);
+		 * 
+		 * response=serviceUtility.searchResponseForPage("order", builder, pageable); }
+		 * return serviceUtility.getPageResult(response, pageable, new Order());
+		 */
 		
-		
-		if(deliveryType.equals("all")) {
-			QueryBuilder qb =  QueryBuilders.boolQuery()
-			.must(QueryBuilders.matchQuery("statusName", statusName))
-			.must(QueryBuilders.matchQuery("storeId", storeId))
-			.must(QueryBuilders.matchQuery("deliveryType", deliveryType));
-			builder.query(qb);
-			
-			response=serviceUtility.searchResponseForPage("order", builder, pageable);
-			
-		}
-		else {
-			QueryBuilder qb =  QueryBuilders.boolQuery()
-			.must(QueryBuilders.matchQuery("statusName", statusName))
-			.must(QueryBuilders.matchQuery("storeId", storeId))
-			.must(QueryBuilders.matchQuery("deliveryType", deliveryType));
-			builder.query(qb);
-					
-			response=serviceUtility.searchResponseForPage("order", builder, pageable);
-		}
-		return serviceUtility.getPageResult(response, pageable, new Order());
-		
-		//SearchRequest searchRequest = null;
 
-		/*if (deliveryType.equals("all")) {
+		if (deliveryType.equals("all")) {
 
 			
-			 * String[] include = new String[] { "" };
-			 * 
-			 * String[] exclude = new String[] {};
-			 * 
-			 * builder.fetchSource(include, exclude);
-			 
+			 /* String[] include = new String[] { "" };
+			  
+			  String[] exclude = new String[] {};
+			  
+			  builder.fetchSource(include, exclude);
+			 */
 
 			builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("status.name.keyword", statusName))
 					.must(QueryBuilders.matchQuery("storeId", storeId))
@@ -165,7 +164,8 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			} catch (IOException e) { // TODO Auto-generated
 				e.printStackTrace();
 			}
-		}*/
+		}
+		return serviceUtility.getPageResult(searchResponse, pageable, new Order());
 
 		
 
@@ -618,5 +618,16 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		});
 		return ResponseEntity.ok().body(orders);
+	}
+
+	@Override
+	public Page<com.diviso.graeshoppe.client.order.model.aggregator.OrderLine> findAllOrderLinesByOrderId(Long orderId,
+			Pageable pageable) {
+		log.debug("<<<<<<<<<<< findAllOrderLinesByOrderId >>>>>>>>",orderId);
+		QueryBuilder queryBuilder = QueryBuilders.termQuery("order.id", orderId);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryBuilder);
+		SearchResponse response = serviceUtility.searchResponseForPage("orderline", builder, pageable);
+		return serviceUtility.getPageResult(response, pageable, new OrderLine());
 	}
 }

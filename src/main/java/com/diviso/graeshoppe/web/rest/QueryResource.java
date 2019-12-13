@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.diviso.graeshoppe.client.order.model.aggregator.OrderLine;
 
 import com.diviso.graeshoppe.client.aggregators.SaleAggregate;
 import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
@@ -37,6 +38,10 @@ import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
+import com.diviso.graeshoppe.client.order.model.aggregator.OrderLine;
+
+import com.diviso.graeshoppe.client.order.model.aggregator.AuxilaryOrderLine;
+import com.diviso.graeshoppe.client.order.model.aggregator.Offer;
 import com.diviso.graeshoppe.client.product.api.AuxilaryLineItemResourceApi;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ComboLineItemResourceApi;
@@ -59,6 +64,7 @@ import com.diviso.graeshoppe.client.store.api.*;
 import com.diviso.graeshoppe.client.store.model.*;
 
 import com.diviso.graeshoppe.service.CustomerQueryService;
+import com.diviso.graeshoppe.service.OfferQueryService;
 import com.diviso.graeshoppe.service.OrderQueryService;
 import com.diviso.graeshoppe.service.ProductQueryService;
 import com.diviso.graeshoppe.service.QueryService;
@@ -72,6 +78,9 @@ import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 @RestController
 @RequestMapping("/api/query")
 public class QueryResource {
+	
+	@Autowired
+	OfferQueryService offerQueryService;
 
 	@Autowired
 	OrderQueryService orderQueryService;
@@ -996,4 +1005,27 @@ public class QueryResource {
 		return ResponseEntity.ok().body(pdf);
 		
 	}
+	@GetMapping("/orderaggregator/{orderNumber}")
+	public ResponseEntity<OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
+		return reportQueryService.getOrderAggregator(orderNumber);
+	}
+	@GetMapping("/findAllOrderLinesByOrderId/{orderId}")
+	public Page<OrderLine> findAllOrderLinesByOrderId(@PathVariable Long orderId, Pageable pageable) {
+		log.debug("<<<<<<<<<findAllOrderLinesByOrderId >>>>>>>>>>>",orderId);
+		Page<OrderLine> page = orderQueryService.findAllOrderLinesByOrderId(orderId, pageable);
+		return page;
+	}
+	@GetMapping("/findOfferLinesByOrderId/{orderId}")
+	public List<Offer> findOfferLinesByOrderId(@PathVariable Long orderId) {
+		return offerQueryService.findOfferLinesByOrderId(orderId);
+	}
+	
+	/*
+	 * @GetMapping("/findAuxilaryOrderLineByOrderLineId/{orderLineId}") public
+	 * Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(@PathVariable Long
+	 * orderLineId, Pageable pageable) {
+	 * log.debug("<<<<<<<<findAuxilaryOrderLineByOrderLineId >>>>>>>>>>",
+	 * orderLineId); return orderQueryService.findAuxilaryOrderLineByOrderLineId();
+	 * }
+	 */
 }

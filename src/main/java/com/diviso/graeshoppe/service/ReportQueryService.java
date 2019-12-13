@@ -5,9 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.diviso.graeshoppe.client.order.model.aggregator.OrderLine;
 import com.diviso.graeshoppe.client.product.model.UOMDTO;
 import com.diviso.graeshoppe.client.report.model.AuxItem;
 import com.diviso.graeshoppe.client.report.model.ComboItem;
+import com.diviso.graeshoppe.client.report.model.OrderAggregator;
 import com.diviso.graeshoppe.client.report.model.OrderMaster;
 import com.diviso.graeshoppe.client.report.model.ReportSummary;
 import com.diviso.graeshoppe.service.dto.PdfDTO;
@@ -21,7 +23,7 @@ public interface ReportQueryService {
 	
 	public Page<ComboItem> findComboItemByOrderLineId(Long orderLineId,Pageable pageable);
 	
-	public Page<com.diviso.graeshoppe.client.report.model.OrderLine> findOrderLineByOrderMasterId(Long orderMasterId,
+	public Page<OrderLine> findOrderLineByOrderMasterId(Long orderMasterId,
 			Pageable pageable);
 	
 	public ResponseEntity<PdfDTO> getAllCategories(String idpcode); 
@@ -32,4 +34,6 @@ public interface ReportQueryService {
 	public ResponseEntity<PdfDTO> getOrderDocket( String orderNumber);
 	public ResponseEntity<PdfDTO> getOrderSummary(String date, String storeId);
 	public ResponseEntity<ReportSummary> createReportSummary( String expectedDelivery, String storeName);
+
+	public ResponseEntity<OrderAggregator> getOrderAggregator(String orderNumber);
 }

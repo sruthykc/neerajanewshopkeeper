@@ -18,14 +18,15 @@ import com.diviso.graeshoppe.client.order.model.OrderLine;
  *
  */
 public interface OrderQueryService {
-	
+
 	/**
 	 * @param statusName
 	 * @param storeid
 	 * @param deliveryType
 	 * @param pageable
 	 */
-	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(String statusName, String storeId, String deliveryType,Pageable pageable);
+	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(String statusName, String storeId,
+			String deliveryType, Pageable pageable);
 
 	/**
 	 * @param storeId
@@ -37,16 +38,18 @@ public interface OrderQueryService {
 	 * @return
 	 */
 	List<OrderLine> findOrderLinesByOrderId(Long orderId);
+
 	/**
 	 * 
 	 * @param receiverId
 	 * @param pageable
 	 * @return
 	 */
-	public Page<Notification> findNotificationByReceiverId(String receiverId,Pageable pageable);
-	
-	//public Long findOrderCountByDateAndStatusName(String statusName, Instant date);
-	
+	public Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable);
+
+	// public Long findOrderCountByDateAndStatusName(String statusName, Instant
+	// date);
+
 	/**
 	 * 
 	 * @param from
@@ -54,8 +57,8 @@ public interface OrderQueryService {
 	 * @param storeId
 	 * @return
 	 */
-	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId,Pageable pageable);
-	
+	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId, Pageable pageable);
+
 	/**
 	 * 
 	 * @param status
@@ -63,6 +66,7 @@ public interface OrderQueryService {
 	 * @return
 	 */
 	public Long getNotificationCountByReceiveridAndStatus(String status, String receiverId);
+
 	/**
 	 * 
 	 * @param receiverId
@@ -70,21 +74,21 @@ public interface OrderQueryService {
 	 * @return
 	 */
 	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
-	
+
 	/**
 	 * @param orderId
 	 */
 	public Order findOrderByOrderId(String orderId);
 
 	public Long orderCountByCustomerIdAndStoreId(String customerId, String storeId);
-	
-	public ResponseEntity<OpenTask> getTaskDetails(String taskName,  String orderId, String storeId);
-	public ResponseEntity<List<Order>> getTasks(String assignee,
-			 String assigneeLike, String candidateGroup,
-			 String candidateGroups,
-			 String candidateUser,  String createdAfter,
-			String createdBefore,  String createdOn,
-			String name,  String nameLike);
 
-	//List<OrderLine> findOrderLinesByOrderId(Long orderId, Pageable pageable);
+	public ResponseEntity<OpenTask> getTaskDetails(String taskName, String orderId, String storeId);
+
+	public ResponseEntity<List<Order>> getTasks(String assignee, String assigneeLike, String candidateGroup,
+			String candidateGroups, String candidateUser, String createdAfter, String createdBefore, String createdOn,
+			String name, String nameLike);
+
+	public Page<com.diviso.graeshoppe.client.order.model.aggregator.OrderLine> findAllOrderLinesByOrderId(Long orderId, Pageable pageable);
+
+	// List<OrderLine> findOrderLinesByOrderId(Long orderId, Pageable pageable);
 }
