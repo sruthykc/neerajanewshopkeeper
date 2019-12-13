@@ -78,7 +78,7 @@ import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 @RestController
 @RequestMapping("/api/query")
 public class QueryResource {
-	
+
 	@Autowired
 	OfferQueryService offerQueryService;
 
@@ -102,7 +102,7 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
-	
+
 	@Autowired
 	SaleResourceApi saleResourceApi;
 
@@ -920,7 +920,9 @@ public class QueryResource {
 	 *              in page
 	 */
 	// findOrderByStatusName
-	@GetMapping("/ findOrderByStatusNameAndStoreIdAndDeliveryType/{statusName}/{storeId}/{deliveryType}") // 27 11 19																										// it's																										// working
+	@GetMapping("/ findOrderByStatusNameAndStoreIdAndDeliveryType/{statusName}/{storeId}/{deliveryType}") // 27 11 19 //
+																											// it's //
+																											// working
 	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(@PathVariable String statusName,
 			@PathVariable String storeId, @PathVariable String deliveryType, Pageable pageable) {
 		return orderQueryService.findOrderByStatusNameAndStoreIdAndDeliveryType(statusName, storeId, deliveryType,
@@ -998,34 +1000,36 @@ public class QueryResource {
 	}
 
 	@GetMapping("/printSale/{saleId}/{idpCode}")
-	public ResponseEntity<PdfDTO> printSale(@PathVariable Long saleId,@PathVariable String idpCode) {
+	public ResponseEntity<PdfDTO> printSale(@PathVariable Long saleId, @PathVariable String idpCode) {
 		PdfDTO pdf = new PdfDTO();
 		pdf.setPdf(this.saleResourceApi.printSaleUsingGET(idpCode, saleId).getBody());
 		pdf.setContentType("application/pdf");
 		return ResponseEntity.ok().body(pdf);
-		
+
 	}
+
 	@GetMapping("/orderaggregator/{orderNumber}")
 	public ResponseEntity<OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
 		return reportQueryService.getOrderAggregator(orderNumber);
 	}
+
 	@GetMapping("/findAllOrderLinesByOrderId/{orderId}")
 	public Page<OrderLine> findAllOrderLinesByOrderId(@PathVariable Long orderId, Pageable pageable) {
-		log.debug("<<<<<<<<<findAllOrderLinesByOrderId >>>>>>>>>>>",orderId);
+		log.debug("<<<<<<<<<findAllOrderLinesByOrderId >>>>>>>>>>>", orderId);
 		Page<OrderLine> page = orderQueryService.findAllOrderLinesByOrderId(orderId, pageable);
 		return page;
 	}
+
 	@GetMapping("/findOfferLinesByOrderId/{orderId}")
 	public List<Offer> findOfferLinesByOrderId(@PathVariable Long orderId) {
 		return offerQueryService.findOfferLinesByOrderId(orderId);
 	}
-	
-	/*
-	 * @GetMapping("/findAuxilaryOrderLineByOrderLineId/{orderLineId}") public
-	 * Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(@PathVariable Long
-	 * orderLineId, Pageable pageable) {
-	 * log.debug("<<<<<<<<findAuxilaryOrderLineByOrderLineId >>>>>>>>>>",
-	 * orderLineId); return orderQueryService.findAuxilaryOrderLineByOrderLineId();
-	 * }
-	 */
+
+	@GetMapping("/findAuxilaryOrderLineByOrderLineId/{orderLineId}")
+	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(@PathVariable Long orderLineId,
+			Pageable pageable) {
+		log.debug("<<<<<<<<findAuxilaryOrderLineByOrderLineId >>>>>>>>>>", orderLineId);
+		return orderQueryService.findAuxilaryOrderLineByOrderLineId(orderLineId,pageable);
+	}
+
 }

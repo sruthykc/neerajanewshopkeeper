@@ -45,6 +45,7 @@ import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.order.model.aggregator.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.report.api.OrderMasterResourceApi;
 import com.diviso.graeshoppe.client.store.model.Store;
 import com.diviso.graeshoppe.service.OrderQueryService;
@@ -626,5 +627,15 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		builder.query(queryBuilder);
 		SearchResponse response = serviceUtility.searchResponseForPage("orderline", builder, pageable);
 		return serviceUtility.getPageResult(response, pageable, new OrderLine());
+	}
+
+	@Override
+	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable) {
+		log.debug("<<<<<< findAuxilaryOrderLineByOrderLineId >>>>>>>>",orderLineId,pageable);
+		QueryBuilder querybuilder = QueryBuilders.termQuery("orderLine.id", orderLineId);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(querybuilder);
+		SearchResponse response = serviceUtility.searchResponseForPage("auxilaryorderline", builder, pageable);
+		return serviceUtility.getPageResult(response, pageable, new AuxilaryOrderLine());
 	}
 }

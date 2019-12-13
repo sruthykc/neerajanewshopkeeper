@@ -357,11 +357,12 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 */
 	@Override
 	public Product findProductById(Long id) {
-		QueryBuilder qb = QueryBuilders.termQuery("id", id);
+		
+		QueryBuilder queryBuilder = QueryBuilders.termQuery("id", id);
 		SearchSourceBuilder builder = new SearchSourceBuilder();
-		builder.query(qb);
-		SearchResponse sr = serviceUtility.searchResponseForObject("product", qb);
-		return serviceUtility.getObjectResult(sr, new Product());
+		builder.query(queryBuilder);
+		SearchResponse response = serviceUtility.searchResponseForObject("product",queryBuilder);
+		return serviceUtility.getObjectResult(response, new Product());
 
 		/*
 		 * builder.query(termQuery("id", id));

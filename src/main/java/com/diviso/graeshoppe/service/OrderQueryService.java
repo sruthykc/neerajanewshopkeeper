@@ -11,6 +11,7 @@ import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.order.model.aggregator.AuxilaryOrderLine;
 
 /**
  * 
@@ -89,6 +90,8 @@ public interface OrderQueryService {
 			String name, String nameLike);
 
 	public Page<com.diviso.graeshoppe.client.order.model.aggregator.OrderLine> findAllOrderLinesByOrderId(Long orderId, Pageable pageable);
+
+	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable);
 
 	// List<OrderLine> findOrderLinesByOrderId(Long orderId, Pageable pageable);
 }
