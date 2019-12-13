@@ -22,6 +22,7 @@ import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.InternalOrder.Aggregation;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.product.api.AuxilaryLineItemResourceApi;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
@@ -128,7 +130,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public Page<Product> findProductByCategoryId(Long categoryId, String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<< findProductByCategoryId >>>>>>>>>", categoryId, storeId);
-		QueryBuilder qb = QueryBuilders.boolQuery().must(termQuery("categoryId", categoryId))
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(termQuery("categoryId", categoryId))
 				.must(termQuery("storeId.keyword", storeId));
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -162,7 +164,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public Page<Product> findAllProductByNameAndStoreId(String name, String storeId, Pageable pageable) {
 		log.debug("<<<<<<<<<< findAllProductBySearchTerm >>>>>>>>>", name, storeId);
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name", name))
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.matchQuery("name", name))
 				.must(QueryBuilders.matchQuery(storeId, storeId));
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -191,14 +193,16 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @param storeId
 	 */
 	@Override
-	public Page<Product> findAllProducts(String storeId, Pageable pageable) {
-		log.debug("<<<<<<<<<< findAllProducts >>>>>>>>", storeId);
+	public Page<Product> findAllProductsByIdpCode(String idpCode, Pageable pageable) {
+		log.debug("<<<<<<<<<< findAllProductsByIdpCode >>>>>>>>", idpCode);
 
-		QueryBuilder qb = termQuery("storeId.keyword", storeId);
-		SearchSourceBuilder ssb = new SearchSourceBuilder();
-		ssb.query(qb);
-		SearchResponse sr = serviceUtility.searchResponseForPage("product", ssb, pageable);
-		return serviceUtility.getPageResult(sr, pageable, new Product());
+		QueryBuilder queryDsl = termQuery("iDPcode.keyword", idpCode);
+		
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.query(queryDsl);
+		searchSourceBuilder.sort(new FieldSortBuilder("id").order(SortOrder.DESC));
+		SearchResponse searchResponse = serviceUtility.searchResponseForPage("product", searchSourceBuilder, pageable);
+		return serviceUtility.getPageResult(searchResponse, pageable, new Product());
 
 		/*
 		 * if (findProducts(pageable) == null) { throw new
@@ -517,7 +521,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public Page<StockEntry> findAllStockEntriesbyIdpCode(String idpCode, Pageable pageable) {
 
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword", idpCode));
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.termQuery("iDPcode.keyword", idpCode));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);
 		SearchResponse sr = serviceUtility.searchResponseForPage("stockentry", builder, pageable);
@@ -548,7 +552,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public Page<StockCurrent> findAllStockCurrentByCategoryId(Long categoryId, String storeId, Pageable pageable) {
 
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.category.id", categoryId))
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.matchQuery("product.category.id", categoryId))
 				.must(QueryBuilders.termQuery("iDPcode.keyword", storeId));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);
@@ -581,7 +585,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public StockCurrent findStockCurrentByProductId(Long productId, String storeId) {
 
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.id", productId))
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.termQuery("product.id", productId))
 				.must(QueryBuilders.termQuery("product.iDPcode.keyword", storeId));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);
@@ -611,7 +615,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public StockEntry findStockEntryByProductId(Long productId, String storeId) {
 
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.id", productId))
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.termQuery("product.id", productId))
 				.must(QueryBuilders.termQuery("product.userId.keyword", storeId));
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
@@ -643,7 +647,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public Page<StockCurrent> findStockCurrentByProductName(String name, String storeId, Pageable pageable) {
 
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.name.keyword", name))
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.termQuery("product.name.keyword", name))
 				.must(QueryBuilders.termQuery("product.iDPcode.keyword", storeId));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);
@@ -725,7 +729,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 */
 	@Override
 	public Page<UOM> findUOMByIDPcode(String iDPcode, Pageable pageable) {
-		QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword", iDPcode));
+		QueryBuilder qb = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.termQuery("iDPcode.keyword", iDPcode));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(qb);
 		SearchResponse sr = serviceUtility.searchResponseForPage("uom", builder, pageable);
@@ -1113,7 +1117,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 
-		builder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name.keyword", name).prefixLength(3))
+		builder.query(QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.matchQuery("name.keyword", name).prefixLength(3))
 				.must(QueryBuilders.termQuery("iDPcode.keyword", idpCode)));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("category", pageable.getPageSize(),
@@ -1137,7 +1141,24 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public Page<Category> findAllCategoriesByIdpCode(String idpCode, Pageable pageable) {
 
-		SearchSourceBuilder builder = new SearchSourceBuilder();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.query(QueryBuilders.termQuery("iDPcode.keyword", idpCode));
+		SearchResponse searchResponse = serviceUtility.searchResponseForPage("category", searchSourceBuilder, pageable);
+
+		Page<Category> page= serviceUtility.getPageResult(searchResponse, pageable, new Customer());
+
+		
+		return page;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*SearchSourceBuilder builder = new SearchSourceBuilder();
 
 		builder.query(QueryBuilders.termQuery("iDPcode.keyword", idpCode));
 
@@ -1152,7 +1173,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 			e.printStackTrace();
 		}
 
-		return serviceUtility.getPageResult(searchResponse, pageable, new Category());
+		return serviceUtility.getPageResult(searchResponse, pageable, new Category());*/
 
 	}
 

@@ -155,7 +155,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	private List<DeliveryInfoDTO> findDeliveryInfoByStoreId(Long id) {
 
-		QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.id", id));
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(matchAllQuery()).filter(QueryBuilders.termQuery("store.id", id));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(queryBuilder);
 
@@ -210,7 +210,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	private List<TypeDTO> findAllDeliveryTypesByStoreId(String storeId) {
 
 		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-				.must(QueryBuilders.termQuery("store.regNo", storeId));
+				.must(matchAllQuery()).filter(QueryBuilders.termQuery("store.regNo", storeId));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(queryBuilder);
 		
@@ -275,7 +275,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	private List<StoreTypeDTO> findAllStoreTypesByStoreId(String regNo) {
 		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-				.must(QueryBuilders.termQuery("store.regNo.keyword", regNo));
+				.must(matchAllQuery()).filter(QueryBuilders.termQuery("store.regNo.keyword", regNo));
 
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(queryBuilder);
@@ -323,7 +323,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	@Override
 	public Page<Banner> findBannersByStoreId(String storeId, Pageable pageable) {
 		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-				.must(QueryBuilders.termQuery("store.regNo.keyword", storeId));
+				.must(matchAllQuery()).filter(QueryBuilders.termQuery("store.regNo.keyword", storeId));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(queryBuilder);
 		SearchResponse response = serviceUtility.searchResponseForPage("banner", builder, pageable);

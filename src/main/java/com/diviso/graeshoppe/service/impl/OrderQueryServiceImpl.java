@@ -59,9 +59,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class OrderQueryServiceImpl implements OrderQueryService {
 
-	/*
-	 * int i = 0; Long count = 0L;
-	 */
 
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 	@Autowired

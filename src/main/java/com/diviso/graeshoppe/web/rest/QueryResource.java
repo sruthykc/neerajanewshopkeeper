@@ -198,7 +198,7 @@ public class QueryResource {
 	 */
 	@GetMapping("/findAllProductsByIdpCode/{idpCode}") // 26 11 19 it,s working
 	public Page<Product> findAllProductsByIdpCode(@PathVariable String idpCode, Pageable pageable) {
-		return productQueryService.findAllProducts(idpCode, pageable);
+		return productQueryService.findAllProductsByIdpCode(idpCode, pageable);
 	}
 
 	/**
