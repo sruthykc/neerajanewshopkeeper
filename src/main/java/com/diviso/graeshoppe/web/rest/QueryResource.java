@@ -920,7 +920,7 @@ public class QueryResource {
 	 *              in page
 	 */
 	// findOrderByStatusName
-	@GetMapping("/get/{statusName}/{storeId}/{deliveryType}") // 27 11 19 //
+	@GetMapping("/findOrderByStatusNameAndStoreIdAndDeliveryType/{statusName}/{storeId}/{deliveryType}") // 27 11 19 //
 																											// it's //
 																											// working
 	public Page<Order> findOrderByStatusNameAndStoreIdAndDeliveryType(@PathVariable String statusName,
