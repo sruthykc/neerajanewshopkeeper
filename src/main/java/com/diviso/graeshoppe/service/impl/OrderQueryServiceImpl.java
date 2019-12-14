@@ -239,12 +239,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public List<OrderLine> findOrderLinesByOrderId(Long orderId) {
 		log.debug("<<<<<<<< findOrderLinesByOrderId  >>>>>>>>>.", orderId);
 
-		/*
-		 * QueryBuilder qb =
-		 * QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
-		 * .filter(QueryBuilders.termQuery("orderId", orderId));
-		 */
-		QueryBuilder qb = termQuery("orderId", orderId);
+		
+		  QueryBuilder qb =
+		  QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
+		  .filter(QueryBuilders.termQuery("orderId", orderId));
+		 
+		//QueryBuilder qb = termQuery("orderId", orderId);
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("orderline", qb);
 		List<OrderLine> list = new ArrayList<OrderLine>();
 		OrderLine result = serviceUtility.getObjectResult(searchResponse, new OrderLine());
@@ -292,10 +292,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		QueryBuilder qb = QueryBuilders.boolQuery()
 				.must(QueryBuilders.matchAllQuery())
 				.filter(QueryBuilders.termQuery("receiverId.keyword", receiverId));
-		SearchSourceBuilder ssb = new SearchSourceBuilder();
-		ssb.query(qb);
-		SearchResponse sr = serviceUtility.searchResponseForPage("Notification", ssb, pageable);
-		Page<Notification> page = serviceUtility.getPageResult(sr, pageable, new Notification());
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.query(qb);
+		SearchResponse searchResponse = serviceUtility.searchResponseForPage("notification", searchSourceBuilder, pageable);
+		Page<Notification> page = serviceUtility.getPageResult(searchResponse, pageable, new Notification());
 		return page;
 
 		/*
@@ -381,10 +381,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 				.must(termQuery("storeId.keyword",storeId))
 				.must(rangeQuery("date").gte(from).lte(to));
 				
-		SearchSourceBuilder ssb = new SearchSourceBuilder();
-		ssb.query(qb);
-		SearchResponse sr =serviceUtility.searchResponseForPage("order", ssb, pageable);
-		Page<Order> page = serviceUtility.getPageResult(sr, pageable, new Order());
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.query(qb);
+		SearchResponse searchResponse =serviceUtility.searchResponseForPage("order", searchSourceBuilder, pageable);
+		Page<Order> page = serviceUtility.getPageResult(searchResponse, pageable, new Order());
 		return page;
 		
 		/*
@@ -424,11 +424,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		/*
 		 * QueryBuilder qb =
 		 * QueryBuilders.boolQuery().must(termQuery("status.keyword",status))
-		 * .must(termQuery("receiverId.keyword",receiverId)); SearchSourceBuilder ssb =
-		 * new SearchSourceBuilder(); ssb.query(qb);
+		 * .must(termQuery("receiverId.keyword",receiverId)); SearchSourceBuilder searchSourceBuilder =
+		 * new SearchSourceBuilder(); searchSourceBuilder.query(qb);
 		 * 
-		 * SearchResponse sr = serviceUtility.searchResponseForObject("notification",
-		 * qb); Notification result = serviceUtility.getObjectResult(sr, new
+		 * SearchResponse searchResponse = serviceUtility.searchResponseForObject("notification",
+		 * qb); Notification result = serviceUtility.getObjectResult(searchResponse, new
 		 * Notification()); return ;
 		 */
 				
