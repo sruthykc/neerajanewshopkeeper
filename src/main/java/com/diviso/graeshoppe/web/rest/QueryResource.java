@@ -966,7 +966,7 @@ public class QueryResource {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping("/notification/{receiverId}") // not working
+	@GetMapping("/notification/{receiverId}") //  working
 	public ResponseEntity<Page<Notification>> findNotificationByReceiverId(@PathVariable String receiverId,
 			Pageable pageable) {
 		return ResponseEntity.ok().body(orderQueryService.findNotificationByReceiverId(receiverId, pageable));
@@ -1009,7 +1009,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/orderaggregator/{orderNumber}")
-	public ResponseEntity<OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
+	public ResponseEntity<com.diviso.graeshoppe.client.report.model.OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
 		return reportQueryService.getOrderAggregator(orderNumber);
 	}
 
