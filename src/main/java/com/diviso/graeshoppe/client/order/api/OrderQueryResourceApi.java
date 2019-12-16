@@ -76,7 +76,7 @@ public interface OrderQueryResourceApi {
     @RequestMapping(value = "/api/taskDetails/{taskName}/{orderId}/{storeId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<OpenTask> getTaskDetailsUsingGET(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId,@ApiParam(value = "taskName",required=true) @PathVariable("taskName") String taskName);
+    ResponseEntity<OpenTask> getTaskDetailsUsingGET(@ApiParam(value = "taskName",required=true) @PathVariable("taskName") String taskName,@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId);
 
 
     @ApiOperation(value = "getTasks", nickname = "getTasksUsingGET", notes = "", response = OpenTask.class, responseContainer = "List", tags={ "order-query-resource", })
