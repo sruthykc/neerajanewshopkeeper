@@ -33,6 +33,7 @@ public class StoreBundleDTO {
 	List<TypeDTO> types;
 	List<StoreTypeDTO> storeType;
 	List<BannerDTO> banners;
+	
 
 	public StoreAddressDTO getStoreAddress() {
 		return storeAddress;

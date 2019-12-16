@@ -54,6 +54,9 @@ import com.diviso.graeshoppe.service.mapper.*;
 import com.diviso.graeshoppe.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.diviso.graeshoppe.client.store.model.PreOrderSettings;
+
+import com.diviso.graeshoppe.client.store.model.PreOrderSettingsDTO;
 @Service
 public class StoreQueryServiceImpl implements StoreQueryService {
 
@@ -82,6 +85,8 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	StoreTypeMapper storeTypeMapper;
 	@Autowired
 	TypeMapper typeMapper;
+	@Autowired
+	PreOrderSettingsMapper preOrderSettingsMapper;
 	private RestHighLevelClient restHighLevelClient;
 
 	public StoreQueryServiceImpl(RestHighLevelClient restHighLevelClient) {
@@ -404,6 +409,21 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		// return storeResourceApi.getStoreUsingGET(store.getId()).getBody();
 	}
 
+	
+	private PreOrderSettingsDTO findPreOrderSettingsByRegNo(String regNo) {
+		QueryBuilder queryBuilder = QueryBuilders.termQuery("regNo.keyword", regNo);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(queryBuilder);
+
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("store", queryBuilder);
+		Store store= serviceUtility.getObjectResult(searchResponse, new Store());
+		return preOrderSettingsMapper.toDto( store.getPreOrderSettings());
+		
+	}
+	
+	
+	
+	
 	public ResponseEntity<StoreBundleDTO> getStoreBundle(String regNo) {
 
 		Store store = findStoreByRegNo(regNo);
@@ -446,6 +466,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			storeSettingsDTO = storeSettingsResourceApi.getStoreSettingsUsingGET(storeSettings.getId()).getBody();
 		}
 
+		
+		
+		
 		StoreBundleDTO bundle = new StoreBundleDTO();
 
 		bundle.setStore(storeDTO);
@@ -461,6 +484,8 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		bundle.setStoreSettings(storeSettingsDTO);
 
 		bundle.setStoreAddress(storeAddressDTO);
+		
+		bundle.setPreOrderSettings(findPreOrderSettingsByRegNo(regNo));
 
 		return ResponseEntity.ok().body(bundle);
 
