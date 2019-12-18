@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -14,14 +16,14 @@ import javax.validation.constraints.*;
  * SaleDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T12:31:38.737+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-08T11:51:40.670+05:30[Asia/Kolkata]")
 
 public class SaleDTO   {
   @JsonProperty("customerId")
   private Long customerId = null;
 
   @JsonProperty("date")
-  private OffsetDateTime date = null;
+  private Instant date = null;
 
   @JsonProperty("grandTotal")
   private Double grandTotal = null;
@@ -64,7 +66,7 @@ public class SaleDTO   {
     this.customerId = customerId;
   }
 
-  public SaleDTO date(OffsetDateTime date) {
+  public SaleDTO date(Instant date) {
     this.date = date;
     return this;
   }
@@ -77,11 +79,11 @@ public class SaleDTO   {
 
   @Valid
 
-  public OffsetDateTime getDate() {
+  public Instant getDate() {
     return date;
   }
 
-  public void setDate(OffsetDateTime date) {
+  public void setDate(Instant date) {
     this.date = date;
   }
 

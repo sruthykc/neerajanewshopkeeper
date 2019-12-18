@@ -35,11 +35,7 @@ public class StoreCommandServiceImpl implements StoreCommandService {
 	@Autowired
 	private PreOrderSettingsResourceApi preOrderSettingsResourceApi;
 
-	@Autowired
-	private UserRatingResourceApi userRatingResourceApi;
-	
-	@Autowired
-	private ReviewResourceApi reviewResourceApi;
+
 	
 	@Autowired
 	DeliveryInfoResourceApi deliveryInfoResourceApi;
@@ -107,41 +103,9 @@ public class StoreCommandServiceImpl implements StoreCommandService {
 		return preOrderSettingsResourceApi.deletePreOrderSettingsUsingDELETE(id);
 	}
 
-	@Override
-	public ResponseEntity<UserRatingDTO> createUserRating(UserRatingDTO userRatingDTO) {
-		
-		return userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
-	}
+	
 
-	@Override
-	public ResponseEntity<UserRatingDTO> updateUserRating(UserRatingDTO userRatingDTO) {
-		
-		return userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
-	}
-
-	@Override
-	public ResponseEntity<Void> deleteUserRating(Long id) {
-		
-		return userRatingResourceApi.deleteUserRatingUsingDELETE(id);
-	}
-
-	@Override
-	public ResponseEntity<ReviewDTO> createUserRating(ReviewDTO reviewDTO) {
-		
-		return reviewResourceApi.createReviewUsingPOST(reviewDTO);
-	}
-
-	@Override
-	public ResponseEntity<ReviewDTO> updateUserRating(ReviewDTO reviewDTO) {
-		
-		return reviewResourceApi.updateReviewUsingPUT(reviewDTO);
-	}
-
-	@Override
-	public ResponseEntity<Void> deleteReview(Long id) {
-		
-		return reviewResourceApi.deleteReviewUsingDELETE(id);
-	}
+	
 
 	@Override
 	public ResponseEntity<DeliveryInfoDTO> createDeliveryInfo(DeliveryInfoDTO deliveryInfoDTO) {

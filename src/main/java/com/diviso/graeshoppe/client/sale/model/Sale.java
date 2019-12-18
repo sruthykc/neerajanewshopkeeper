@@ -8,10 +8,10 @@ import java.util.Objects;
 import java.util.Set;
 
 
+
 /**
  * A Sale.
  */
-
 
 public class Sale implements Serializable {
 

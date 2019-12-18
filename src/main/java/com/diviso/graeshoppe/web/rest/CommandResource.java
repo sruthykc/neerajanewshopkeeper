@@ -371,7 +371,7 @@ public class CommandResource {
 		return storeCommandService.deleteReply(id);
 	}
 
-	@PostMapping("/user-ratings")
+	/*@PostMapping("/user-ratings")
 	public ResponseEntity<UserRatingDTO> createUserRating(@RequestBody UserRatingDTO userRatingDTO) {
 		return storeCommandService.createUserRating(userRatingDTO);
 	}
@@ -400,7 +400,7 @@ public class CommandResource {
 	public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
 		return storeCommandService.deleteReview(id);
 	}
-
+*/
 	@PostMapping("/delivery-infos")
 	public ResponseEntity<DeliveryInfoDTO> createDeliveryInfo(@RequestBody DeliveryInfoDTO deliveryInfoDTO) {
 		return storeCommandService.createDeliveryInfo(deliveryInfoDTO);

@@ -318,26 +318,9 @@ public class QueryResource {
 	@GetMapping("/getProductBundle/{id}") // its working
 	public ResponseEntity<ProductBundle> getProductBundleById(@PathVariable Long id) {
 
-		Product product = productQueryService.findProductById(id);
+	
 
-		List<ComboLineItem> comboLineItem = productQueryService.finAllComboLineItemsByProductId(product.getId());
-
-		List<AuxilaryLineItem> auxilaryLineItem = productQueryService
-				.findAllAuxilaryProductsByProductId(product.getId());
-
-		Discount discount = productQueryService.findDiscountByProductId(product.getId());
-
-		ProductBundle productBundle = new ProductBundle();
-
-		productBundle.setDiscount(discount);
-
-		productBundle.setComboLineItems(comboLineItem);
-
-		productBundle.setAuxilaryLineItems(auxilaryLineItem);
-
-		productBundle.setProduct(product);
-
-		return ResponseEntity.ok().body(productBundle);
+		return ResponseEntity.ok().body(productQueryService.getProductBundleById(id));
 	}
 
 	/**
@@ -348,20 +331,8 @@ public class QueryResource {
 	@GetMapping("/getStockEntryBundleById/{id}") // not tested getStockEntryBundle
 	public ResponseEntity<StockEntryBundle> getStockEntryBundleById(@PathVariable Long id) {
 
-		StockEntry stockEntry = productQueryService.findStockEntryById(id);
-		List<EntryLineItem> entryLineItems = productQueryService
-				.findAllEntryLineItemsByStockEntryId(stockEntry.getId());
-		Reason reason = productQueryService.findReasonByStockEntryId(stockEntry.getId());
-		Location location = productQueryService.findLocationByStockEntryId(stockEntry.getId());
-		Address address = productQueryService.findAddressByStockEntryId(stockEntry.getId());
-		StockEntryBundle stockEntryBundle = new StockEntryBundle();
-
-		stockEntryBundle.setEntryLineItems(entryLineItems);
-		stockEntryBundle.setLocation(location);
-		stockEntryBundle.setReason(reason);
-		stockEntryBundle.setStockEntry(stockEntry);
-		stockEntryBundle.getLocation().setAddress(address);
-		return ResponseEntity.ok().body(stockEntryBundle);
+	
+		return ResponseEntity.ok().body(productQueryService.getStockEntryBundleById(id));
 	}
 
 	/**
@@ -621,6 +592,14 @@ public class QueryResource {
 	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
 		return saleQueryService.findSaleById(id);
 	}
+	@GetMapping("/printSale/{saleId}/{idpCode}")
+	public ResponseEntity<PdfDTO> printSale(@PathVariable Long saleId, @PathVariable String idpCode) {
+		PdfDTO pdf = new PdfDTO();
+		pdf.setPdf(this.saleResourceApi.printSaleUsingGET(idpCode, saleId).getBody());
+		pdf.setContentType("application/pdf");
+		return ResponseEntity.ok().body(pdf);
+
+	}
 
 	/**
 	 * 
@@ -854,6 +833,11 @@ public class QueryResource {
 		return reportQueryService.getCurrentStock(idpcode);
 
 	}
+	@GetMapping("/orderaggregator/{orderNumber}")
+	public ResponseEntity<com.diviso.graeshoppe.client.report.model.OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
+		return reportQueryService.getOrderAggregator(orderNumber);
+	}
+
 
 	// ***********************Order related end Points*************************
 	/**
@@ -996,23 +980,12 @@ public class QueryResource {
 	 */
 	@GetMapping("/findNotificationCountByReceiverIdAndStatusName/{receiverId}/{status}") // working
 	Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status) {
-		return orderQueryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
+		return orderQueryService.getNotificationCountByReceiveridAndStatus(receiverId, status);
 	}
 
-	@GetMapping("/printSale/{saleId}/{idpCode}")
-	public ResponseEntity<PdfDTO> printSale(@PathVariable Long saleId, @PathVariable String idpCode) {
-		PdfDTO pdf = new PdfDTO();
-		pdf.setPdf(this.saleResourceApi.printSaleUsingGET(idpCode, saleId).getBody());
-		pdf.setContentType("application/pdf");
-		return ResponseEntity.ok().body(pdf);
+	
 
-	}
-
-	@GetMapping("/orderaggregator/{orderNumber}")
-	public ResponseEntity<com.diviso.graeshoppe.client.report.model.OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
-		return reportQueryService.getOrderAggregator(orderNumber);
-	}
-
+	
 	@GetMapping("/findAllOrderLinesByOrderId/{orderId}")
 	public Page<OrderLine> findAllOrderLinesByOrderId(@PathVariable Long orderId, Pageable pageable) {
 		log.debug("<<<<<<<<<findAllOrderLinesByOrderId >>>>>>>>>>>", orderId);
@@ -1020,16 +993,18 @@ public class QueryResource {
 		return page;
 	}
 
-	@GetMapping("/findOfferLinesByOrderId/{orderId}")
-	public List<Offer> findOfferLinesByOrderId(@PathVariable Long orderId) {
-		return offerQueryService.findOfferLinesByOrderId(orderId);
-	}
+	
 
 	@GetMapping("/findAuxilaryOrderLineByOrderLineId/{orderLineId}")
 	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(@PathVariable Long orderLineId,
 			Pageable pageable) {
 		log.debug("<<<<<<<<findAuxilaryOrderLineByOrderLineId >>>>>>>>>>", orderLineId);
 		return orderQueryService.findAuxilaryOrderLineByOrderLineId(orderLineId,pageable);
+	}
+	//***********************Offer related end points**********************
+	@GetMapping("/findOfferLinesByOrderId/{orderId}")
+	public List<Offer> findOfferLinesByOrderId(@PathVariable Long orderId) {
+		return offerQueryService.findOfferLinesByOrderId(orderId);
 	}
 
 }

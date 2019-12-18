@@ -31,17 +31,9 @@ public interface StoreCommandService {
 	
 	public ResponseEntity<Void> deletePreOrderSettings(Long id);
 	
-	public ResponseEntity<UserRatingDTO> createUserRating(UserRatingDTO userRatingDTO);
 	
-	public ResponseEntity<UserRatingDTO> updateUserRating(UserRatingDTO userRatingDTO);
 	
-	public ResponseEntity<Void> deleteUserRating(Long id);
 	
-	public ResponseEntity<ReviewDTO> createUserRating(ReviewDTO reviewDTO);		
-	
-	public ResponseEntity<ReviewDTO> updateUserRating(ReviewDTO reviewDTO);
-	
-	public ResponseEntity<Void> deleteReview(Long id);
 	
 	public ResponseEntity<DeliveryInfoDTO> createDeliveryInfo(DeliveryInfoDTO deliveryInfoDTO);
 	

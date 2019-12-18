@@ -52,7 +52,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 	
 	
 
-	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(CustomerQueryServiceImpl.class);
 	
 	@Autowired
 	private RestHighLevelClient restHighLevelClient;
@@ -152,7 +152,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		}
 		return serviceUtility.getPageResult(searchResponse, pageable, new Customer());*/
 	}
-	public /*ResponseEntity<CustomerDTO>*/CustomerDTO findCustomerById(Long id) {
+	public CustomerDTO findCustomerById(Long id) {
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
 				.filter(QueryBuilders.termQuery("id", id));
 		
@@ -160,12 +160,9 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		Customer result=serviceUtility.getObjectResult(searchResponse, new Customer());
 		return customerMapper.toDto(result);
 		
-		/*log.debug("<<<<<<<<< findCustomerById >>>>>>>>", id);
-		return customerResourceApi.getCustomerUsingGET(id);
-	*/
-	
+		
 	}
-	public /*ResponseEntity<ContactDTO>*/ContactDTO findContactById( Long id) {
+	public ContactDTO findContactById( Long id) {
 
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
 				.filter(QueryBuilders.termQuery("id", id));
@@ -175,7 +172,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService{
 		return contactMapper.toDto(result);
 		
 		
-		/*return this.contactResourceApi.getContactUsingGET(id);*/
+		
 	}
 	
 }

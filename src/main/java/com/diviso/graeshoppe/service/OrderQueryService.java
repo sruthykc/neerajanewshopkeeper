@@ -74,7 +74,7 @@ public interface OrderQueryService {
 	 * @param status
 	 * @return
 	 */
-	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
+	//public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
 
 	/**
 	 * @param orderId

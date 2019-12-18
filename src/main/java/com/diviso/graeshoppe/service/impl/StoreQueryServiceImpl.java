@@ -355,19 +355,23 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	private List<BannerDTO> findAllBannersByStoreId(String regNo) {
 
-		QueryBuilder queryBuilder = QueryBuilders.termQuery("store.regNo.keyword", regNo);
+		//QueryBuilder queryBuilder = QueryBuilders.termQuery("store.regNo.keyword", regNo);
+		QueryBuilder dslQuery = QueryBuilders.boolQuery()
+				.must(matchAllQuery()).filter(QueryBuilders.termQuery("store.regNo.keyword", regNo));
+		
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		searchSourceBuilder.query(queryBuilder);
+		searchSourceBuilder.query(dslQuery);
 
-		SearchRequest searchRequest = new SearchRequest("banner");
-		searchRequest.source(searchSourceBuilder);
-		SearchResponse searchResponse = null;
+	//	SearchRequest searchRequest = new SearchRequest("banner");
+		//searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = serviceUtility.searchResponseForSourceBuilder("banner", searchSourceBuilder);
+		/*SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 		} catch (IOException e) { // TODO Auto-generated
 			e.printStackTrace();
-		}
+		}*/
 
 		SearchHit[] searchHit = searchResponse.getHits().getHits();
 
@@ -411,11 +415,13 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	
 	private PreOrderSettingsDTO findPreOrderSettingsByRegNo(String regNo) {
-		QueryBuilder queryBuilder = QueryBuilders.termQuery("regNo.keyword", regNo);
+		//QueryBuilder queryBuilder = QueryBuilders.termQuery("regNo.keyword", regNo);
+		QueryBuilder dslQuery = QueryBuilders.boolQuery()
+				.must(matchAllQuery()).filter(QueryBuilders.termQuery("regNo.keyword", regNo));
 		SearchSourceBuilder builder = new SearchSourceBuilder();
-		builder.query(queryBuilder);
+		builder.query(dslQuery);
 
-		SearchResponse searchResponse = serviceUtility.searchResponseForObject("store", queryBuilder);
+		SearchResponse searchResponse = serviceUtility.searchResponseForObject("store", dslQuery);
 		Store store= serviceUtility.getObjectResult(searchResponse, new Store());
 		return preOrderSettingsMapper.toDto( store.getPreOrderSettings());
 		

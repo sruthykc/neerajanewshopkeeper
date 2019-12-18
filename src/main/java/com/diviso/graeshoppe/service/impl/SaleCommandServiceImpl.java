@@ -24,7 +24,7 @@ public class SaleCommandServiceImpl implements SaleCommandService{
 
 	@Override
 	public ResponseEntity<SaleDTO> createSale(SaleDTO saleDTO) {	
-		saleDTO.date(OffsetDateTime.now());
+		
 		return saleResourceApi.createSaleUsingPOST(saleDTO);
 		
 	}

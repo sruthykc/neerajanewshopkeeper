@@ -100,7 +100,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 	public List<TicketLine> findAllTicketLinesBySaleId(Long saleId) {
 
 		List<TicketLine> ticketLines = new ArrayList<TicketLine>();
-		SearchSourceBuilder builder = new SearchSourceBuilder();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		/*
 		 * String[] include = new String[] { "" };
@@ -110,9 +110,10 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 		 * builder.fetchSource(include, exclude);
 		 */
 
-		builder.query(termQuery("id", saleId));
+		searchSourceBuilder.query(termQuery("id", saleId));
 
 		SearchRequest searchRequest = new SearchRequest("ticketline");
+		searchRequest.source(searchSourceBuilder);
 		SearchResponse searchResponse = null;
 
 		try {

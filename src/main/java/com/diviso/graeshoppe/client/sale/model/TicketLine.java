@@ -5,9 +5,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
+
 /**
  * A TicketLine.
  */
+
 
 public class TicketLine implements Serializable {
 
